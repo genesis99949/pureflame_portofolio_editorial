@@ -1,0 +1,4 @@
+const fs=require('fs');
+const models=['Embera','Aether','Flavo','Fera','Ignite'];
+const nav='<nav class="ce-quick-nav" aria-label="Acces rapid la modele / Quick model navigation"><p class="ce-quick-label"><span class="lang-ro">Alege modelul</span><span class="lang-en" hidden>Choose your model</span></p><div class="ce-quick-links">'+models.map((m,i)=>`<a href="#${m.toLowerCase()}"><span class="ce-quick-number" aria-hidden="true">0${i+1}</span><span>${m}</span><span class="ce-quick-arrow" aria-hidden="true">↘</span></a>`).join('')+'</div></nav>';
+for(const f of ['colectie.html','colectie-editorial.html']){let h=fs.readFileSync(f,'utf8');h=h.replace(/(<section class="ce-intro">[\s\S]*?<\/section>)/,'$1\n'+nav).replace('collection-experiment.css?v=6','collection-experiment.css?v=7');fs.writeFileSync(f,h);}
