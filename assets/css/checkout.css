@@ -1,0 +1,913 @@
+/* ---------- Pagina de comanda (comanda.html) ---------- */
+/* Cosul gol lasa foarte putin continut — fara asta, footer-ul ar urca
+   imediat sub formular in loc sa stea la baza ferestrei. */
+body:has(.checkout-page){
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+body:has(.checkout-page) .site-footer{ margin-top: auto; }
+
+.checkout-page{
+  flex: 1 0 auto;
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 130px 5vw 120px;
+}
+/* Pe desktop, latimea urmeaza aceeasi formula ca header-ul premium
+   (calc(100% - 96px), plafonat la 1440px) — coșul si finalizarea
+   comenzii se aliniaza vizual cu bara de header de deasupra. */
+@media (min-width: 1025px){
+  .checkout-page{
+    max-width: 1440px;
+    width: calc(100% - 96px);
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+.checkout-title{
+  font-family: var(--display);
+  font-size: clamp(30px, 4vw, 46px);
+  color: var(--charcoal);
+  margin: 0 0 48px;
+}
+.finalize-back{
+  display: inline-block;
+  margin-bottom: 16px;
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(17,15,10,0.55);
+}
+.finalize-back:hover{ color: var(--charcoal); }
+.checkout-card-title-plain{
+  font-family: var(--display);
+  font-size: 20px;
+  color: var(--charcoal);
+  margin: 0 0 22px;
+}
+.checkout-main form .checkout-card{ margin-bottom: 24px; }
+.checkout-main form .checkout-card:last-child{ margin-bottom: 0; }
+
+/* Fara asta, campurile din "Metoda de plata" si "Datele tale" nu aveau nicio
+   spatiere intre ele (doar padding-ul cardului le tinea departe de margini) —
+   randurile, eticheta "Adresa" si bifa de acord stateau lipite unele de altele. */
+#checkoutForm .checkout-card > * + *{
+  margin-top: 22px;
+}
+#checkoutForm label{ gap: 8px; }
+#checkoutForm label em{
+  font-style: normal;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: rgba(17,15,10,0.4);
+}
+#checkoutForm .form-row{ gap: 16px; }
+#checkoutForm input::placeholder,
+#checkoutForm textarea::placeholder{ color: rgba(17,15,10,0.35); }
+#checkoutForm input:not([type="checkbox"]):not([type="radio"]),
+#checkoutForm textarea{
+  padding: 14px 16px;
+}
+#checkoutForm textarea{ resize: vertical; min-height: 60px; }
+/* Pe telefon, campurile puse cate 2 pe rand (Prenume/Nume, Email/Telefon,
+   Numar/Cod postal) au prea putin loc fiecare — le stivuim unul sub altul. */
+@media (max-width: 700px){
+  #checkoutForm .form-row{
+    flex-direction: column;
+    gap: 22px;
+  }
+  #checkoutForm .form-row .form-row-narrow{
+    flex: initial;
+  }
+}
+.finalize-submit{
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.finalize-summary-items{
+  margin-bottom: 16px;
+}
+.finalize-summary-item{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--body);
+  font-size: 13px;
+  color: rgba(17,15,10,0.7);
+}
+.finalize-summary-item-thumb{
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: var(--cream);
+  flex-shrink: 0;
+}
+.finalize-summary-item-info{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.finalize-summary-item-name{ color: var(--charcoal); font-weight: 600; }
+.finalize-summary-item-qty{ color: rgba(17,15,10,0.5); font-weight: 400; font-size: 12px; }
+.finalize-summary-item-price{ flex-shrink: 0; }
+
+/* ---- Indicator de progres (cos -> finalizare) ---- */
+.checkout-steps{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(17,15,10,0.35);
+}
+.checkout-step.is-done{ color: rgba(17,15,10,0.55); }
+.checkout-step.is-current{ color: var(--ember-deep); font-weight: 600; }
+.checkout-step-sep{ color: rgba(17,15,10,0.2); }
+
+.checkout-grid{
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  grid-template-areas:
+    "delivery summary"
+    "addons   summary"
+    "faq      summary";
+  gap: 24px 40px;
+  align-items: start;
+}
+/* min-width:0 pe toate cele 4 zone — fara el, cardul de accesorii (care are
+   in interior un carusel orizontal cu overflow-x:auto) isi impune latimea
+   minima de continut (suma cardurilor de accesorii) intregii coloane a
+   grid-ului, si toate celelalte zone (livrare, sumar, faq) ies din ecran
+   odata cu el pe mobil. */
+.checkout-area-delivery{ grid-area: delivery; min-width: 0; }
+.checkout-area-addons{ grid-area: addons; min-width: 0; }
+.checkout-area-faq{ grid-area: faq; min-width: 0; }
+.checkout-area-summary{
+  grid-area: summary;
+  position: sticky;
+  top: 110px;
+  min-width: 0;
+}
+/* Pe mobil, sumarul (cu pretul si CTA) vine imediat dupa cardul de
+   livrare/produse — nu ingropat sub accesorii si FAQ, unde ar fi usor
+   ratat inainte de a apasa spre finalizare. */
+@media (max-width: 860px){
+  .checkout-grid{
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "delivery"
+      "summary"
+      "addons"
+      "faq";
+    gap: 20px;
+  }
+  .checkout-area-summary{ position: static; }
+}
+
+/* ---- Grid pagina de finalizare: formular + sumar sticky pe 2 coloane ----
+   Distinct de .checkout-grid (care are 4 zone numite pentru pagina de cos) —
+   aici sunt doar 2 blocuri, iar .checkout-side trebuie sa ramana sticky. */
+.finalize-grid{
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px 40px;
+  align-items: start;
+}
+.finalize-grid .checkout-side{
+  position: sticky;
+  top: 110px;
+}
+@media (max-width: 860px){
+  .finalize-grid{
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .finalize-grid .checkout-side{ position: static; }
+}
+
+/* ---- Card generic, reutilizat pentru livrare/cos, accesorii si FAQ ---- */
+.checkout-card{
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px;
+}
+.checkout-card-head{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.checkout-card-head h2{
+  font-family: var(--display);
+  font-size: 20px;
+  color: var(--charcoal);
+  margin: 0;
+}
+.checkout-delivery-eta{
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--cream-soft);
+  color: var(--charcoal);
+}
+.checkout-card-eyebrow{
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ember-deep);
+  margin-bottom: 8px;
+}
+.checkout-card-title{
+  font-family: var(--display);
+  font-size: 22px;
+  color: var(--charcoal);
+  margin: 0 0 22px;
+}
+.checkout-help-link{
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--charcoal);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+
+/* ---- Linii de produs ---- */
+.cart-lines{
+  margin-top: 20px;
+}
+.cart-line{
+  display: grid;
+  grid-template-columns: 84px 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+}
+.cart-line-thumb{
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--cream-soft);
+}
+.cart-line-name{
+  font-family: var(--condensed);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 19px;
+  color: var(--charcoal);
+  margin: 0 0 4px;
+}
+.cart-line-meta{
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(17,15,10,0.55);
+  text-transform: uppercase;
+}
+.cart-line-price{
+  font-family: var(--body);
+  font-size: 13px;
+  color: rgba(17,15,10,0.55);
+  margin-top: 6px;
+}
+.cart-line-actions{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.cart-line-total{
+  font-family: var(--display);
+  font-size: 17px;
+  color: var(--charcoal);
+}
+.cart-line-qty{
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+}
+.cart-line-qty button{
+  width: 26px; height: 26px;
+  border: none;
+  background: none;
+  color: var(--charcoal);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+.cart-line-qty button:hover{ background: rgba(17,15,10,0.06); }
+.cart-line-qty span{
+  min-width: 20px;
+  text-align: center;
+  font-family: var(--body);
+  font-size: 13px;
+}
+.cart-line-remove{
+  font-family: var(--body);
+  font-size: 12px;
+  color: rgba(17,15,10,0.5);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.cart-line-remove:hover{ color: #b3261e; }
+
+.checkout-policy-note{
+  margin: 20px 0 0;
+  padding: 16px 18px;
+  border-radius: 8px;
+  background: rgba(217,119,46,0.08);
+  border: 1px solid rgba(217,119,46,0.25);
+  font-family: var(--body);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--olive);
+}
+.checkout-policy-note a{ color: var(--ember-deep); font-weight: 600; }
+
+/* ---- Accesorii recomandate ---- */
+.addon-row{
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+.addon-card{
+  flex: 0 0 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.addon-image{
+  width: 160px;
+  height: 160px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--cream-soft);
+}
+.addon-image img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+.addon-image-icon{
+  display: grid;
+  place-items: center;
+  color: rgba(17,15,10,0.3);
+}
+.addon-image-icon svg{ width: 56px; height: 56px; }
+.addon-name{
+  margin: 0;
+  min-height: 2.8em;
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--charcoal);
+  line-height: 1.4;
+}
+.addon-add{ margin-top: auto; }
+.addon-price{
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: rgba(17,15,10,0.55);
+}
+.addon-add{
+  margin-top: 4px;
+  padding: 10px;
+  border: 1.5px solid var(--charcoal);
+  border-radius: 999px;
+  background: none;
+  color: var(--charcoal);
+  font-family: var(--body);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease;
+}
+.addon-add:hover{ background: var(--charcoal); color: var(--cream); }
+.addon-add.is-added{ background: var(--olive); border-color: var(--olive); color: var(--cream); }
+
+/* ---- FAQ ---- */
+.checkout-faq{ margin-top: 4px; }
+.checkout-faq-item{
+  border-top: 1px solid var(--line);
+  padding: 16px 0;
+}
+.checkout-faq-item:last-child{ padding-bottom: 0; }
+.checkout-faq-item summary{
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-family: var(--body);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--charcoal);
+}
+.checkout-faq-item summary::-webkit-details-marker{ display: none; }
+.checkout-faq-chevron{
+  font-size: 18px;
+  color: rgba(17,15,10,0.4);
+  transition: transform .2s ease;
+}
+.checkout-faq-item[open] .checkout-faq-chevron{ transform: rotate(180deg); }
+.checkout-faq-item p{
+  margin: 12px 0 0;
+  font-family: var(--body);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: rgba(17,15,10,0.65);
+}
+
+/* ---- Sumar ---- */
+.checkout-summary{
+  background: var(--cream-soft);
+  border-radius: 12px;
+  padding: 36px 32px;
+}
+.checkout-summary-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(17,15,10,0.7);
+  padding: 11px 0;
+}
+.checkout-summary-row > span:last-child{ text-align: right; }
+.checkout-summary-row.is-total{
+  border-top: 1px solid var(--line);
+  margin-top: 10px;
+  padding-top: 22px;
+  padding-bottom: 26px;
+  flex-wrap: nowrap;
+  gap: 12px;
+  align-items: center;
+}
+.checkout-summary-row.is-total > span:first-child{
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--charcoal);
+  flex-shrink: 0;
+}
+.checkout-summary-row.is-total > span:last-child{
+  font-family: var(--display);
+  font-size: 20px;
+  color: var(--charcoal);
+  white-space: nowrap;
+  text-align: right;
+}
+.checkout-summary-row.is-total em{
+  display: block;
+  font-family: var(--body);
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(17,15,10,0.45);
+  margin-top: 2px;
+}
+.checkout-summary-cta{
+  display: block;
+  width: 100%;
+  padding: 16px 20px;
+  text-align: center;
+  white-space: nowrap;
+}
+.checkout-payment-icons{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+.checkout-summary-note{
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(17,15,10,0.5);
+}
+
+/* ---- Metode de plata ---- */
+.payment-methods{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 4px 0 0;
+}
+.payment-method{
+  position: relative;
+  /* !important: ".payment-method" e un <label> in #checkoutForm, iar regula
+     generica "#checkoutForm label{flex-direction:column;gap:6px}" (specificitate
+     de ID) altfel ar stivui iconita deasupra textului in loc sa le puna pe randul
+     dorit — acelasi conflict rezolvat mai sus pentru .consent-field. */
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 16px !important;
+  padding: 16px 46px 16px 18px;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color .2s ease, background-color .2s ease, box-shadow .2s ease;
+}
+.payment-method:hover{ border-color: rgba(217,119,46,0.45); }
+.payment-method:has(input:checked){
+  border-color: var(--ember);
+  background: rgba(217,119,46,0.06);
+  box-shadow: 0 0 0 1px var(--ember) inset;
+}
+.payment-method:has(input:focus-visible){
+  outline: 2px solid var(--ember);
+  outline-offset: 3px;
+}
+/* Radioul ramane in DOM (necesar pt. FormData si tastatura), dar vizual
+   selectia se citeste din bordura cardului + bifa custom din dreapta —
+   un cerc gol e un afordance mai slab decat cardul insusi, care e deja
+   intreaga zona clickabila. */
+.payment-method input{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.payment-method-icon{
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--cream-soft);
+  color: rgba(17,15,10,0.55);
+  transition: background-color .2s ease, color .2s ease;
+}
+.payment-method-icon svg{ width: 20px; height: 20px; }
+.payment-method:has(input:checked) .payment-method-icon{
+  background: var(--ember);
+  color: var(--cream);
+}
+.payment-method-text{ min-width: 0; }
+.payment-method-label{
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--charcoal);
+}
+.payment-method-desc{
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(17,15,10,0.55);
+  margin-top: 2px;
+}
+.payment-method-check{
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  background: var(--cream);
+  transition: border-color .2s ease, background-color .2s ease;
+}
+.payment-method-check svg{
+  width: 12px;
+  height: 12px;
+  color: var(--cream);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity .15s ease, transform .15s ease;
+}
+.payment-method:has(input:checked) .payment-method-check{
+  border-color: var(--ember);
+  background: var(--ember);
+}
+.payment-method:has(input:checked) .payment-method-check svg{
+  opacity: 1;
+  transform: scale(1);
+}
+.payment-method-note{
+  margin: 12px 2px 0;
+  font-family: var(--body);
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(17,15,10,0.5);
+}
+
+/* ---- Stare goala ---- */
+.checkout-empty{
+  text-align: center;
+  padding: 80px 20px;
+}
+.checkout-empty p{
+  font-family: var(--condensed);
+  font-size: 17px;
+  color: rgba(17,15,10,0.65);
+  margin: 0 0 24px;
+}
+
+.checkout-success{
+  text-align: center;
+  padding: 60px 20px;
+}
+.checkout-success h2{
+  font-family: var(--display);
+  font-size: 28px;
+  color: var(--charcoal);
+  margin: 0 0 12px;
+}
+.checkout-success p{
+  font-family: var(--condensed);
+  font-size: 16px;
+  color: rgba(17,15,10,0.65);
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+/* ---- Coș editorial: ierarhie, imagini și recomandări ---- */
+.checkout-heading{ margin: 0 0 48px; max-width: 720px; }
+.checkout-heading-kicker{
+  margin: 0 0 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ember-deep);
+}
+.checkout-heading .checkout-title{
+  margin: 0;
+  font-size: clamp(38px, 5vw, 64px);
+  line-height: .95;
+  letter-spacing: -.035em;
+}
+.checkout-heading-copy{
+  max-width: 560px;
+  margin: 18px 0 0;
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(17,15,10,.58);
+}
+.checkout-grid{
+  grid-template-columns: minmax(0,1.5fr) minmax(330px,.82fr);
+  gap: 24px 32px;
+}
+.checkout-grid .checkout-card{
+  padding: 30px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.44);
+}
+.checkout-grid .cart-line{
+  grid-template-columns: 158px minmax(0,1fr) auto;
+  gap: 24px;
+  padding: 24px 0;
+}
+.checkout-grid .cart-line-thumb{
+  width: 158px;
+  height: 112px;
+  border-radius: 4px;
+  object-fit: contain;
+}
+.cart-line-info{ min-width: 0; }
+.checkout-grid .cart-line-name{ font-size: 23px; }
+.cart-line-product-link{ color: inherit; }
+.cart-line-product-link:hover{ color: var(--ember-deep); }
+.checkout-grid .cart-line-actions{ gap: 12px; min-width: 116px; }
+.checkout-grid .cart-line-total{ font-size: 18px; }
+.checkout-grid .cart-line-qty button:disabled{ opacity: .28; cursor: not-allowed; }
+
+.checkout-card-intro{
+  max-width: 590px;
+  margin: -10px 0 24px;
+  font-family: var(--body);
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(17,15,10,.55);
+}
+.checkout-grid .addon-row{
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12px;
+  overflow: visible;
+  padding: 0;
+}
+.checkout-grid .addon-card{
+  position: relative;
+  display: grid;
+  grid-template-columns: 112px minmax(0,1fr) 38px;
+  gap: 14px;
+  align-items: center;
+  min-height: 138px;
+  padding: 12px;
+  border: 1px solid rgba(17,15,10,.11);
+  border-radius: 8px;
+  background: rgba(255,255,255,.52);
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.checkout-grid .addon-card:hover{
+  border-color: rgba(17,15,10,.26);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(17,15,10,.06);
+}
+.checkout-grid .addon-card[hidden]{ display: none; }
+.checkout-grid .addon-image{
+  width: 112px;
+  height: 112px;
+  border-radius: 5px;
+}
+.checkout-grid .addon-copy{ min-width: 0; }
+.checkout-grid .addon-name{
+  min-height: 0;
+  margin: 0 0 5px;
+  font-size: 13.5px;
+  line-height: 1.35;
+}
+.addon-benefit{
+  margin: 0 0 9px;
+  font-family: var(--body);
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: rgba(17,15,10,.5);
+}
+.addon-match{
+  display: block;
+  margin-bottom: 5px;
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ember-deep);
+}
+.checkout-grid .addon-card[data-addon-id="husa"]{ order: 1; }
+.checkout-grid .addon-card[data-addon-id="masca-patrata"]{ order: 2; }
+.checkout-grid .addon-card[data-addon-id="masca-circulara"]{ order: 3; }
+.checkout-grid .addon-card[data-addon-id="pietre"]{ order: 4; }
+.checkout-grid .addon-card[data-addon-id="picioare"]{ order: 5; }
+.addon-variants{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0 0 8px;
+}
+.addon-variant{
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 24px;
+  padding: 3px 7px;
+  border: 1px solid rgba(17,15,10,.15);
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--body);
+  font-size: 9.5px;
+  color: rgba(17,15,10,.62);
+  cursor: pointer;
+}
+.addon-variant.is-active{
+  border-color: rgba(17,15,10,.55);
+  background: rgba(255,255,255,.8);
+  color: var(--charcoal);
+}
+.addon-swatch{
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(17,15,10,.14);
+}
+.addon-swatch-grey{ background: #b9b5ae; }
+.addon-swatch-black{ background: #20201e; }
+.checkout-grid .addon-price{ font-size: 11.5px; color: rgba(17,15,10,.65); }
+.checkout-grid .addon-add{
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border-width: 1px;
+  background: rgba(255,255,255,.7);
+  font-size: 0;
+}
+.checkout-grid .addon-add > span[aria-hidden]{ font-size: 17px; font-weight: 400; }
+.checkout-grid .addon-add.is-added > span{ font-size: 0; }
+.checkout-grid .addon-add.is-added::after{ content: '✓'; font-size: 15px; }
+
+.checkout-area-summary{ background: var(--cream-soft); color: var(--charcoal); box-shadow: none; }
+.checkout-summary-head{
+  margin-bottom: 20px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.checkout-summary-head .checkout-card-eyebrow{ color: var(--ember-deep); }
+.checkout-summary-head h2{
+  margin: 0;
+  font-family: var(--display);
+  font-size: 28px;
+  color: var(--charcoal);
+}
+.checkout-area-summary .checkout-summary-row{ color: rgba(17,15,10,.7); }
+.checkout-area-summary .checkout-summary-row.is-total{ border-color: var(--line); }
+.checkout-area-summary .checkout-summary-row.is-total > span:first-child,
+.checkout-area-summary .checkout-summary-row.is-total > span:last-child{ color: var(--charcoal); }
+.checkout-area-summary .checkout-summary-row.is-total em,
+.checkout-area-summary .checkout-summary-note{ color: rgba(17,15,10,.5); }
+.checkout-area-summary .checkout-payment-icons{
+  border-color: var(--line);
+  color: rgba(17,15,10,.58);
+}
+.checkout-secure-note{
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 18px 0 0;
+  font-family: var(--body);
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: rgba(17,15,10,.5);
+}
+.checkout-secure-note > span:first-child{ color: var(--ember-deep); font-size: 15px; }
+.checkout-secure-note strong{ color: rgba(17,15,10,.72); font-weight: 600; }
+
+@media (max-width:1180px) and (min-width:861px){
+  .checkout-grid{ grid-template-columns: minmax(0,1.2fr) minmax(310px,.8fr); }
+  .checkout-grid .addon-row{ grid-template-columns: 1fr; }
+}
+@media (max-width:860px){
+  .checkout-grid{
+    grid-template-columns: minmax(0,1fr);
+    grid-template-areas:
+      "delivery"
+      "summary"
+      "addons"
+      "faq";
+    gap: 20px;
+  }
+  .checkout-grid .checkout-area-summary{ position: static; }
+}
+@media (max-width:700px){
+  .checkout-page{ padding-top: 108px; padding-bottom: 72px; }
+  .checkout-heading{ margin-bottom: 32px; }
+  .checkout-heading-copy{ font-size: 13px; }
+  .checkout-grid .checkout-card{ padding: 22px 18px; }
+  .checkout-grid .cart-line{
+    grid-template-columns: 96px minmax(0,1fr);
+    gap: 14px;
+    align-items: start;
+  }
+  .checkout-grid .cart-line-thumb{ width: 96px; height: 86px; }
+  .checkout-grid .cart-line-name{ font-size: 20px; }
+  .checkout-grid .cart-line-actions{
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .checkout-grid .cart-line-total{ order: 2; margin-left: auto; }
+  .checkout-grid .cart-line-remove{ order: 3; }
+  .checkout-grid .addon-row{ grid-template-columns: 1fr; }
+  .checkout-grid .addon-card{ grid-template-columns: 96px minmax(0,1fr) 36px; min-height: 120px; }
+  .checkout-grid .addon-image{ width: 96px; height: 96px; }
+  .checkout-grid .addon-benefit{ display: none; }
+  .checkout-area-summary{ padding: 28px 22px; }
+}
+
+/* Sume în coloană: preț pe linie, accesorii, subtotal. Totalul rămâne pe dinafară,
+   fiind setat în Georgia (`--display`), nu în Work Sans. */
+.cart-line-price,
+.addon-price,
+.checkout-summary-row:not(.is-total) > span:last-child{ font-variant-numeric: tabular-nums; }

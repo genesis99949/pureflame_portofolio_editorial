@@ -1,0 +1,589 @@
+/* ---------- Despre PureFlame: poveste editoriala ---------- */
+.despre-page{ background: var(--cream); }
+.despre-page main{ overflow: hidden; }
+
+.eyebrow{
+  display: block;
+  margin: 0;
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--ember-deep);
+}
+
+/* Hero editorial cu imagine de rezolutie mare. */
+.despre-hero{
+  position: relative;
+  min-height: 720px;
+  height: 88vh;
+  height: 88svh;
+  overflow: hidden;
+  background: var(--charcoal);
+  color: var(--cream);
+}
+.despre-hero-image{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  filter: saturate(1.03) contrast(1.025);
+}
+.despre-hero-scrim{
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(17,15,10,.8) 0%, rgba(17,15,10,.49) 42%, rgba(17,15,10,.04) 72%),
+    linear-gradient(0deg, rgba(17,15,10,.34), transparent 42%);
+}
+.despre-hero-copy{
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 20px;
+  width: min(660px, 58vw);
+  height: 100%;
+  padding: 0 0 clamp(72px, 9vh, 112px) 5vw;
+}
+.despre-hero-copy .eyebrow{ color: rgba(254,255,253,.72); }
+.despre-hero-copy h1{
+  max-width: 12ch;
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(52px, 6.8vw, 100px);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -.035em;
+  line-height: .98;
+  text-wrap: balance;
+}
+.despre-hero-copy p{
+  max-width: 48ch;
+  margin: 2px 0 0;
+  font-size: clamp(14px, 1.15vw, 17px);
+  line-height: 1.65;
+  color: rgba(254,255,253,.78);
+}
+
+/* Cuprins editorial inspirat de structura pe capitole, adaptat PureFlame. */
+.despre-chapters{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 0 5vw;
+  border-bottom: 1px solid var(--line);
+  background: var(--cream);
+}
+.despre-chapters > a{
+  position: relative;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 18px;
+  min-height: 116px;
+  padding: 24px clamp(22px, 3vw, 46px);
+  color: var(--charcoal);
+  transition: color .25s ease, background-color .25s ease;
+}
+.despre-chapters > a::after{
+  content: "";
+  position: absolute;
+  right: clamp(22px, 3vw, 46px);
+  bottom: -1px;
+  left: clamp(22px, 3vw, 46px);
+  height: 2px;
+  background: var(--ember-deep);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.despre-chapters > a:first-child::after{ left: 0; }
+.despre-chapters > a:first-child{ padding-left: 0; }
+.despre-chapters > a + a{ border-left: 1px solid var(--line); }
+.despre-chapter-no{
+  align-self: start;
+  padding-top: 5px;
+  font: 600 10px/1 var(--body);
+  letter-spacing: .12em;
+  color: var(--ember-deep);
+}
+.despre-chapter-copy{ display: grid; gap: 5px; }
+.despre-chapter-copy strong{
+  font-family: var(--display);
+  font-size: clamp(22px, 2vw, 30px);
+  font-weight: 400;
+  line-height: 1;
+}
+.despre-chapter-copy small{
+  font-size: 10px;
+  letter-spacing: .08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: rgba(17,15,10,.5);
+}
+.despre-chapter-arrow{
+  font-size: 18px;
+  color: rgba(17,15,10,.34);
+  transition: transform .25s ease, color .25s ease;
+}
+.despre-chapters > a:hover{ color: var(--ember-deep); background: rgba(217,119,46,.045); }
+.despre-chapters > a:hover .despre-chapter-arrow{ transform: translateY(4px); color: var(--ember-deep); }
+
+/* Atelier si dovezi. */
+.despre-origin{
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+  column-gap: clamp(48px, 8vw, 130px);
+  row-gap: clamp(52px, 7vw, 96px);
+  padding: clamp(88px, 10vw, 150px) 5vw;
+}
+.despre-origin-heading{
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: start;
+  gap: 40px;
+}
+.despre-origin-heading h2{
+  max-width: 17ch;
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(44px, 6vw, 86px);
+  font-weight: 400;
+  letter-spacing: -.04em;
+  line-height: .98;
+  text-wrap: balance;
+  justify-self: end;
+  text-align: right;
+}
+.despre-origin-media{ margin: 0; }
+.despre-origin-media img{
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--charcoal);
+}
+.despre-origin-media figcaption{
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font: 600 10px/1.4 var(--body);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(17,15,10,.58);
+}
+.despre-origin-copy{
+  align-self: center;
+  padding-right: min(4vw, 60px);
+}
+.despre-origin-lead{
+  margin: 0 0 clamp(36px, 5vw, 68px);
+  font-family: var(--display);
+  font-size: clamp(24px, 2.5vw, 37px);
+  line-height: 1.26;
+  color: var(--charcoal);
+}
+.despre-proof-list{ margin: 0; }
+.despre-proof-list div{
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 18px;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+}
+.despre-proof-list div:last-child{ border-bottom: 1px solid var(--line); }
+.despre-proof-list dt{
+  font: 600 10px/1.6 var(--body);
+  letter-spacing: .12em;
+  color: var(--ember-deep);
+}
+.despre-proof-list dd{
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(17,15,10,.68);
+}
+
+/* Manifest material: o poveste vizuala, nu un catalog de specificatii. */
+.despre-origin,
+.despre-materials,
+.despre-team{ scroll-margin-top: 90px; }
+.despre-materials{
+  padding: clamp(88px, 10vw, 150px) 5vw;
+  border-top: 1px solid var(--line);
+  background: var(--cream-soft);
+}
+.despre-materials-head{
+  display: grid;
+  grid-template-columns: .7fr 1.45fr .85fr;
+  align-items: start;
+  gap: clamp(30px, 5vw, 76px);
+  margin-bottom: clamp(54px, 8vw, 104px);
+}
+.despre-materials-head h2{
+  max-width: 13ch;
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(48px, 6.4vw, 92px);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: .94;
+  text-wrap: balance;
+}
+.despre-materials-head h2 em{ color: var(--ember-deep); font-weight: 400; }
+.despre-materials-head > p{
+  max-width: 40ch;
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(17,15,10,.64);
+}
+.despre-materials-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2.1vw, 34px);
+}
+.despre-material-card{ min-width: 0; margin: 0; }
+.despre-material-image{
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--charcoal);
+}
+.despre-material-image img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.despre-material-card:hover .despre-material-image img{ transform: scale(1.025); }
+.despre-material-card figcaption{
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 16px;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--line);
+  margin-top: 12px;
+}
+.despre-material-card figcaption > span{
+  padding-top: 5px;
+  font: 600 10px/1 var(--body);
+  letter-spacing: .12em;
+  color: var(--ember-deep);
+}
+.despre-material-card figcaption strong{
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--display);
+  font-size: clamp(25px, 2.4vw, 36px);
+  font-weight: 400;
+  line-height: 1;
+}
+.despre-material-card figcaption p{
+  max-width: 34ch;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(17,15,10,.58);
+}
+
+/* Echipa fictiva a proiectului de portofoliu — tratament tipografic simplu,
+   fara portrete inventate sau carduri circulare de tip template. */
+.despre-team{
+  padding: clamp(88px, 10vw, 148px) 5vw;
+  background: var(--charcoal);
+  color: var(--cream);
+}
+.despre-team-head{
+  display: grid;
+  grid-template-columns: 1fr 1.25fr .75fr;
+  gap: 40px;
+  align-items: end;
+  margin-bottom: clamp(54px, 7vw, 90px);
+}
+.despre-team-head .eyebrow{ align-self: start; color: var(--ember-bright); }
+.despre-team-head h2{
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(58px, 8vw, 116px);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: .85;
+}
+.despre-team-head > p{
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(254,255,253,.62);
+}
+.despre-team-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 1.8vw, 28px);
+}
+.despre-team-member{
+  position: relative;
+  min-width: 0;
+}
+.despre-team-portrait{
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #211c17;
+}
+.despre-team-portrait::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 62%, rgba(17,15,10,.22));
+  pointer-events: none;
+}
+.despre-team-portrait img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.despre-team-member:hover .despre-team-portrait img{ transform: scale(1.025); }
+.despre-team-no{
+  position: absolute;
+  z-index: 1;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(254,255,253,.38);
+  border-radius: 50%;
+  font: 600 10px/1 var(--body);
+  letter-spacing: .12em;
+  color: var(--cream);
+  background: rgba(17,15,10,.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.despre-team-copy{
+  margin-top: 15px;
+  padding: 22px 2px 0;
+  border-top: 1px solid rgba(254,255,253,.18);
+}
+.despre-team-member h3{
+  margin: 0 0 8px;
+  font-family: var(--display);
+  font-size: clamp(26px, 2.7vw, 40px);
+  font-weight: 400;
+}
+.despre-team-member p{
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: rgba(254,255,253,.52);
+}
+
+/* Prezenta fictiva: doar oras/regiune, fara adrese care ar putea fi reale. */
+.despre-presence{
+  padding: clamp(88px, 10vw, 150px) 5vw;
+  background: var(--cream);
+}
+.despre-presence-head{
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  margin-bottom: clamp(52px, 7vw, 88px);
+}
+.despre-presence-head h2{
+  max-width: 19ch;
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(42px, 5.3vw, 74px);
+  font-weight: 400;
+  letter-spacing: -.035em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+.despre-presence-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.despre-place{
+  position: relative;
+  min-height: 340px;
+  padding: clamp(36px, 5vw, 70px);
+}
+.despre-place + .despre-place{ border-left: 1px solid var(--line); }
+.despre-place-no{
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  font: 600 10px/1 var(--body);
+  letter-spacing: .12em;
+  color: var(--ember-deep);
+}
+.despre-place-type{
+  margin: 0 0 clamp(45px, 6vw, 80px);
+  font: 600 10px/1.4 var(--body);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(17,15,10,.55);
+}
+.despre-place h3{
+  margin: 0 0 8px;
+  font-family: var(--display);
+  font-size: clamp(42px, 5vw, 72px);
+  font-weight: 400;
+  letter-spacing: -.035em;
+  line-height: 1;
+}
+.despre-place > p:not(.despre-place-type):not(.despre-place-note){
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(17,15,10,.52);
+}
+.despre-place-note{
+  max-width: 34ch;
+  margin: 28px 0 0;
+  font-family: var(--display);
+  font-size: 17px;
+  font-style: italic;
+  line-height: 1.5;
+  color: rgba(17,15,10,.68);
+}
+.despre-presence-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 44px;
+  margin-top: 28px;
+  border-bottom: 1px solid currentColor;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.despre-presence-link:hover{ color: var(--ember-deep); }
+
+/* Final coerent cu capitolele intunecate ale homepage-ului. */
+.cta-strap.despre-cta{
+  padding: clamp(90px, 11vw, 160px) 5vw;
+  background: var(--charcoal);
+  color: var(--cream);
+}
+.despre-cta .eyebrow{ margin-bottom: 24px; color: var(--ember-bright); }
+.despre-cta h2{
+  max-width: 18ch;
+  margin-right: auto;
+  margin-left: auto;
+  color: var(--cream);
+  text-wrap: balance;
+}
+.despre-cta .btn-solid{ background: var(--cream); border-color: var(--cream); color: var(--charcoal); }
+.despre-cta .btn-solid:hover{ background: var(--ember-bright); border-color: var(--ember-bright); }
+.despre-cta .btn-outline{ border-color: rgba(254,255,253,.42); color: var(--cream); }
+.despre-cta .btn-outline:hover{ border-color: var(--ember); background: rgba(217,119,46,.12); }
+
+@media (max-width: 860px){
+  .despre-hero{ height: 82vh; height: 82svh; min-height: 620px; }
+  .despre-hero-image{
+    object-position: 66% center;
+    filter: brightness(1.1) saturate(1.04) contrast(1.02);
+  }
+  .despre-hero-scrim{
+    background: linear-gradient(0deg, rgba(17,15,10,.8) 0%, rgba(17,15,10,.36) 55%, rgba(17,15,10,.08) 100%);
+  }
+  .despre-hero-copy{
+    width: auto;
+    padding: 0 20px 52px;
+    gap: 16px;
+  }
+  .despre-hero-copy h1{ max-width: 11ch; font-size: clamp(44px, 13vw, 62px); }
+  .despre-hero-copy p{ max-width: 40ch; font-size: 14px; line-height: 1.6; }
+
+  .despre-chapters{
+    display: flex;
+    overflow-x: auto;
+    padding: 0 20px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .despre-chapters::-webkit-scrollbar{ display: none; }
+  .despre-chapters > a{
+    flex: 0 0 min(78vw, 330px);
+    min-height: 92px;
+    padding: 18px 22px;
+    scroll-snap-align: start;
+  }
+  .despre-chapters > a:first-child{ padding-left: 22px; }
+  .despre-chapters > a + a{ border-left: 1px solid var(--line); }
+  .despre-chapters > a::after{ right: 22px; left: 22px; }
+  .despre-chapters > a:first-child::after{ left: 22px; }
+  .despre-chapter-copy strong{ font-size: 25px; }
+
+  .despre-origin,
+  .despre-materials,
+  .despre-team,
+  .despre-presence{ padding: 76px 20px; }
+  .despre-origin{ grid-template-columns: 1fr; gap: 38px; }
+  .despre-origin-heading,
+  .despre-team-head,
+  .despre-presence-head{ grid-template-columns: 1fr; gap: 22px; }
+  .despre-origin-heading{ grid-column: auto; }
+  .despre-origin-heading h2{ justify-self: auto; text-align: left; }
+  .despre-origin-heading h2,
+  .despre-team-head h2,
+  .despre-presence-head h2{ font-size: clamp(39px, 11vw, 54px); }
+  .despre-origin-copy{ padding: 0; }
+  .despre-origin-lead{ font-size: 26px; }
+
+  .despre-materials-head{ grid-template-columns: 1fr; gap: 22px; margin-bottom: 48px; }
+  .despre-materials-head h2{ max-width: 12ch; font-size: clamp(42px, 11vw, 60px); }
+  .despre-materials-head > p{ max-width: 50ch; }
+  .despre-materials-grid{ grid-template-columns: 1fr; gap: 48px; }
+  .despre-material-card figcaption strong{ font-size: 30px; }
+
+  .despre-team-head{ align-items: start; }
+  .despre-team-head h2{ font-size: clamp(58px, 18vw, 82px); }
+  .despre-team-grid{ grid-template-columns: 1fr; }
+  .despre-team-grid{ gap: 52px; }
+  .despre-team-copy{ padding-top: 18px; }
+
+  .despre-presence-grid{ grid-template-columns: 1fr; }
+  .despre-place{ min-height: 300px; padding: 36px 0; }
+  .despre-place + .despre-place{ border-top: 1px solid var(--line); border-left: 0; }
+  .despre-place-no{ top: 36px; right: 0; }
+  .despre-place h3{ font-size: clamp(44px, 13vw, 62px); }
+}
+
+@media (max-width: 520px){
+  .despre-cta .cta-buttons{ width: 100%; }
+  .despre-cta .btn{ width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .despre-page *{ scroll-behavior: auto; }
+}
+
+/* ---- Intrarea în scenă (assets/js/despre-motion.js) ----
+   Ascunderea se dezactivează, nu se suprascrie — vezi nota din
+   product-detail.css: un override cu `opacity: 1` ar șterge valorile de
+   repaus pe care elementele le au deja în design. */
+@media (prefers-reduced-motion: no-preference){
+  .js-reveal:not(.pf-motion-off) .despre-hero-copy > *{ opacity: 0; transform: translateY(22px); }
+  .js-reveal:not(.pf-motion-off) .despre-chapters > a{ opacity: 0; transform: translateY(16px); }
+}

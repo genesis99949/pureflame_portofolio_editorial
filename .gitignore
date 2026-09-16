@@ -1,0 +1,22 @@
+node_modules/
+.env
+.env.*
+!.env.example
+data/
+tools/
+backups/
+*.db
+*.db.gz
+*.db.gz.enc
+
+# Materiale de lucru — raman local, nu pe GitHub (prea mari pentru repo)
+after-effects/
+behance/
+design-review/
+assets/products/*/raw/*
+# ... cu exceptia celor doua folosite efectiv de aether.html si embera.html
+!assets/products/aether/raw/aether-raw-01.jpg
+!assets/products/embera/raw/embera-raw-31.jpg
+
+# Fisiere temporare de siguranta
+*.bak

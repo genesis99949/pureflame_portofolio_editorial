@@ -1,0 +1,154 @@
+/* ============================================================
+   PREMIUM DESKTOP HEADER — comun pe tot site-ul, >=1025px.
+   Scoped sub .site-header--home, adaugata pe headerul din TOATE
+   paginile (index.html + produse + colectie + despre-noi + legal
+   etc.) — un singur loc de intretinut, nu o copie per pagina.
+   Nu atinge headerul de mobil/tableta (.brand/.header-right,
+   hamburger, #siteNav — neschimbate, ascunse doar pe desktop).
+
+   Doua stari, mereu dark/glass (niciodata alb/light):
+     - implicit ("top")  — varful hero-ului pe index.html: dark
+                           transparent, cinematic, video-ul se
+                           intrezareste prin el.
+     - "scrolled"        — fie index.html dupa ce a inceput scroll-ul
+                           / a trecut de hero, fie pur si simplu
+                           starea implicita pe toate celelalte pagini
+                           (care nu au hero de urmarit) — acelasi
+                           dark glass, doar putin mai opac.
+   Comutarea intre "top" si "scrolled" pe index.html o face
+   assets/js/home-header.js (IntersectionObserver pe .hero). Pe
+   restul paginilor, atributul data-header-mode="scrolled" e scris
+   static in HTML — nu exista hero de urmarit, deci JS nici nu
+   intervine acolo (vezi guard-ul "if (!hero) return;").
+
+   Text/iconite raman albe/aproape-albe in ambele stari — portocaliul
+   ramane accent (link activ, hover, pastila de limba activa).
+   Singurele proprietati care se schimba intre stari sunt background/
+   border/shadow — geometria (pozitie, latime, inaltime, padding)
+   ramane constanta, ca sa nu existe niciun layout shift.
+   ============================================================ */
+
+@media (min-width: 1025px){
+  .site-header.site-header--home{
+    top: 12px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: calc(100% - 96px);
+    max-width: 1280px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    column-gap: 30px;
+    padding: 10px 22px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.10);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+    background: rgba(30,28,24,0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    /* opacity + transform sunt incluse aici (nu doar background/border/
+       shadow) — altfel regula asta inlocuieste complet tranzitia de baza
+       .site-header (care are transform/opacity proprii), iar disparitia
+       sau aparitia la scroll devine instanta pe o singura directie, in
+       loc sa foloseasca aceeasi animatie dus-intors. */
+    transition:
+      background-color .3s ease,
+      border-color .3s ease,
+      box-shadow .3s ease,
+      opacity .45s cubic-bezier(.22, 1, .36, 1),
+      transform .45s cubic-bezier(.22, 1, .36, 1);
+  }
+  .site-header.site-header--home.hidden{
+    transform: translateX(-50%) translateY(-140%);
+    opacity: 0;
+  }
+
+  /* --- stare opaca: index.html dupa varful hero-ului, si implicit pe
+     toate celelalte pagini (fara hero, deci fara stare "top"). --- */
+  .site-header.site-header--home[data-header-mode="scrolled"]{
+    background: rgba(38,36,32,0.78);
+    border-color: rgba(255,255,255,0.08);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  /* ---------- brand (stanga) ---------- */
+  .home-header-brand{
+    grid-column: 1;
+    justify-self: start;
+    display: flex;
+    align-items: center;
+  }
+  .home-header-brand img{
+    height: 34px;
+    width: auto;
+    display: block;
+  }
+
+  /* ---------- navigatie (centru, perfect centrata prin cele doua
+     coloane 1fr egale din grid, indiferent de latimea brand/actions) ---------- */
+  .home-header-nav{
+    grid-column: 2;
+    justify-self: center;
+    gap: 30px;
+  }
+  /* .home-header-nav a are aceeasi specificitate ca regula de baza .nav a
+     (o clasa + element) — prefixat cu .site-header--home ca sa castige
+     mereu, indiferent de ordinea din fisiere. */
+  .site-header--home .home-header-nav a{
+    color: #F5EEE6;
+    transition: color .3s ease;
+  }
+  .site-header--home .home-header-nav a:hover{ color: var(--ember-bright); }
+  .site-header--home .home-header-nav a.is-active{ color: var(--ember); }
+
+  /* ---------- limba + cos (dreapta) ---------- */
+  .home-header-actions{
+    grid-column: 3;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .home-header-lang{ gap: 6px; }
+  .home-header-lang .lang-btn{
+    color: #F5EEE6;
+    border-color: rgba(255,255,255,0.25);
+    transition: color .3s ease, border-color .3s ease, background-color .3s ease;
+  }
+  .home-header-lang .lang-btn:hover:not(.active){ border-color: rgba(255,255,255,0.5); }
+
+  /* Prefixat cu .site-header--home — aceeasi specificitate ca regula de
+     baza .cart-link ar insemna castig prin ordine, nu prin intentie. */
+  .site-header--home .home-header-cart{
+    color: #F5EEE6;
+    transition: color .3s ease;
+    /* Zona de click ramane confortabila (~44px) chiar daca iconul
+       vizual e mai mic (22px) — centrat in interior. */
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .home-header-cart svg{ width: 22px; height: 22px; }
+  .home-header-cart .cart-badge{ top: 2px; right: 6px; }
+}
+
+/* Ascunse implicit (mobil/tableta) — afisate doar in media query-ul de
+   mai sus. Selectoare cu .site-header ca sa castige mereu in fata
+   regulilor de baza .nav/.header-lang, indiferent de ordinea din fisier. */
+.site-header .home-header-brand,
+.site-header .home-header-nav,
+.site-header .home-header-actions{ display: none; }
+@media (min-width: 1025px){
+  .site-header.site-header--home .home-header-brand,
+  .site-header.site-header--home .home-header-nav,
+  .site-header.site-header--home .home-header-actions{ display: flex; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .site-header.site-header--home{ transition: none; }
+  .site-header.site-header--home *{ transition: none !important; }
+}

@@ -1,0 +1,1260 @@
+/* ============================================================
+   HOME — EDITORIAL COLLECTION PREVIEW (index.html #collection)
+   Scoped entirely under .home-editorial-collection so nothing here
+   leaks into the rest of the homepage or any other page.
+   ============================================================ */
+
+.home-editorial-collection{
+  position: relative;
+  z-index: 5;
+  background: var(--cream);
+  padding: clamp(46px, 4.3vw, 62px) 5vw clamp(46px, 4.3vw, 62px);
+  margin-top: -1px;
+  box-shadow: 0 -24px 60px rgba(17,15,10,.18);
+}
+
+/* Titlul si textul introductiv stau pe doua coloane (acelasi tipar ca
+   .home-lifestyle-heading si .home-space-guide-head), nu stivuite — asa
+   introducerea ocupa o singura banda pe verticala, desi acum poarta si
+   mesajul preluat din fosta sectiune .intro. */
+.hec-intro{
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  align-items: end;
+  gap: clamp(20px, 3.5vw, 60px);
+  max-width: 1500px;
+  margin: 0 0 clamp(28px, 2.6vw, 38px);
+}
+.hec-kicker{
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0 0 4px;
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(17,15,10,0.55);
+}
+.hec-kicker-num{ color: var(--ember); }
+.hec-title{
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.028em;
+  font-size: clamp(38px, 5.2vw, 70px);
+  line-height: 0.96;
+  text-wrap: balance;
+  color: var(--charcoal);
+}
+.hec-lead{
+  max-width: 46ch;
+  margin: 0 0 4px;
+  font-family: var(--condensed);
+  font-size: clamp(15px, 1.45vw, 18px);
+  line-height: 1.55;
+  letter-spacing: -0.006em;
+  color: rgba(17,15,10,0.68);
+}
+/* Accentul mostenit din fostul .intro h2 em, la scara textului de lead:
+   fara italic, contrast mai puternic si o linie ember dedesubt. */
+.hec-lead em{
+  font-style: normal;
+  color: var(--charcoal);
+  border-bottom: 1.5px solid var(--ember);
+}
+
+/* ---- Asymmetric grid: Embera dominant, Aether + Ignite secondary ----
+   Embera pastreaza cele mai multe coloane (7) si deci imaginea cea mai mare.
+   Aether (5 col, cadru 4:3) si Ignite (6 col, cadru 16:9) ies la suprafata
+   aproximativ egala, deci se citesc ca pereche secundara. Decalajele pe
+   verticala raman, doar mult reduse — ritmul asimetric se pastreaza fara
+   golurile mari de dinainte. */
+.hec-grid{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(20px, 2.2vw, 32px) 24px;
+}
+.hec-card{
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: inherit;
+}
+.hec-card-embera{ grid-column: 1 / 8; }
+.hec-card-aether{ grid-column: 8 / 13; margin-top: clamp(24px, 5vw, 72px); }
+.hec-card-ignite{ grid-column: 2 / 8; margin-top: clamp(8px, 1.4vw, 20px); }
+
+.hec-card-image{
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--cream-soft);
+}
+/* Aether ocupa doar 5/12 coloane fata de 7-8/12 la Embera si Ignite —
+   la acelasi raport 16:9 produsul ar aparea mult mai mic. Un cadru mai
+   inalt ii da greutate vizuala comparabila, fara sa taie produsul (ambele
+   randari studio au spatiu negativ generos in jurul piesei). */
+.hec-card-aether .hec-card-image{ aspect-ratio: 4 / 3; }
+.hec-card-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+  display: block;
+  transition: transform .8s cubic-bezier(.22, 1, .36, 1);
+}
+.hec-card:hover .hec-card-image img,
+.hec-card:focus-visible .hec-card-image img{ transform: scale(1.035); }
+
+.hec-card-arrow{
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(254,255,253,0.92);
+  color: var(--charcoal);
+  font-size: 17px;
+  transform: scale(0.85);
+  opacity: 0;
+  transition: transform .25s ease, opacity .25s ease;
+}
+.hec-card:hover .hec-card-arrow,
+.hec-card:focus-visible .hec-card-arrow{ transform: scale(1); opacity: 1; }
+
+.hec-card-meta{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.hec-card-id{
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.hec-card-no{
+  font-family: var(--body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ember);
+}
+.hec-card-name{
+  font-family: var(--product-name);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(26px, 2.6vw, 40px);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  color: var(--charcoal);
+}
+.hec-card-specs{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  flex-shrink: 0;
+  text-align: right;
+}
+.hec-card-material,
+.hec-card-dims{
+  font-family: var(--body);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  color: rgba(17,15,10,0.5);
+}
+.hec-card-price{
+  font-family: var(--display);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  color: var(--charcoal);
+}
+
+/* Aliniat sub ultimul card (Ignite, care porneste din coloana 2), nu centrat
+   pe toata latimea — CTA-ul ramane astfel legat vizual de produse. */
+.hec-cta-row{
+  display: flex;
+  justify-content: flex-start;
+  padding-left: calc((100% - 11 * 24px) / 12 + 24px);
+  margin-top: clamp(26px, 3vw, 44px);
+}
+.hec-cta{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 17px 30px;
+  border-radius: 999px;
+  border: 1.5px solid var(--charcoal);
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--charcoal);
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+.hec-cta:hover{ background: var(--charcoal); color: var(--cream); transform: translateY(-2px); }
+.hec-cta-arrow{ transition: transform .2s ease; }
+.hec-cta:hover .hec-cta-arrow{ transform: translateX(4px); }
+
+@media (max-width: 900px){
+  .home-editorial-collection{
+    box-shadow: 0 -16px 36px rgba(17,15,10,.16);
+  }
+  /* Introducerea revine la o singura coloana — la latimea asta, doua coloane
+     ar lasa titlul si textul prea inguste. */
+  .hec-intro{ display: block; }
+  .hec-title{ margin-bottom: 18px; }
+  .hec-lead{ max-width: none; margin-bottom: 0; }
+  .hec-grid{ display: flex; flex-direction: column; gap: 38px; }
+  .hec-card-embera, .hec-card-aether, .hec-card-ignite{ grid-column: auto; margin-top: 0; }
+  /* Stivuite pe toata latimea, cele trei carduri au deja greutate vizuala
+     egala — revenim la cadrul 16:9 uniform pentru Aether. */
+  .hec-card-aether .hec-card-image{ aspect-ratio: 16 / 9; }
+  /* Fara coloane de care sa se agate, CTA-ul redevine centrat. */
+  .hec-cta-row{ justify-content: center; padding-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .hero.is-css-card-stack{ position: relative; }
+  .home-editorial-collection{ box-shadow: none; }
+  .hec-card-image img, .hec-card-arrow{ transition: none; }
+}
+
+/* ============================================================
+   COLLECTION RUNWAY — CINEMATIC FIVE-PRODUCT STORY
+   ============================================================ */
+.home-editorial-collection{
+  padding: clamp(78px, 8vw, 124px) 5vw clamp(72px, 8vw, 116px);
+  overflow: clip;
+}
+.home-editorial-collection .hec-intro{
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+  align-items: end;
+  max-width: 1600px;
+  margin: 0 auto clamp(72px, 8vw, 118px);
+}
+.home-editorial-collection .hec-kicker{ margin-bottom: clamp(8px, 1vw, 16px); }
+.home-editorial-collection .hec-title{
+  font-size: clamp(58px, 8.2vw, 126px);
+  line-height: .88;
+  letter-spacing: -.04em;
+}
+.home-editorial-collection .hec-lead{
+  max-width: 40ch;
+  padding-bottom: 8px;
+  font-size: clamp(17px, 1.45vw, 21px);
+}
+
+.hec-runway{
+  display: grid;
+  grid-template-columns: minmax(0, 2.05fr) minmax(340px, .95fr);
+  width: calc(100% + 10vw);
+  margin-inline: -5vw;
+  background: var(--charcoal);
+  color: var(--cream);
+}
+.hec-stage{
+  position: relative;
+  min-width: 0;
+  background: var(--charcoal);
+}
+.hec-stage-media{
+  position: sticky;
+  top: 86px;
+  height: calc(100vh - 86px);
+  min-height: 620px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--charcoal);
+}
+.hec-runway.is-js-pinned .hec-stage-media{
+  position: relative;
+  top: auto;
+}
+.hec-stage-frame{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  opacity: 0;
+  transform: scale(1.035);
+  transition: opacity .75s ease, transform 1.4s cubic-bezier(.22,1,.36,1);
+}
+.hec-stage-frame.is-active{
+  z-index: 1;
+  opacity: 1;
+  transform: scale(1);
+}
+.hec-stage-frame img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+.hec-stage-frame[data-hec-visual="1"] img{ object-position: 50% 62%; }
+.hec-stage-frame[data-hec-visual="2"] img,
+.hec-stage-frame[data-hec-visual="3"] img,
+.hec-stage-frame[data-hec-visual="4"] img{ object-position: 50% 54%; }
+.hec-stage-shade{
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(17,15,10,.05) 45%, rgba(17,15,10,.72) 100%);
+}
+.hec-stage-wordmark{
+  position: absolute;
+  z-index: 3;
+  left: clamp(26px, 4vw, 68px);
+  bottom: clamp(42px, 5vw, 78px);
+  max-width: calc(100% - 180px);
+  overflow: hidden;
+  font-family: var(--product-name);
+  font-size: clamp(70px, 10vw, 164px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: .76;
+  letter-spacing: -.045em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--cream);
+  text-shadow: 0 8px 40px rgba(17,15,10,.34);
+}
+.hec-stage-count{
+  position: absolute;
+  z-index: 3;
+  right: clamp(24px, 3vw, 52px);
+  bottom: clamp(48px, 5vw, 78px);
+  display: grid;
+  grid-template-columns: auto 42px auto;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--body);
+  font-size: 10px;
+  font-style: normal;
+  letter-spacing: .1em;
+  color: rgba(254,255,253,.7);
+}
+.hec-stage-count b{ font-weight: 600; color: var(--cream); }
+.hec-stage-count i{ height: 1px; background: rgba(254,255,253,.45); }
+.hec-stage-progress{
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: rgba(254,255,253,.18);
+}
+.hec-stage-progress i{
+  display: block;
+  width: 20%;
+  height: 100%;
+  background: var(--ember-bright);
+  transform-origin: left;
+  transition: width .55s cubic-bezier(.22,1,.36,1);
+}
+
+.hec-sequence{
+  min-width: 0;
+  padding: 0 clamp(30px, 3.4vw, 58px);
+  border-left: 1px solid rgba(254,255,253,.16);
+}
+.hec-chapter{
+  display: flex;
+  align-items: center;
+  min-height: 88vh;
+  border-bottom: 1px solid rgba(254,255,253,.15);
+  opacity: .32;
+  transition: opacity .45s ease;
+}
+.hec-chapter:last-child{ border-bottom: 0; }
+.hec-chapter.is-active{ opacity: 1; }
+.hec-chapter-link{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: clamp(64px, 8vh, 96px) 0;
+  color: inherit;
+}
+.hec-chapter-link:focus-visible{
+  outline: 2px solid var(--ember-bright);
+  outline-offset: 12px;
+}
+.hec-mobile-image{ display: none; }
+.hec-chapter-top{
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(254,255,253,.24);
+  font-family: var(--body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(254,255,253,.62);
+}
+.hec-chapter-top > span:first-child{ color: var(--ember-bright); }
+.hec-chapter-name{
+  margin: clamp(34px, 4vh, 48px) 0 22px;
+  font-family: var(--product-name);
+  font-size: clamp(64px, 7vw, 108px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: .82;
+  letter-spacing: -.04em;
+}
+.hec-chapter-copy{
+  max-width: 35ch;
+  font-family: var(--condensed);
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.55;
+  color: rgba(254,255,253,.72);
+}
+.hec-chapter-meta{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: clamp(38px, 5vh, 58px);
+}
+.hec-chapter-meta > span{
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.hec-chapter-meta small{
+  font-family: var(--body);
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(254,255,253,.46);
+}
+.hec-chapter-meta b{
+  font-family: var(--condensed);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--cream);
+}
+.hec-chapter-cta{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  margin-top: clamp(42px, 6vh, 68px);
+  padding: 0 0 10px;
+  border-bottom: 1px solid var(--cream);
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.hec-chapter-cta i{
+  font-size: 18px;
+  font-style: normal;
+  transition: transform .25s ease;
+}
+.hec-chapter-link:hover .hec-chapter-cta i{ transform: translate(4px,-4px); }
+
+.home-editorial-collection .hec-cta-row{
+  justify-content: center;
+  padding-left: 0;
+  margin-top: clamp(58px, 7vw, 94px);
+}
+
+@media (max-width: 1024px){
+  .home-editorial-collection .hec-intro{ display: block; }
+  .home-editorial-collection .hec-title{ margin-bottom: 28px; }
+  .home-editorial-collection .hec-lead{ max-width: 46ch; }
+  .hec-runway{ display: block; }
+  .hec-stage{ display: none; }
+  .hec-sequence{ padding: 0; border-left: 0; }
+  .hec-chapter{
+    display: block;
+    min-height: 0;
+    opacity: 1;
+  }
+  .hec-chapter-link{ padding: 0 0 64px; }
+  .hec-chapter + .hec-chapter .hec-chapter-link{ padding-top: 64px; }
+  .hec-mobile-image{
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    margin-bottom: 30px;
+    overflow: hidden;
+    background: var(--charcoal);
+  }
+  .hec-mobile-image img{ width: 100%; height: 100%; display: block; object-fit: cover; }
+  .hec-chapter-link > :not(.hec-mobile-image){ margin-inline: clamp(22px, 5vw, 52px); }
+  .hec-chapter-name{ font-size: clamp(68px, 13vw, 104px); }
+  .hec-chapter-copy{ font-size: 17px; }
+}
+
+@media (max-width: 560px){
+  .home-editorial-collection{ padding-top: 68px; }
+  .home-editorial-collection .hec-intro{ margin-bottom: 58px; }
+  .home-editorial-collection .hec-kicker{ margin-bottom: 18px; }
+  .home-editorial-collection .hec-title{ font-size: clamp(47px, 14vw, 62px); line-height: .91; }
+  .home-editorial-collection .hec-lead{ font-size: 16px; line-height: 1.55; }
+  .hec-mobile-image{ aspect-ratio: 4 / 5; }
+  .hec-chapter-link{ padding-bottom: 54px; }
+  .hec-chapter + .hec-chapter .hec-chapter-link{ padding-top: 54px; }
+  .hec-chapter-top{ gap: 12px; font-size: 9px; }
+  .hec-chapter-name{ margin-top: 30px; font-size: clamp(60px, 21vw, 82px); }
+  .hec-chapter-meta{ grid-template-columns: 1fr 1fr; row-gap: 22px; }
+  .hec-chapter-cta{ margin-top: 38px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .hec-stage-frame,
+  .hec-stage-progress i,
+  .hec-chapter,
+  .hec-chapter-cta i{ transition: none; }
+}
+
+/* ============================================================
+   MINIMAL COLLECTION TEASER
+   Homepage-ul sugereaza gama; pagina de colectie pastreaza comparatia.
+   ============================================================ */
+.hec-runway[hidden]{ display: none !important; }
+.home-editorial-collection{
+  padding: clamp(76px, 7vw, 108px) 5vw clamp(80px, 8vw, 120px);
+}
+.home-editorial-collection .hec-intro{
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr);
+  max-width: 1600px;
+  margin-bottom: clamp(52px, 5vw, 76px);
+}
+.home-editorial-collection .hec-title{
+  font-size: clamp(52px, 6.7vw, 96px);
+  line-height: .91;
+}
+.home-editorial-collection .hec-lead{
+  max-width: 38ch;
+  font-size: clamp(16px, 1.35vw, 19px);
+}
+.hec-preview{
+  display: grid;
+  grid-template-columns: minmax(0, 2.1fr) minmax(300px, .9fr);
+  gap: clamp(32px, 4vw, 68px);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+.hec-preview-visual{
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--cream-soft);
+}
+.hec-preview-frame{
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  transform: scale(1.018);
+  transition: opacity .5s ease, transform .8s cubic-bezier(.22,1,.36,1);
+}
+.hec-preview-frame.is-active{ opacity: 1; transform: scale(1); }
+.hec-preview-frame img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+.hec-preview-frame[data-hec-preview-frame="1"] img{ object-position: 50% 62%; }
+.hec-preview-caption{
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 38px clamp(20px, 2.2vw, 34px) 20px;
+  font-family: var(--body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--cream);
+  background: linear-gradient(180deg, transparent, rgba(17,15,10,.58));
+}
+.hec-preview-caption > span:last-child{
+  font-family: var(--product-name);
+  font-size: clamp(28px, 3vw, 44px);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: 1;
+  text-transform: none;
+}
+.hec-preview-index{
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+.hec-preview-index a{
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto 24px;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-height: 76px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--charcoal);
+  transition: color .25s ease, padding-left .25s ease;
+}
+.hec-preview-index a > span{
+  font-family: var(--body);
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--ember);
+}
+.hec-preview-index strong{
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--product-name);
+  font-size: clamp(29px, 2.8vw, 43px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hec-preview-index small{
+  font-family: var(--body);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(17,15,10,.5);
+}
+.hec-preview-index i{
+  font-size: 16px;
+  font-style: normal;
+  opacity: 0;
+  transform: translate(-5px,5px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.hec-preview-index a:hover,
+.hec-preview-index a:focus-visible,
+.hec-preview-index a.is-active{ padding-left: 8px; }
+.hec-preview-index a:hover i,
+.hec-preview-index a:focus-visible i,
+.hec-preview-index a.is-active i{ opacity: 1; transform: translate(0,0); }
+.hec-preview-index a:focus-visible{
+  outline: 2px solid var(--ember);
+  outline-offset: 4px;
+}
+.home-editorial-collection .hec-cta-row{ margin-top: clamp(46px, 5vw, 68px); }
+
+@media (max-width: 900px){
+  .home-editorial-collection .hec-intro{ margin-bottom: 48px; }
+  .hec-preview{ display: block; }
+  .hec-preview-visual{ aspect-ratio: 16 / 10; }
+  .hec-preview-index{ margin-top: 24px; }
+  .hec-preview-index a{ min-height: 68px; }
+  .hec-preview-index strong{ font-size: 34px; }
+}
+
+@media (max-width: 560px){
+  .home-editorial-collection{ padding-top: 62px; padding-bottom: 76px; }
+  .home-editorial-collection .hec-intro{ margin-bottom: 40px; }
+  .home-editorial-collection .hec-title{ font-size: clamp(45px, 13.5vw, 58px); }
+  .hec-preview-visual{ aspect-ratio: 4 / 3; }
+  .hec-preview-index a{ grid-template-columns: 26px minmax(0,1fr) auto 20px; min-height: 62px; }
+  .hec-preview-index strong{ font-size: 30px; }
+  .hec-preview-index small{ font-size: 8px; }
+  .home-editorial-collection .hec-cta-row{ margin-top: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .hec-preview-frame,
+  .hec-preview-index a,
+  .hec-preview-index i{ transition: none; }
+}
+
+/* Revenire la preview-ul editorial initial. Prototipurile ulterioare raman
+   scoase complet din layout pana la validarea unei noi directii. */
+.hec-preview[hidden],
+.hec-runway[hidden]{ display: none !important; }
+.home-editorial-collection{
+  padding: clamp(46px, 4.3vw, 62px) 5vw clamp(46px, 4.3vw, 62px);
+}
+.home-editorial-collection .hec-intro{
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr);
+  align-items: end;
+  gap: clamp(20px, 3.5vw, 60px);
+  max-width: 1500px;
+  margin: 0 0 clamp(28px, 2.6vw, 38px);
+}
+.home-editorial-collection .hec-kicker{ margin: 0 0 4px; }
+.home-editorial-collection .hec-title{
+  margin: 0;
+  font-size: clamp(38px, 5.2vw, 70px);
+  line-height: .96;
+  letter-spacing: -.028em;
+}
+.home-editorial-collection .hec-lead{
+  max-width: 46ch;
+  margin: 0 0 4px;
+  padding-bottom: 0;
+  font-size: clamp(15px, 1.45vw, 18px);
+}
+.home-editorial-collection .hec-cta-row{
+  justify-content: flex-start;
+  padding-left: calc((100% - 11 * 24px) / 12 + 24px);
+  margin-top: clamp(26px, 3vw, 44px);
+}
+
+@media (max-width: 900px){
+  .home-editorial-collection .hec-intro{ display: block; }
+  .home-editorial-collection .hec-title{ margin-bottom: 18px; }
+  .home-editorial-collection .hec-lead{ max-width: none; margin-bottom: 0; }
+  .home-editorial-collection .hec-cta-row{ justify-content: center; padding-left: 0; }
+}
+
+/* ============================================================
+   HOME — LIFESTYLE CHAPTER
+   ============================================================ */
+.home-lifestyle{
+  position: relative;
+  padding: clamp(84px, 10vw, 150px) 5vw clamp(100px, 12vw, 180px);
+  overflow: hidden;
+  isolation: isolate;
+  background: #12110e;
+  color: var(--cream);
+}
+.home-lifestyle-heading{
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(260px, .45fr);
+  align-items: end;
+  gap: clamp(40px, 8vw, 130px);
+  max-width: 1500px;
+  margin: 0 auto;
+}
+.home-section-kicker{
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0 0 22px;
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.home-section-number{ color: var(--ember); }
+.home-lifestyle .home-section-kicker{ color: rgba(254,255,253,.72); }
+.home-lifestyle h2{
+  max-width: 980px;
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(52px, 8.5vw, 128px);
+  font-weight: 400;
+  line-height: .88;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+.home-lifestyle-aside{
+  max-width: 390px;
+  padding-bottom: 5px;
+}
+.home-lifestyle-aside p{
+  margin: 0;
+  font-family: var(--condensed);
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.55;
+  color: rgba(254,255,253,.7);
+}
+/* Hover identic cu linkurile din header (.nav a din site.css): culoarea trece
+   pe ember si o linie se deseneaza de la stanga la dreapta. Linia statica
+   ramane la locul ei — ::after o acopera exact (bottom:-1px peste border-ul
+   de 1px), ca linkul sa arate a link si in repaus, nu doar la hover. */
+.home-lifestyle-aside a{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(254,255,253,.65);
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--cream);
+  transition: color .35s ease;
+}
+.home-lifestyle-aside a::after{
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .3s ease;
+}
+/* Fundal inchis (#12110e) — ember-bright, ca in headerul de pe desktop. */
+.home-lifestyle-aside a:hover{ color: var(--ember-bright); }
+.home-lifestyle-aside a:hover::after{ transform: scaleX(1); transform-origin: left; }
+.home-lifestyle-aside a span:last-child{ transition: transform .2s ease; }
+.home-lifestyle-aside a:hover span:last-child{ transform: translateX(4px); }
+.home-lifestyle-gallery{
+  position: relative;
+  max-width: 1600px;
+  height: clamp(680px, 68vw, 1040px);
+  margin: clamp(72px, 9vw, 135px) auto 0;
+}
+.home-lifestyle-wordmark{
+  position: absolute;
+  z-index: 0;
+  left: -1vw;
+  top: -9vw;
+  font-family: var(--script);
+  font-size: clamp(120px, 22vw, 340px);
+  font-weight: 400;
+  font-style: normal;
+  line-height: .8;
+  letter-spacing: 0;
+  white-space: nowrap;
+  /* Italianno e desenat pt. minuscule legate — literele mari sunt majuscule
+     ornamentale separate, ilizibile pe un cuvant intreg scris cu CAPS. */
+  text-transform: lowercase;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(254,255,253,.16);
+}
+.home-lifestyle-frame{
+  position: absolute;
+  display: block;
+  margin: 0;
+  overflow: hidden;
+  background: #28251f;
+  color: var(--cream);
+  box-shadow: 0 30px 80px rgba(0,0,0,.3);
+}
+.home-lifestyle-frame-main{
+  z-index: 1;
+  left: 12%;
+  top: 0;
+  width: 76%;
+  aspect-ratio: 16 / 9;
+}
+.home-lifestyle-frame-aether{
+  z-index: 3;
+  left: 0;
+  bottom: 1%;
+  width: 32%;
+  aspect-ratio: 4 / 3;
+}
+.home-lifestyle-frame-ignite{
+  z-index: 4;
+  right: 0;
+  bottom: 8%;
+  width: 35%;
+  aspect-ratio: 4 / 3;
+}
+.home-lifestyle-frame img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+/* Keep the Embera table fully visible in the desktop landscape crop. */
+.home-lifestyle-frame-main img{
+  object-position: center bottom;
+}
+.home-lifestyle-frame::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 58%, rgba(8,7,5,.65));
+}
+.home-lifestyle-caption{
+  position: absolute;
+  z-index: 2;
+  left: 18px;
+  right: 18px;
+  bottom: 15px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--body);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.home-lifestyle-caption > span:last-child{
+  font-variant-numeric: tabular-nums;
+  color: var(--ember);
+}
+
+/* ============================================================
+   HOME — CHOOSE BY SPACE
+   ============================================================ */
+.home-space-guide{
+  padding: clamp(80px, 10vw, 140px) 5vw;
+  background: var(--cream);
+  color: var(--charcoal);
+}
+.home-space-guide-head{
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, .6fr);
+  align-items: end;
+  gap: 30px;
+  margin-bottom: clamp(54px, 7vw, 90px);
+}
+.home-space-guide-head .home-section-kicker{
+  grid-column: 1 / -1;
+  margin-bottom: -4px;
+  color: rgba(17,15,10,.55);
+}
+.home-space-guide-head h2{
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(42px, 6.7vw, 92px);
+  font-weight: 400;
+  line-height: .94;
+  letter-spacing: -.03em;
+}
+.home-space-guide-head > p:last-child{
+  max-width: 420px;
+  margin: 0 0 4px;
+  font-family: var(--condensed);
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.55;
+  color: rgba(17,15,10,.66);
+}
+.home-space-method{
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 18px;
+  font-family: var(--body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  line-height: 1.45;
+  text-align: right;
+  text-transform: uppercase;
+  color: rgba(17,15,10,.52);
+}
+.home-space-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.home-space-card{
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 22px clamp(18px, 2vw, 30px) 26px;
+  color: inherit;
+  background: transparent;
+  transition: background-color .3s ease;
+}
+.home-space-card + .home-space-card{ border-left: 1px solid var(--line); }
+.home-space-card:hover,
+.home-space-card:focus-visible{ background: var(--cream-soft); }
+.home-space-card-topline{
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(17,15,10,.48);
+}
+.home-space-card-topline > span:first-child{ color: var(--ember); }
+.home-space-diagram{
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  margin: 22px 0 18px;
+  padding: 38px 28px 34px;
+  overflow: hidden;
+  background-color: var(--cream-soft);
+  background-image:
+    linear-gradient(rgba(17,15,10,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17,15,10,.055) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.home-space-scale{
+  position: relative;
+  display: block;
+  width: min(92%, 520px);
+  aspect-ratio: 5 / 3;
+}
+.home-space-footprint{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  border: 1px solid rgba(17,15,10,.42);
+  background: linear-gradient(145deg, rgba(255,255,255,.5), rgba(17,15,10,.08));
+  box-shadow: inset 0 0 0 5px rgba(255,255,255,.3), 0 12px 26px rgba(17,15,10,.09);
+  transform: translate(-50%, -50%);
+  transition: border-color .3s ease, box-shadow .3s ease;
+}
+.home-space-card-aether .home-space-footprint{
+  width: 52.1875%;
+  height: 86.9792%;
+  border-radius: 50%;
+}
+.home-space-card-flavo .home-space-footprint{
+  width: 60%;
+  height: 100%;
+}
+.home-space-card-fera .home-space-footprint{
+  width: 100%;
+  height: 71.875%;
+}
+.home-space-burner{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  border: 1px solid rgba(17,15,10,.55);
+  background: var(--charcoal);
+  box-shadow: 0 0 0 5px rgba(17,15,10,.1);
+  transform: translate(-50%, -50%);
+}
+.home-space-burner::after{
+  content: "";
+  position: absolute;
+  inset: 26%;
+  border-radius: inherit;
+  background: var(--ember);
+  opacity: .78;
+}
+.home-space-card-aether .home-space-burner{
+  width: 52%;
+  height: 52%;
+  border-radius: 50%;
+}
+.home-space-card-flavo .home-space-burner{
+  width: 50%;
+  height: 50%;
+  border-radius: 2px;
+}
+.home-space-card-flavo .home-space-burner::after{ border-radius: 50%; }
+.home-space-card-fera .home-space-burner{
+  width: 76%;
+  height: 34%;
+  border-radius: 999px;
+}
+.home-space-measure{
+  position: absolute;
+  z-index: 2;
+  display: block;
+  padding: 2px 5px;
+  font-family: var(--body);
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+  line-height: 1;
+  white-space: nowrap;
+  color: rgba(17,15,10,.62);
+  background: var(--cream-soft);
+}
+.home-space-measure-x{
+  left: 50%;
+  bottom: -22px;
+  transform: translateX(-50%);
+}
+.home-space-measure-y{
+  top: 50%;
+  left: -30px;
+  transform: translateY(-50%) rotate(-90deg);
+}
+.home-space-card:hover .home-space-footprint,
+.home-space-card:focus-visible .home-space-footprint{
+  border-color: var(--ember);
+  box-shadow: inset 0 0 0 5px rgba(255,255,255,.3), 0 16px 32px rgba(17,15,10,.14);
+}
+.home-space-card-meta{
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.home-space-card-meta > span:first-child{
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.home-space-card-meta strong{
+  font-family: var(--product-name);
+  font-size: clamp(28px, 2.6vw, 40px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1;
+}
+.home-space-card-meta small{
+  max-width: 220px;
+  font-family: var(--condensed);
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(17,15,10,.58);
+}
+.home-space-dims{
+  padding-top: 6px;
+  font-family: var(--body);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  color: rgba(17,15,10,.58);
+}
+.home-space-arrow{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 18px;
+  color: var(--ember);
+  transform: translate(-4px, 4px);
+  opacity: 0;
+  transition: transform .25s ease, opacity .25s ease;
+}
+.home-space-card:hover .home-space-arrow,
+.home-space-card:focus-visible .home-space-arrow{
+  transform: translate(0, 0);
+  opacity: 1;
+}
+.home-space-guide-cta{
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(48px, 6vw, 78px);
+}
+/* Acelasi hover ca in header — vezi nota de la .home-lifestyle-aside a. */
+.home-space-guide-cta a{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid currentColor;
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  transition: color .35s ease;
+}
+.home-space-guide-cta a::after{
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .3s ease;
+}
+/* Fundal crem — ember (nu ember-bright, care s-ar pierde pe deschis). */
+.home-space-guide-cta a:hover{ color: var(--ember); }
+.home-space-guide-cta a:hover::after{ transform: scaleX(1); transform-origin: left; }
+.home-space-guide-cta a span:last-child{ transition: transform .2s ease; }
+.home-space-guide-cta a:hover span:last-child{ transform: translateX(4px); }
+
+@media (max-width: 900px){
+  .home-lifestyle-heading{ display: block; }
+  .home-lifestyle-aside{ margin-top: 30px; }
+  .home-lifestyle-gallery{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    height: auto;
+    margin-top: 68px;
+  }
+  .home-lifestyle-wordmark{ display: none; }
+  .home-lifestyle-frame{
+    position: relative;
+    inset: auto;
+    width: auto;
+  }
+  .home-lifestyle-frame-main{
+    grid-column: 1 / -1;
+    aspect-ratio: 4 / 3;
+  }
+  .home-lifestyle-frame-aether,
+  .home-lifestyle-frame-ignite{ aspect-ratio: 4 / 3; }
+  .home-space-guide-head{ display: block; }
+  .home-space-guide-head .home-section-kicker{ margin-bottom: 22px; }
+  .home-space-guide-head > p:last-child{ margin-top: 24px; }
+  .home-space-grid{ grid-template-columns: 1fr; }
+  .home-space-card + .home-space-card{
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .home-space-diagram{
+    aspect-ratio: 16 / 9;
+    max-height: 440px;
+  }
+}
+
+@media (max-width: 560px){
+  .home-lifestyle{ padding-inline: 18px; }
+  .home-lifestyle-gallery{ grid-template-columns: 1fr; }
+  .home-lifestyle-frame-main,
+  .home-lifestyle-frame-aether,
+  .home-lifestyle-frame-ignite{ grid-column: auto; }
+  .home-space-card{ padding-inline: 0; }
+  .home-space-card:hover,
+  .home-space-card:focus-visible{ background: transparent; }
+  .home-space-method{
+    justify-content: flex-start;
+    text-align: left;
+  }
+  .home-space-diagram{
+    aspect-ratio: 4 / 3;
+    padding-inline: 22px;
+  }
+  .home-space-scale{ width: 90%; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .home-lifestyle-frame img,
+  .home-lifestyle-aside a span:last-child,
+  .home-space-card,
+  .home-space-footprint,
+  .home-space-arrow,
+  .home-space-guide-cta a span:last-child{ transition: none; }
+}

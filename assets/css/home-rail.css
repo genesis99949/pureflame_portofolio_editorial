@@ -1,0 +1,175 @@
+/* PureFlame homepage: brand ribbon and editorial navigation. */
+.editorial-rail{display:none}
+@media(min-width:1025px){
+.home-rail-page{padding-left:48px}
+.home-rail-page #smooth-wrapper{left:48px;width:calc(100% - 48px)}
+.home-rail-page .site-header.site-header--home{display:none}
+.editorial-rail{display:block;position:fixed;inset:0 auto 0 0;width:48px;z-index:100;background:var(--charcoal);color:var(--cream);border-right:1px solid var(--line-dark)}
+.rail-toggle{display:block;position:relative;overflow:hidden;width:100%;height:100%;padding:0;border:0;background:transparent;color:inherit;cursor:pointer;transition:background .25s}
+.rail-axis{position:absolute;left:50%;bottom:0;width:100vh;height:48px;transform-origin:0 50%;transform:rotate(-90deg);display:flex;align-items:center}
+.rail-track{display:flex;width:max-content;flex-shrink:0;animation:rail-flow 65s linear infinite;will-change:transform}
+.rail-group{display:flex;flex-shrink:0;align-items:center;min-width:100vh}
+.rail-item{display:flex;flex-shrink:0;align-items:center;gap:26px;padding-right:26px;white-space:nowrap;font:500 11px/1 var(--utility);letter-spacing:.16em}
+.rail-item img{width:116px;height:auto;max-width:none}
+.rail-item i{width:3px;height:3px;border-radius:50%;background:var(--ember)}
+.rail-toggle:hover{background:var(--charcoal-soft)}
+.rail-toggle:focus-visible{outline:2px solid var(--ember);outline-offset:-5px}
+}
+/* Two identical groups: the final frame lands exactly on the next copy. */
+@keyframes rail-flow{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+#rail-menu{box-sizing:border-box;position:fixed;inset:0 auto 0 48px;margin:0;width:min(760px,calc(100vw - 48px));max-width:none;height:100dvh;max-height:none;overflow-y:auto;padding:34px 48px;border:0;border-right:1px solid var(--line-dark);border-radius:0;background:var(--charcoal);color:var(--cream)}
+#rail-menu::backdrop{background:rgba(17,15,10,.65);backdrop-filter:blur(6px)}
+.rail-top,.rail-bottom{display:flex;align-items:center;justify-content:space-between;gap:24px}
+#rail-menu a{color:inherit;text-decoration:none}
+.rail-brand img{width:160px;height:auto}
+.rail-close{background:none;border:1px solid var(--line-dark);border-radius:50%;color:var(--cream);width:44px;height:44px;cursor:pointer;font:300 28px/1 var(--utility)}
+.rail-close:hover{color:var(--ember-bright);border-color:var(--ember)}
+#rail-menu nav{display:flex;flex-direction:column;margin:64px 0}
+#rail-menu nav a{display:flex;align-items:baseline;gap:22px;padding:20px 0;border-bottom:1px solid var(--line-dark);font:400 clamp(38px,4.8vw,68px)/1.05 var(--editorial);letter-spacing:-.028em;transition:color .2s}
+#rail-menu small{color:var(--ember);font:500 11px/1 var(--utility);letter-spacing:.16em}
+#rail-menu nav a:hover,#rail-menu nav a[aria-current]{color:var(--ember-bright)}
+.rail-bottom{font:500 12px/1.5 var(--utility);letter-spacing:.08em}
+.rail-bottom .lang-btn{color:var(--cream);border-color:var(--line-dark);min-width:44px;min-height:44px;margin-right:8px}
+.rail-bottom .lang-btn.active{background:var(--ember);color:var(--charcoal);border-color:var(--ember)}
+#rail-menu p{margin-top:48px;color:var(--cream-soft);font:400 24px/1.4 var(--editorial);letter-spacing:-.02em;text-transform:lowercase;font-style:italic}
+#rail-menu :is(a,button):focus-visible{outline:2px solid var(--ember);outline-offset:5px}
+@media(prefers-reduced-motion:reduce){.rail-track{animation:none;will-change:auto}}
+/* Motion and layout use the same editorial voice as the homepage. */
+.editorial-rail{--rail-width:56px}
+@media(min-width:1025px){
+.home-rail-page{padding-left:56px}
+.home-rail-page #smooth-wrapper{left:56px;width:calc(100% - 56px)}
+.editorial-rail{width:56px;background:var(--charcoal);border-right-color:var(--line-dark)}
+.rail-axis{height:56px;bottom:-28px}
+.rail-track.is-gsap{animation:none}
+.rail-item{gap:32px;padding-right:32px;font-size:10px;letter-spacing:.2em}
+.rail-item img{width:108px}
+.rail-toggle::after{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:var(--ember);transform:scaleY(0);transform-origin:bottom;transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.rail-toggle:hover::after,.rail-toggle:focus-visible::after{transform:scaleY(1)}
+}
+#rail-menu{--rail-backdrop:0;inset:0 0 0 56px;width:calc(100vw - 56px);padding:0;border:0;overflow-y:auto;background:var(--charcoal)}
+#rail-menu[open]{display:grid;grid-template-columns:minmax(480px,1.08fr) minmax(0,1fr)}
+#rail-menu::backdrop{background:rgba(17,15,10,var(--rail-backdrop));backdrop-filter:none}
+.rail-content{min-height:100%;padding:clamp(24px,3.3vw,56px);display:flex;flex-direction:column;position:relative;z-index:1;background:var(--charcoal)}
+.rail-brand img{width:144px}
+.rail-close{border-color:var(--line-dark);transition:color .25s,border-color .25s,transform .4s}
+.rail-close:hover{transform:rotate(90deg)}
+#rail-menu nav{margin:auto 0;padding:48px 0;gap:0}
+#rail-menu nav a{position:relative;overflow:hidden;padding:18px 0;gap:24px;font-size:clamp(38px,4.7vw,76px);line-height:1.13;border-bottom-color:var(--line-dark)}
+#rail-menu nav a::after{content:'↗';margin-left:auto;align-self:center;font:300 24px/1 var(--utility);color:var(--ember);opacity:0;transform:translate(-12px,8px);transition:opacity .3s,transform .4s}
+#rail-menu nav a:hover::after,#rail-menu nav a:focus-visible::after{opacity:1;transform:none}
+#rail-menu nav a[aria-current]{color:var(--cream)}
+#rail-menu nav a:hover,#rail-menu nav a:focus-visible{color:var(--ember-bright)}
+.rail-bottom{border-top:0;padding-top:16px;letter-spacing:.04em}
+.rail-bottom>a{min-height:44px;display:flex;align-items:center}
+.rail-bottom .lang-btn{border:0;background:transparent;border-radius:0;margin-right:0;color:var(--cream-soft)}
+.rail-bottom .lang-btn.active{background:transparent;color:var(--ember-bright);border-bottom:1px solid var(--ember)}
+#rail-menu .rail-signature{font:italic 26px/1.3 var(--editorial);margin:32px 0 0;text-transform:none;color:var(--cream-soft)}
+.rail-visual{position:relative;overflow:hidden;min-height:100%;background:var(--charcoal-soft)}
+.rail-scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.05)}
+.rail-scene.is-current{opacity:1}
+.rail-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,15,10,.08) 30%,rgba(17,15,10,.88) 100%);pointer-events:none}
+.rail-visual-copy{position:absolute;inset:auto 48px 56px;z-index:1;color:var(--cream)}
+.rail-eyebrow,.rail-caption{font:500 11px/1.6 var(--utility);letter-spacing:.13em}
+#rail-menu .rail-visual-copy p{font:400 clamp(38px,4.2vw,64px)/1.02 var(--editorial);margin:24px 0;letter-spacing:-.035em;text-transform:none;color:var(--cream)}
+.rail-caption{letter-spacing:.04em;color:var(--cream-soft)}
+@media(max-height:720px){#rail-menu nav{padding:24px 0}#rail-menu nav a{font-size:44px;padding:12px 0}.rail-content{padding:24px 40px}#rail-menu .rail-signature{margin-top:20px}.rail-visual-copy{bottom:32px}}
+@media(max-width:1100px){#rail-menu[open]{grid-template-columns:minmax(440px,1.15fr) minmax(0,1fr)}.rail-visual-copy{left:32px;right:24px}}
+@media(prefers-reduced-motion:reduce){.rail-track{animation:none!important}.rail-scene{transform:none}}
+/* Preserve the flame as the focal point when the landscape photo fills the panel. */
+.rail-scene-collection{object-position:65% center}
+/* Full-bleed collection image: trim the extended floor, not an inset frame. */
+.rail-scene-collection{object-fit:cover;object-position:center 38%;padding:0;background:var(--charcoal-soft)}
+.rail-visual.is-collection::after{background:linear-gradient(0deg,var(--charcoal) 0%,transparent 16%);}
+
+/* Desktop rail replaces the horizontal header: remove its obsolete top allowance. */
+@media(min-width:1025px){
+ .home-rail-page .ce-intro{padding-top:clamp(64px,6vw,88px)}
+ .home-rail-page .epp-gallery,.home-rail-page .epp-buy-panel{padding-top:48px}
+ .home-rail-page .checkout-page,.home-rail-page .finalize-editorial,.home-rail-page .legal-page{padding-top:64px}
+ .home-rail-page .confirm-page{padding-top:64px}
+ .home-rail-page .ce-card{scroll-margin-top:32px}
+}
+
+/* A compact collection index gives the open menu a useful second layer. */
+.menu-discovery{display:none}
+#rail-menu .menu-discovery{display:block;margin-bottom:20px}
+#rail-menu nav{margin:auto 0 0;padding:28px 0}
+.menu-models{padding-top:22px}
+#rail-menu .menu-models h2,#siteNav .menu-models h2{margin:0 0 14px;font:500 10px/1.5 var(--utility);letter-spacing:.16em;text-transform:uppercase;color:var(--cream-soft)}
+.menu-model-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px}
+#rail-menu .menu-model-links a,#siteNav .menu-model-links a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:5px 0;font:400 23px/1.2 var(--editorial);letter-spacing:-.02em;text-transform:none;color:var(--cream);text-decoration:none;transition:color .2s ease}
+.menu-model-links a>span{font:400 14px/1 var(--utility);color:var(--ember);opacity:.65}
+#rail-menu .menu-model-links a:hover,#siteNav .menu-model-links a:hover{color:var(--ember-bright)}
+.menu-useful-links{display:flex;flex-wrap:wrap;gap:4px 24px;margin-top:16px}
+#rail-menu .menu-useful-links a,#siteNav .menu-useful-links a{display:inline-flex;align-items:center;min-height:44px;font:400 12px/1.5 var(--utility);letter-spacing:.02em;text-transform:none;color:var(--cream-soft);text-decoration:none}
+#rail-menu .menu-useful-links a:hover,#siteNav .menu-useful-links a:hover{color:var(--ember-bright)}
+@media(max-height:720px){#rail-menu nav{padding:20px 0}#rail-menu .menu-discovery{margin-bottom:12px}.menu-models{padding-top:16px}}
+@media(max-width:1024px){#siteNav.nav-open{overflow-y:auto}#siteNav.nav-open .menu-discovery{display:block;flex-shrink:0;width:100%;margin-top:26px}.menu-model-links{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px}#siteNav .menu-model-links a{font-size:24px;min-height:48px}#siteNav .menu-useful-links a{font-size:13px}#siteNav .menu-discovery a:focus-visible{outline:2px solid var(--ember);outline-offset:3px}}
+@media(prefers-reduced-motion:reduce){.menu-model-links a{transition:none}}
+
+/* Desktop collection links read as one balanced row. */
+@media(min-width:1025px){
+ #rail-menu .menu-model-links{grid-template-columns:repeat(5,minmax(0,1fr));column-gap:clamp(10px,1.4vw,22px)}
+ #rail-menu .menu-model-links a{position:relative;justify-content:center;gap:0;padding:8px 0;font-size:clamp(18px,1.65vw,25px);min-height:48px}
+ #rail-menu .menu-model-links a>span{position:absolute;top:0;right:0;font-size:11px;opacity:0;transition:opacity .2s ease}
+ #rail-menu .menu-model-links a:hover>span,#rail-menu .menu-model-links a:focus-visible>span{opacity:.8}
+}
+@media(prefers-reduced-motion:reduce){#rail-menu .menu-model-links a>span{transition:none}}
+
+/* Spread the menu chapters through the panel instead of packing them at its foot. */
+@media(min-width:1025px){
+ .rail-content{justify-content:space-between;gap:clamp(20px,2.6vh,36px)}
+ #rail-menu nav{margin:clamp(16px,2.5vh,36px) 0 0;padding:0;flex-shrink:0}
+ #rail-menu .menu-discovery{margin:0;flex-shrink:0}
+ #rail-menu .menu-models{padding-top:8px}
+ #rail-menu .menu-models h2{margin-bottom:20px}
+ #rail-menu .menu-useful-links{margin-top:20px}
+ #rail-menu .rail-bottom{padding-top:0;flex-shrink:0}
+ #rail-menu .rail-signature{margin:0;flex-shrink:0}
+}
+
+/* Utility links sit together at the bottom of the open desktop menu. */
+#rail-menu .rail-footer{margin-top:auto;padding-top:28px;flex-shrink:0}
+#rail-menu .rail-footer .menu-useful-links{margin-top:0;margin-bottom:20px}
+@media(min-width:1025px){
+ .rail-content{justify-content:flex-start;gap:clamp(24px,3vh,40px)}
+ #rail-menu .menu-discovery{margin-top:8px}
+}
+@media(max-width:1024px){
+ #siteNav.nav-open .menu-discovery{display:flex;flex-direction:column;flex:1 0 auto}
+ #siteNav .menu-discovery .menu-useful-links{margin-top:auto;padding-top:28px}
+}
+
+@media(min-width:1025px){.rail-content{min-height:100dvh;height:max-content}}
+
+/* Standalone flame replaces the signature in the navigation bars. */
+.site-header .brand-link .brand-symbol{display:block;width:28px;height:44px;object-fit:contain}
+@media(min-width:1025px){
+ .rail-item{font-size:14px;font-weight:600;letter-spacing:.17em}
+ .rail-item img{width:28px;height:44px;object-fit:contain;transform:rotate(90deg);transform-origin:center}
+ .rail-toggle:hover .rail-item img{animation:rail-flame-pulse 1.1s ease-in-out 1}
+ .site-header .brand-link:hover .brand-symbol{animation:header-flame-pulse 1.1s ease-in-out 1}
+}
+@keyframes rail-flame-pulse{0%,100%{transform:rotate(90deg) scale(1);filter:none}32%{transform:rotate(90deg) scale(1.09);filter:drop-shadow(0 0 4px rgba(240,145,63,.45))}62%{transform:rotate(90deg) scale(.99);filter:none}80%{transform:rotate(90deg) scale(1.025)}}
+@keyframes header-flame-pulse{0%,100%{transform:scale(1);filter:none}32%{transform:scale(1.09);filter:drop-shadow(0 0 4px rgba(240,145,63,.45))}62%{transform:scale(.99);filter:none}80%{transform:scale(1.025)}}
+@media(prefers-reduced-motion:reduce){.rail-toggle:hover .rail-item img,.site-header .brand-link:hover .brand-symbol{animation:none}}
+
+#rail-menu .rail-brand .flame-mark img,#rail-menu .rail-brand .flame-mark video{width:100%;height:100%;transform:none}
+/* Quiet signature rail: one mark, one label, one control. */
+.rail-single-flame{position:absolute;top:28px;left:0;width:100%;display:flex;justify-content:center}
+.rail-single-flame img{width:19px;height:30px;object-fit:contain}
+.rail-single-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.rail-single-label>span{writing-mode:vertical-rl;transform:rotate(180deg);font:500 10px/1 var(--utility);letter-spacing:.24em}
+.rail-label-open{display:none}
+.rail-toggle[aria-expanded="true"] .rail-label-rest{display:none}
+.rail-toggle[aria-expanded="true"] .rail-label-open{display:block}
+.rail-single-icon{position:absolute;bottom:32px;left:18px;width:20px;height:20px}
+.rail-single-icon i{position:absolute;left:0;top:6px;width:20px;height:1px;background:currentColor;transition:transform .45s cubic-bezier(.22,1,.36,1),top .45s}
+.rail-single-icon i+i{top:13px;width:14px}
+.rail-toggle:hover .rail-single-icon i+i{width:20px}
+.rail-toggle[aria-expanded="true"] .rail-single-icon i{top:10px;transform:rotate(45deg)}
+.rail-toggle[aria-expanded="true"] .rail-single-icon i+i{width:20px;transform:rotate(-45deg)}
+#rail-menu{left:0;width:100vw;padding-left:56px}
+.rail-modal-toggle{position:absolute;inset:0 auto 0 0;width:56px;height:100%;min-height:100dvh;background:var(--charcoal);border-right:1px solid var(--line-dark);z-index:5}
+@media(prefers-reduced-motion:reduce){.rail-single-icon i{transition:none}}

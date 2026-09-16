@@ -1,0 +1,24 @@
+{
+  "name": "pureflame-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PureFlame — site static + backend de comenzi/plati (Stripe Checkout)",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node --test",
+    "backup": "node scripts/backup-db.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.6.1",
+    "helmet": "^8.3.0",
+    "nodemailer": "^9.0.3",
+    "stripe": "^16.8.0"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}

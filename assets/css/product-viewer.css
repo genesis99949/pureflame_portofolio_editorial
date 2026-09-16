@@ -1,0 +1,42 @@
+.product-viewer{--av-surface:var(--cream-soft);--av-ink:var(--charcoal);--av-accent:var(--olive-deep);--av-gap:clamp(20px,3vw,48px);margin:clamp(64px,8vw,120px) auto;padding:0 clamp(20px,5vw,88px);max-width:1600px;color:var(--av-ink)}
+.av-heading{display:flex;justify-content:space-between;align-items:end;gap:var(--av-gap);margin-bottom:32px}
+.av-kicker{font:500 11px/1.5 var(--utility);letter-spacing:.16em;text-transform:uppercase;margin:0 0 16px}
+.av-heading h2{font:400 clamp(30px,3.4vw,54px)/1.06 var(--editorial);letter-spacing:-.035em;margin:0;max-width:680px}
+.av-heading>p{max-width:320px;font:400 14px/1.7 var(--utility);margin:0}
+.av-layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.av-stage{position:relative;min-width:0;min-height:560px;background:var(--av-surface);isolation:isolate;overflow:hidden}
+.av-poster{position:absolute;width:100%;height:100%;object-fit:cover;inset:0}
+.av-launch{position:absolute;z-index:3;inset:0;display:flex;align-items:center;justify-content:end;flex-direction:column;padding:36px 20px;background:linear-gradient(transparent 60%,var(--av-surface))}
+.av-launch p{font:400 12px/1.6 var(--utility);text-align:center;max-width:340px;margin:12px 0 0}
+.product-viewer button{font:500 12px/1.4 var(--utility);cursor:pointer;min-height:44px;border:1px solid var(--line);color:var(--av-ink);background:var(--cream);border-radius:0;transition:background .15s,color .15s}
+.product-viewer button:focus-visible,.av-canvas canvas:focus-visible{outline:3px solid var(--av-accent);outline-offset:3px}
+.product-viewer button:hover{background:var(--av-surface)}
+.product-viewer button:disabled{cursor:wait;opacity:.6}
+.product-viewer .av-primary{padding:16px 25px;background:var(--av-ink);color:var(--cream);border-color:var(--av-ink);font-size:14px}
+.product-viewer .av-primary:hover{background:var(--av-accent)}
+.av-canvas{position:absolute;inset:0}
+.av-canvas canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.av-canvas canvas:active{cursor:grabbing}
+.av-tools{position:absolute;top:18px;left:18px;display:flex;gap:6px;z-index:2}
+.av-tools button{min-width:44px;padding:10px 14px}
+.av-tools button:first-child,.av-tools button:nth-child(2){font-size:20px}
+.av-scale{position:absolute;left:22px;bottom:20px;font:500 11px/1.5 var(--utility);letter-spacing:.05em;pointer-events:none}
+.av-hint{position:absolute;bottom:44px;left:22px;right:22px;pointer-events:none;font:400 11px/1.5 var(--utility);margin:0}
+.av-inspector{padding:28px;display:flex;flex-direction:column;min-width:0;background:var(--cream)}
+.av-part-list{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.av-part-list button{text-align:left;padding:9px 10px;font-size:11px}
+.av-part-list button[aria-pressed=true],.av-options button[aria-pressed=true]{color:var(--cream);background:var(--av-accent);border-color:var(--av-accent)}
+.av-detail{padding:24px 0 18px;min-height:175px}
+.av-detail-number{font:500 10px/1.5 var(--utility);letter-spacing:.12em;color:var(--av-accent)}
+.av-detail h3{font:400 24px/1.2 var(--editorial);margin:8px 0 12px}
+.av-detail p{font:400 12px/1.7 var(--utility);margin:0}
+.av-options{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.av-options button{padding:9px 12px;font-size:11px}
+.av-note{font:400 10px/1.65 var(--utility);margin:auto 0 0;padding-top:16px;border-top:1px solid var(--line)}
+.product-viewer [hidden]{display:none!important}
+@media(max-width:1000px){.av-layout{grid-template-columns:minmax(0,1fr) 290px}.av-inspector{padding:20px}.av-stage{min-height:610px}}
+@media(max-width:700px){.av-heading{display:block}.av-heading>p{margin-top:18px;max-width:100%}.av-layout{grid-template-columns:1fr}.av-stage{min-height:0;height:440px}.av-inspector{padding:24px 0}.av-part-list{grid-template-columns:repeat(3,minmax(0,1fr))}.av-detail{min-height:145px}.av-launch{padding-bottom:44px}.av-tools{left:12px;top:12px}.av-tools button{padding:8px}.av-hint{bottom:38px;font-size:10px}.av-scale{bottom:15px}.av-heading h2{max-width:400px}}
+@media(prefers-reduced-motion:reduce){.product-viewer button{transition:none}}
+
+/* Keep the complete product visible above the launch controls on phones. */
+@media(max-width:700px){.av-poster{object-fit:contain;height:calc(100% - 110px);top:10px}.av-launch{background:none}}

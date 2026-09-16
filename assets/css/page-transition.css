@@ -1,0 +1,7 @@
+/* A charcoal curtain rises over the old page and leaves through the top. */
+.pf-page-transition{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#110f0a;transform:translateY(101%);pointer-events:none;visibility:hidden;will-change:transform}
+.pf-page-transition img{width:clamp(160px,20vw,250px);height:auto;max-width:70vw;display:block}
+html.pf-page-enter .pf-page-transition,.pf-page-transition.is-exiting{visibility:visible;pointer-events:auto}
+html.pf-page-enter .pf-page-transition{transform:translateY(0)}
+html.pf-page-boot::before{content:"";position:fixed;inset:0;z-index:9998;background:#110f0a}
+@media(prefers-reduced-motion:reduce){.pf-page-transition,html.pf-page-boot::before{display:none}}

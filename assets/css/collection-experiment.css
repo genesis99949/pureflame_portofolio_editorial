@@ -1,0 +1,117 @@
+/* Isolated editorial study; the original collection is unchanged. */
+.ce-experiment{display:block;padding:0;overflow:hidden}
+.cx-chapter{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:72px 5vw 112px;position:relative}
+.cx-heading{grid-column:1/-1;display:grid;grid-template-columns:72px 1fr auto;align-items:baseline;gap:24px;margin-bottom:32px}
+.cx-index{font:500 10px/1.5 var(--utility);letter-spacing:.15em;color:var(--ember-deep)}
+.cx-heading h2{font:400 clamp(76px,10vw,156px)/.85 var(--editorial);letter-spacing:-.065em;margin:0}
+.cx-heading-note{font:italic 18px/1.4 var(--editorial);max-width:18ch}
+.ce-experiment .ce-card{grid-column:1/9;margin:0;align-self:start;min-width:0}
+.ce-experiment .ce-card-image{aspect-ratio:4/3}
+.ce-experiment .ce-card-image img{transition:none;object-position:center}
+.ce-experiment .ce-card-link:hover img{transform:none}
+.ce-experiment .ce-card-meta{padding-top:24px}
+.ce-experiment .ce-card-name{font-size:28px}
+.cx-detail{grid-column:10/13;margin:100px 0 0;align-self:start;min-width:0}
+.cx-detail-frame{aspect-ratio:3/4;overflow:hidden;background:var(--cream-soft)}
+.cx-detail img{width:100%;height:100%;object-fit:cover;display:block}
+.cx-detail figcaption{display:flex;gap:16px;margin-top:16px;font:400 12px/1.6 var(--utility)}
+.cx-chapter-1{padding-top:32px}
+.cx-chapter-1 .ce-card,.cx-chapter-3 .ce-card{grid-column:6/13;grid-row:2}
+.cx-chapter-1 .ce-card-image,.cx-chapter-3 .ce-card-image{aspect-ratio:4/5}
+.cx-chapter-1 .cx-detail,.cx-chapter-3 .cx-detail{grid-column:1/5;grid-row:2;margin-top:180px}
+.cx-chapter-1 .cx-detail-frame{aspect-ratio:1}
+.cx-chapter-2{background:var(--charcoal);color:var(--cream);padding-top:96px}
+.cx-chapter-2 .cx-index{color:var(--ember-bright)}
+.cx-chapter-2 .ce-card,.cx-chapter-2 .ce-card-specs{color:var(--cream)}
+.cx-chapter-2 .ce-card-meta{border-color:var(--line-dark)}
+.cx-chapter-2 .ce-card{grid-column:1/10}
+.cx-chapter-2 .cx-detail{grid-column:10/13;margin-top:240px}
+.cx-chapter-4 .ce-card{grid-column:1/-1}
+.cx-chapter-4 .ce-card-image{aspect-ratio:16/9}
+.cx-chapter-4 .cx-detail{grid-column:9/12;margin-top:40px}
+.cx-chapter-4 .cx-detail-frame{aspect-ratio:4/3}
+.cx-interlude{padding:48px 12vw 112px}
+.cx-interlude p{font:400 clamp(54px,7vw,112px)/1.04 var(--editorial);letter-spacing:-.045em;margin:32px 0}
+.cx-interlude em{font-weight:400;color:var(--ember-deep)}
+.cx-interlude-note{display:block;text-align:right;font:400 12px var(--utility);letter-spacing:.08em}
+@media(max-width:1024px){.cx-heading{grid-template-columns:48px 1fr}.cx-heading-note{grid-column:2}.cx-chapter{padding-bottom:72px;gap:20px}.cx-detail{grid-column:9/13;margin-top:64px}.ce-experiment .ce-card{grid-column:1/9}.cx-chapter-1 .ce-card,.cx-chapter-3 .ce-card{grid-column:6/13}.cx-chapter-2 .ce-card{grid-column:1/9}.cx-chapter-2 .cx-detail{grid-column:9/13;margin-top:96px}.cx-chapter-4 .ce-card{grid-column:1/-1}}
+@media(max-width:600px){.cx-chapter{padding:48px 20px 64px;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}.cx-heading{gap:12px;margin-bottom:8px}.cx-heading h2{font-size:76px}.cx-heading-note{font-size:16px}.ce-experiment .ce-card{grid-column:1/-1;grid-row:auto}.ce-experiment .ce-card-image{aspect-ratio:4/5}.ce-experiment .cx-detail{grid-column:2/5;grid-row:auto;margin-top:12px}.cx-detail-frame{aspect-ratio:4/3}.ce-experiment .ce-card-meta{display:block}.ce-experiment .ce-card-specs{margin-top:12px}.cx-interlude{padding:24px 20px 64px}.cx-interlude p{font-size:52px}.cx-chapter-4 .ce-card-image{aspect-ratio:4/5}}
+@media(prefers-reduced-motion:reduce){.ce-experiment *{scroll-behavior:auto}}
+/* Artu-inspired image rhythm: close gutters, offset photographic columns. */
+.ce-experiment{background:var(--cream)}
+.cx-chapter{padding:48px 24px 100px;column-gap:10px}
+.cx-heading{grid-template-columns:64px 1fr auto;gap:16px;padding:0 8px;margin-bottom:28px;align-items:center}
+.cx-heading h2{font-size:clamp(48px,5.5vw,84px);letter-spacing:-.055em;line-height:1}
+.cx-heading-note{font:400 12px/1.6 var(--utility);max-width:24ch}
+.ce-experiment .ce-card{grid-column:1/7;grid-row:2;margin:0}
+.ce-experiment .ce-card-image{aspect-ratio:4/3}
+.ce-experiment .ce-card-meta{padding:16px 8px 0;border:0}
+.ce-experiment .ce-card-name{font:400 24px/1.2 var(--editorial)}
+.ce-experiment .ce-card-no{display:none}
+.cx-detail{grid-column:7/10;grid-row:2;margin:140px 0 0}
+.cx-material{grid-column:10/13;grid-row:2;margin:60px 0 0;min-width:0}
+.cx-detail-frame{aspect-ratio:3/4}
+.cx-material-frame{aspect-ratio:2/3;overflow:hidden;background:var(--cream-soft)}
+.cx-material img{width:100%;height:100%;object-fit:cover}
+.cx-detail figcaption,.cx-material figcaption{margin:14px 8px 0;font:400 10px/1.6 var(--utility);letter-spacing:.035em}
+.cx-detail figcaption .cx-index{display:none}
+.cx-chapter-1 .ce-card,.cx-chapter-3 .ce-card{grid-column:7/13;grid-row:2}
+.cx-chapter-1 .ce-card-image,.cx-chapter-3 .ce-card-image{aspect-ratio:4/5}
+.cx-chapter-1 .cx-detail,.cx-chapter-3 .cx-detail{grid-column:1/4;margin-top:30px}
+.cx-chapter-1 .cx-material,.cx-chapter-3 .cx-material{grid-column:4/7;margin-top:190px}
+.cx-chapter-1 .cx-detail-frame{aspect-ratio:3/4}
+.cx-chapter-2{background:var(--cream);color:var(--charcoal);padding-top:48px}
+.cx-chapter-2 .ce-card,.cx-chapter-2 .ce-card-specs{color:var(--charcoal)}
+.cx-chapter-2 .cx-index{color:var(--ember-deep)}
+.cx-chapter-2 .ce-card{grid-column:1/7}
+.cx-chapter-2 .cx-detail{grid-column:7/10;margin-top:190px}
+.cx-chapter-4 .ce-card{grid-column:1/7}
+.cx-chapter-4 .cx-detail{grid-column:7/10;margin-top:90px}
+.cx-chapter-4 .cx-material{grid-column:10/13;margin-top:220px}
+.cx-chapter-4 .cx-detail-frame{aspect-ratio:3/4}
+.cx-interlude{border-top:1px solid var(--line);margin:0 24px;padding:72px 10vw 100px}
+.cx-interlude p{font-size:clamp(48px,6vw,88px)}
+@media(max-width:1024px){.cx-chapter{padding-inline:20px}.cx-heading{grid-template-columns:44px 1fr}.cx-heading-note{grid-column:2}.ce-experiment .ce-card-meta{display:block}.ce-experiment .ce-card-specs{margin-top:12px}.cx-material{margin-top:40px}}
+@media(max-width:600px){.cx-chapter{grid-template-columns:repeat(2,minmax(0,1fr));padding:40px 16px 64px;gap:10px}.cx-heading{grid-column:1/-1;margin-bottom:20px}.cx-heading h2{font-size:58px}.ce-experiment .ce-card{grid-column:1/-1;grid-row:2}.ce-experiment .ce-card-image{aspect-ratio:4/3}.ce-experiment .cx-detail{grid-column:1;grid-row:3;margin:24px 0 0}.ce-experiment .cx-material{grid-column:2;grid-row:3;margin:64px 0 0}.ce-experiment .cx-detail-frame{aspect-ratio:3/4}.cx-detail figcaption,.cx-material figcaption{font-size:11px;margin-inline:0}.cx-interlude{margin:0 16px;padding:48px 0 64px}.cx-interlude p{font-size:48px}}
+@media(min-width:1025px){.cx-chapter{padding-inline:clamp(48px,4vw,64px)}}
+/* Keep custom portrait compositions intact during parallax. */
+.cx-chapter-0 .cx-detail-frame img{object-position:center}
+/* Give material photographs their own visual scale, distinct from room scenes. */
+.cx-chapter-0 .cx-material img{object-position:35% center}
+.cx-chapter-1 .cx-material img{object-position:50% 45%}
+.cx-chapter-3 .cx-material img{object-position:center 60%}
+.cx-chapter-4 .cx-material img{object-position:center 65%}
+/* Artu-style breathing paragraphs: one plain, wide statement between photo clusters. */
+.cx-text{padding:clamp(24px,4vw,64px) 24px clamp(64px,8vw,120px)}
+.cx-text p{max-width:30em;margin:0 8px;font:400 clamp(24px,3vw,46px)/1.2 var(--utility);letter-spacing:-.015em;color:var(--charcoal);text-wrap:pretty}
+@media(max-width:1024px){.cx-text{padding-inline:20px}}
+@media(max-width:600px){.cx-text{padding:24px 16px 40px}.cx-text p{margin-inline:0}}
+@media(min-width:1025px){.cx-text{padding-inline:clamp(48px,4vw,64px)}}
+
+/* Generated editorial images retain their composed framing on every screen. */
+.ce-experiment .cx-material img{object-position:center;display:block}
+.ce-experiment .cx-chapter-1 .ce-card-image,.ce-experiment .cx-chapter-3 .ce-card-image{aspect-ratio:4/5}
+
+/* Readable supporting typography on phones and tablets. */
+@media(max-width:1180px){
+ .ce-kicker,.ce-section-kicker,.cx-index{font-size:12px;line-height:1.6;letter-spacing:.09em}
+ .cx-heading{grid-template-columns:60px 1fr}
+ .cx-heading-note,.cx-detail figcaption,.cx-material figcaption,.cx-interlude-note{font-size:14px;line-height:1.6;letter-spacing:.015em}
+ .ce-card-material,.ce-card-dims{font-size:14px;line-height:1.5;letter-spacing:.025em;color:rgba(17,15,10,.75)}
+ .ce-card-price{font-size:18px;line-height:1.5}
+ .ce-card-specs{gap:6px}
+ .ce-compare-table thead th{font-size:13px;line-height:1.5;letter-spacing:.035em}
+ .ce-compare-table tbody td{font-size:15px;line-height:1.5}
+ .ce-compare-card-head>span{font-size:16px;line-height:1.5}
+ .ce-compare-card dt,.ce-compare-card dd{font-size:14px;line-height:1.6}
+ .ce-compare-card dt{letter-spacing:.025em;color:rgba(17,15,10,.72)}
+ .ce-included-list li{font-size:16px;line-height:1.6}
+ .ce-included-list li>span:first-child{font-size:12px}
+ .ce-accessory-price{font-size:16px;line-height:1.5}
+ .ce-accessory-action,.ce-accessory-variant,.ce-accessory-hint,.ce-guidance-action{font-size:14px;line-height:1.5;letter-spacing:.025em}
+ .ce-accessory-variant{min-height:44px}
+ .ce-accessory-variants{flex-wrap:wrap}
+ .ce-accessory-action{min-height:44px}
+}
+@media(max-width:380px){.ce-compare-card-head{flex-wrap:wrap;gap:8px}.cx-heading{column-gap:10px}}
+@media(max-width:560px){.ce-accessories-head>p{display:block;font-size:15px;line-height:1.6;max-width:38ch}.ce-accessories-head{flex-direction:column;gap:18px}}

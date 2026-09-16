@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<title>Ofertă — Website PureFlame</title>
+<style>
+  @page{
+    size: A4;
+    margin: 62.2pt 55.8pt 51.5pt 57pt;
+  }
+  html{ background:#fff; }
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  body{
+    background:#FEFDFA;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-family: Georgia, serif;
+    color:#45403A;
+  }
+
+  .eyebrow{
+    font-family: Arial, sans-serif;
+    font-size: 7.9pt;
+    letter-spacing: .22em;
+    color:#A6813B;
+    line-height: 1;
+    padding-top: 1.6pt;
+  }
+
+  h1{
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 22.5pt;
+    line-height: 26.3pt;
+    color:#171410;
+    margin-top: 5.5pt;
+  }
+
+  .rule{
+    border:0;
+    height:.75pt;
+    background:#E4DDCC;
+  }
+  .rule-1{ margin-top: 20pt; }
+  .rule-2{ margin-top: 14.5pt; }
+
+  /* Latimile trebuie sa insumeze exact 482.2pt (latimea zonei de continut).
+     Daca depasesc, Chrome micsoreaza intreaga pagina ca sa incapa. */
+  .meta{
+    display:grid;
+    grid-template-columns: 166.7pt 166.8pt auto;
+    margin-top: 14.4pt;
+  }
+  .label{
+    display:block;
+    font-family: Arial, sans-serif;
+    font-size: 7.1pt;
+    letter-spacing: .15em;
+    color:#8C8371;
+    line-height:1;
+  }
+  .val{
+    display:block;
+    font-size: 10.5pt;
+    color:#211D17;
+    line-height:1;
+    margin-top: 4.1pt;
+  }
+  .sub{
+    display:block;
+    font-family: Arial, sans-serif;
+    font-size: 8.2pt;
+    color:#8C8371;
+    line-height:1;
+    margin-top: 2.3pt;
+  }
+
+  .intro{
+    font-size: 10.1pt;
+    line-height: 17.2pt;
+    color:#45403A;
+    margin-top: 20.6pt;
+    max-width: 380pt;
+  }
+
+  table{
+    width:100%;
+    border-collapse: collapse;
+    margin-top: 27pt;
+    table-layout: fixed;
+  }
+  col.c1{ width:144.7pt; }
+  col.c2{ width:255pt; }
+  col.c3{ width:82.5pt; }
+  thead th{
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    font-size: 7.1pt;
+    letter-spacing: .13em;
+    color:#8C8371;
+    text-align:left;
+    line-height:1;
+    padding:0 0 7.3pt;
+    border-bottom:.8pt solid #171410;
+  }
+  thead th.right{ text-align:right; }
+  tbody td{
+    padding-top: 10.8pt;
+    vertical-align: top;
+  }
+  .svc{
+    font-family: Georgia, serif;
+    font-weight:bold;
+    font-size: 9.7pt;
+    color:#171410;
+    line-height:1;
+  }
+  .svc-desc{
+    font-size: 9.7pt;
+    line-height: 15pt;
+    color:#55503F;
+    padding-right: 28pt;
+  }
+  .amount{
+    font-family: Georgia, serif;
+    font-weight:bold;
+    font-size: 9.7pt;
+    color:#171410;
+    text-align:right;
+    line-height:1;
+  }
+
+  .total{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    border-top:1.5pt solid #171410;
+    margin-top: 10.7pt;
+    padding-top: 14pt;
+  }
+  .total-label{
+    font-family: Arial, sans-serif;
+    font-size: 8.2pt;
+    letter-spacing: .07em;
+    color:#8C8371;
+    line-height:1;
+  }
+  .total-value{
+    font-family: Arial, sans-serif;
+    font-weight:bold;
+    font-size: 16.5pt;
+    color:#171410;
+    line-height:1;
+  }
+
+  .optional{
+    display:flex;
+    align-items:center;
+    gap: 0;
+    background:#F8F4EA;
+    background-clip: padding-box;
+    border:1.6pt dashed #C9BFA3;
+    border-radius: 6pt;
+    padding: 11pt 12.7pt;
+    margin: 15.5pt -1.6pt 0;
+  }
+  .badge{
+    flex: 0 0 55.7pt;
+    font-family: Arial, sans-serif;
+    font-weight:bold;
+    font-size: 7.1pt;
+    letter-spacing: .125em;
+    color:#A6813B;
+    line-height:1;
+  }
+  .opt-body{ flex:1 1 auto; }
+  .opt-title{
+    font-family: Georgia, serif;
+    font-weight:bold;
+    font-size: 9.7pt;
+    color:#171410;
+    line-height:1;
+  }
+  .opt-desc{
+    font-size: 8.6pt;
+    line-height: 12pt;
+    color:#55503F;
+    margin-top: 2.1pt;
+  }
+  .opt-price{
+    flex: 0 0 auto;
+    font-family: Arial, sans-serif;
+    font-weight:bold;
+    font-size: 10.5pt;
+    color:#171410;
+    line-height:1;
+    padding-left: 14pt;
+  }
+
+  .cols{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20.4pt;
+    margin-top: 30pt;
+  }
+  .cols h4{
+    font-family: Arial, sans-serif;
+    font-weight:bold;
+    font-size: 7.5pt;
+    letter-spacing: .115em;
+    color:#A6813B;
+    line-height:1;
+  }
+  .cols ul{ list-style:none; margin-top: 11.5pt; }
+  .cols li{
+    font-size: 9pt;
+    line-height:1;
+    color:#45403A;
+    padding-left: 12pt;
+    margin-bottom: 9.3pt;
+  }
+
+  .sign{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28pt;
+    font-family: Arial, sans-serif;
+    font-size: 7.9pt;
+    letter-spacing: .06em;
+    color:#8C8371;
+    line-height:1;
+    margin-top: 81pt;
+  }
+
+  .runfoot{
+    display:flex;
+    justify-content:space-between;
+    font-family: Arial, sans-serif;
+    font-size: 7.1pt;
+    letter-spacing: .05em;
+    color:#A69D89;
+    line-height:1;
+    margin-top: 22pt;
+  }
+</style>
+</head>
+<body>
+
+<div class="eyebrow">OFERTĂ SERVICII DE PROMOVARE ONLINE</div>
+
+<h1>Website de promovare și comenzi online<br>— PureFlame —</h1>
+
+<hr class="rule rule-1">
+
+<div class="meta">
+  <div>
+    <span class="label">DE LA</span>
+    <span class="val">Bugariu Ramon-David — PFA</span>
+    <span class="sub">ramonbugariu@gmail.com</span>
+  </div>
+  <div>
+    <span class="label">CĂTRE</span>
+    <span class="val">SC PureFlame SRL</span>
+    <span class="sub">Str. Brădet nr. 26, Hunedoara</span>
+  </div>
+  <div>
+    <span class="label">DATA</span>
+    <span class="val">5 august 2026</span>
+    <span class="sub">Valabilă 30 de zile</span>
+  </div>
+</div>
+
+<hr class="rule rule-2">
+
+<p class="intro">Ofertă pentru realizarea website-ului de promovare PureFlame — vitrina online a brandului, cu prezentare de produs, identitate vizuală proprie și modul de comandă integrat — livrat, testat și gata de lansare.</p>
+
+<table>
+  <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+  <thead>
+    <tr>
+      <th>SERVICIU</th>
+      <th>DESCRIERE</th>
+      <th class="right">RON</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="svc">Website PureFlame</td>
+      <td class="svc-desc">Design UI/UX complet (homepage + 5 pagini de produs, bilingv RO/EN, responsive), backend Node.js/Express, plăți online Stripe, conformitate legală GDPR, securitate testată (32 teste automate), formular de contact, newsletter cu dublă confirmare, backup criptat, documentație de predare.</td>
+      <td class="amount">5.500</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="total">
+  <span class="total-label">TOTAL</span>
+  <span class="total-value">5.500 RON</span>
+</div>
+
+<div class="optional">
+  <span class="badge">OPȚIONAL</span>
+  <div class="opt-body">
+    <div class="opt-title">Integrare CMS</div>
+    <p class="opt-desc">Panou de administrare securizat, cu parolă, din care modifici singur prețurile, textele și imaginile produselor și adaugi produse noi, fără intervenția unui developer.</p>
+  </div>
+  <span class="opt-price">+1.500 RON</span>
+</div>
+
+<div class="cols">
+  <div>
+    <h4>CE INCLUDE OFERTA</h4>
+    <ul>
+      <li>Cod sursă complet, predat la finalizare</li>
+      <li>Licență de utilizare neexclusivă</li>
+      <li>2 runde de revizii incluse</li>
+      <li>Testare completă înainte de predare</li>
+    </ul>
+  </div>
+  <div>
+    <h4>NEINCLUSE ÎN PREȚ</h4>
+    <ul>
+      <li>Hosting, domeniu, certificat SSL</li>
+      <li>Cont de email tranzacțional (SMTP)</li>
+      <li>Mentenanță și revizii peste cele 2 incluse</li>
+      <li>Comisioane procesator de plăți (Stripe)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sign">
+  <span>Bugariu Ramon-David PFA — furnizor</span>
+  <span>SC PureFlame SRL — beneficiar</span>
+</div>
+
+<div class="runfoot">
+  <span>Ofertă de servicii — dezvoltare website</span>
+  <span>1 / 1</span>
+</div>
+
+</body>
+</html>

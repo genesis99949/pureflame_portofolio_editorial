@@ -1,0 +1,11 @@
+/* The first visit displays only the transparent signature. */
+.pf-intro{display:none}
+html.pf-intro-active{overflow:hidden}
+html.pf-intro-active .pf-intro{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:#0d0a07;transform:translateY(0);transition:transform .75s cubic-bezier(.76,0,.24,1)}
+.pf-intro:focus{outline:none}
+html.pf-intro-active .pf-intro.is-leaving{transform:translateY(-101%)}
+.pf-intro-art{position:relative;width:min(78vw,640px);aspect-ratio:16/9}
+.pf-intro-art video{display:block;width:100%;height:100%;object-fit:contain;opacity:0}
+.pf-intro.is-playing video{opacity:1}
+@media(max-width:600px){.pf-intro-art{width:92vw}}
+@media(prefers-reduced-motion:reduce){html.pf-intro-active .pf-intro{transition:none}}

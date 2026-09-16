@@ -1,0 +1,433 @@
+/* ===== Demo: panou plutitor tip "galerie", doar pe embera-copy.html ===== */
+.pd2-explorer{
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
+  background: var(--cream);
+}
+.pd2-media{
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 100vh;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.pd2-media video, .pd2-media img{
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pd2-media::after{
+  content:'';
+  position:absolute; inset:0;
+  background: linear-gradient(to right, rgba(17,15,10,0.1) 0%, rgba(17,15,10,0) 30%);
+}
+
+/* ---- Pagina de colectie: selectorul de model din josul imaginii ---- */
+.pd2-media-item{ position:absolute; inset:0; }
+
+.pd2-picker{
+  position:absolute;
+  left: 50%;
+  bottom: 40px;
+  transform: translateX(-50%);
+  z-index: 3;
+  display:flex;
+  align-items: flex-end;
+  gap: clamp(10px, 1.3vw, 18px);
+}
+.pd2-pick{
+  --pick-size: clamp(42px, 4.4vw, 64px);
+  --arc: 0px;     /* ridicarea din arc, dupa pozitia in rand */
+  --pop: 0px;     /* ridicarea suplimentara a modelului activ */
+  --scale: 1;
+  position: relative;
+  width: var(--pick-size);
+  height: var(--pick-size);
+  flex: 0 0 auto;
+  display:grid;
+  place-items:center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--charcoal);
+  color: var(--cream);
+  opacity: 0.7;
+  cursor: pointer;
+  transform: translateY(calc(var(--arc) + var(--pop))) scale(var(--scale));
+  transition: transform .42s cubic-bezier(.22, 1, .36, 1), color .3s ease;
+}
+/* Arcul: bulina din mijloc sta cel mai sus, cele de la capete cel mai jos.
+   Valorile urmaresc o parabola (1 - x²) peste cele 5 pozitii. */
+.pd2-pick:nth-child(2), .pd2-pick:nth-child(4){ --arc: -20px; }
+.pd2-pick:nth-child(3){ --arc: -27px; }
+
+.pd2-pick svg{ width: 46%; height: 46%; display:block; }
+.pd2-pick:hover{ color: var(--ember); --scale: 1.22; opacity: 1; z-index: 1; }
+.pd2-pick.is-active{ color: var(--ember); --pop: -6px; --scale: 1.1; opacity: 1; }
+.pd2-pick.is-active:hover{ --scale: 1.28; }
+
+.pd2-panel{
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
+  width: min(520px, 92vw);
+  max-width: none;
+  min-height: 100vh;
+  background: var(--cream);
+  padding: 130px 44px 60px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -40px 0 80px rgba(0,0,0,0.25);
+}
+
+.pd2-title-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 0 0 10px;
+}
+.pd2-title{
+  font-family: var(--product-name);
+  font-style: italic;
+  font-weight: 500;
+  text-transform: none;
+  font-size: clamp(44px, 6vw, 66px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--charcoal);
+  margin: 0;
+}
+.pd2-subtitle{
+  font-family: var(--condensed);
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(17,15,10,0.6);
+  margin: 0 0 16px;
+}
+
+/* ---- Recenzii: rating scurt + un citat real, cand exista ---- */
+.pd2-reviews{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 22px;
+}
+.pd2-stars{
+  color: var(--ember);
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+.pd2-reviews-count{
+  font-family: var(--body);
+  font-size: 12.5px;
+  color: rgba(17,15,10,0.55);
+}
+.pd2-review-quote{
+  margin: 0 0 22px;
+  padding: 2px 0 2px 18px;
+  border-left: 2px solid var(--ember);
+  font-family: var(--condensed);
+  font-style: italic;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(17,15,10,0.75);
+}
+.pd2-review-quote cite{
+  display: block;
+  margin-top: 8px;
+  font-style: normal;
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--charcoal);
+}
+.pd2-review-note{
+  margin: 0 0 22px;
+  padding-left: 18px;
+  font-family: var(--body);
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(17,15,10,0.6);
+}
+
+/* Bulinele de culoare, impinse in dreapta randului de titlu, cu tooltip la hover/focus */
+.pd2-title-swatches{
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-shrink: 0;
+}
+.pd2-dot{
+  position: relative;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 2px solid rgba(17,15,10,0.15);
+  padding: 0;
+  cursor: pointer;
+  transition: border-color .2s ease, transform .2s ease;
+}
+.pd2-dot[data-color="Gri"]{ background: #8b8d86; }
+.pd2-dot[data-color="Negru"]{ background: #1b1a17; }
+.pd2-dot.active{ border-color: var(--ember); transform: scale(1.15); }
+.pd2-dot::after{
+  content: attr(data-name);
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--charcoal);
+  color: var(--cream);
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  padding: 6px 11px;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.pd2-dot:hover::after,
+.pd2-dot:focus-visible::after{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+/* Pe touch nu exista hover — arata numele la apasare/focus, si pastreaza
+   o zona de atins de minim 44px fara sa umfle vizual bulina. */
+@media (hover: none){
+  .pd2-dot{
+    width: 34px; height: 34px;
+  }
+}
+
+.pd2-row{
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  align-items: center;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(17,15,10,0.5);
+}
+/* Nu ":last-of-type" — acela cere sa fie ultimul <div> dintre frati, iar dupa
+   randuri mai vin .pd2-masks / .pd2-buy, deci linia de jos nu se desena niciodata
+   si blocul de specificatii ramanea deschis. */
+.pd2-row:last-child,
+.pd2-row:has(+ :not(.pd2-row)){ border-bottom: 1px solid var(--line); }
+.pd2-row-value{
+  font-family: var(--body);
+  font-size: 15px;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--charcoal);
+}
+
+.pd2-desc{
+  margin: 26px 0 0;
+  font-family: var(--condensed);
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(17,15,10,0.75);
+}
+.pd2-desc p{ margin: 0 0 14px; }
+.pd2-desc summary{
+  list-style: none;
+  cursor: pointer;
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ember);
+}
+.pd2-desc summary::-webkit-details-marker{ display:none; }
+.pd2-desc .pd2-more-label{ display:inline; }
+.pd2-desc .pd2-less-label{ display:none; }
+.pd2-desc[open] .pd2-more-label{ display:none; }
+.pd2-desc[open] .pd2-less-label{ display:inline; }
+/* ---- Specificatii, mutate in buy-box (mai importante decat descrierea) ---- */
+.pd2-specs{ margin: 28px 0; }
+
+/* ---- Masca pentru butelia de gaz ----
+   Doua finisaje, alese din miniaturi: culoarea singura (o bulina) nu ar spune
+   nimic despre forma, iar forma e cea care difera intre modele — cilindrica
+   doar la Aether, patrata la restul. */
+/* Fara margine proprie sus: vine imediat dupa subtitlu, care lasa deja 28px. */
+.pd2-masks{ margin: 0; }
+.pd2-masks-head{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin: 0 0 12px;
+}
+/* Masca intra in pretul afisat, nu e un extra platit — spus explicit langa
+   selector, acolo unde se pune intrebarea, nu ascuns in descriere. */
+.pd2-masks-note{
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border-radius: 2px;
+  background: rgba(90,86,39,0.1);
+  font-family: var(--body);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--olive);
+}
+.pd2-masks-label{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(17,15,10,0.5);
+}
+.pd2-mask-options{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.pd2-mask{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: rgba(17,15,10,0.025);
+  cursor: pointer;
+  transition: border-color .2s ease, background-color .2s ease;
+}
+/* Inaltime fixa, latime "auto": pozele sunt portret 2:3, iar "contain" pe o
+   caseta patrata ar lasa jumatate din tile gol. */
+.pd2-mask img{
+  width: auto;
+  height: 88px;
+  object-fit: contain;
+  display: block;
+}
+.pd2-mask-name{
+  font-family: var(--body);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: rgba(17,15,10,0.6);
+}
+.pd2-mask:hover{ border-color: rgba(17,15,10,0.35); }
+.pd2-mask.is-active{
+  border-color: var(--ember);
+  background: rgba(217,119,46,0.06);
+}
+.pd2-mask.is-active .pd2-mask-name{ color: var(--charcoal); font-weight: 600; }
+
+/* ---- Ierarhie: masti > cumpara (card evidentiat) > detalii (dupa, mai discrete) ---- */
+.pd2-buy{
+  margin: 28px 0 0;
+  padding: 24px;
+  background: var(--cream-soft);
+  border-radius: 10px;
+}
+.pd2-price{
+  font-family: var(--display);
+  font-size: 26px;
+  color: var(--charcoal);
+  margin: 0 0 18px;
+  display: block;
+}
+.pd2-buy .buy-qty{ margin-bottom: 18px; }
+.pd2-buy .buy-cta{ width: 100%; text-align: center; position: relative; overflow: hidden; }
+
+/* Confirmarea de adaugare in cos se intampla chiar pe buton: label-ul iese,
+   bifa intra, fara sa mai fie nevoie sa cauti alt element pe pagina. */
+.buy-cta-label, .buy-cta-added{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.buy-cta-added{
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(6px);
+}
+.buy-cta-added svg{ width: 16px; height: 16px; }
+.buy-cta.is-added{ background: var(--olive); }
+.buy-cta.is-added .buy-cta-label{ opacity: 0; transform: translateY(-6px); }
+.buy-cta.is-added .buy-cta-added{ opacity: 1; transform: translateY(0); }
+
+.buy-added-note{
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: rgba(17,15,10,0.6);
+}
+.buy-added-note a{ font-weight: 600; color: var(--charcoal); text-decoration: underline; text-underline-offset: 2px; }
+
+.buy-trust{ margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+.buy-delivery-cost{
+  margin: 0 0 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(17,15,10,0.5);
+}
+.buy-payment-methods{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+/* Nota de comenzi mari: cea mai joasa prioritate din tot buy-box-ul, discreta. */
+.buy-bulk-note{
+  margin: 14px 0 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: rgba(17,15,10,0.45);
+}
+.buy-bulk-note a{ color: rgba(17,15,10,0.6); }
+
+/* Fara .product-body inaintea ei pe pagina asta — .product-story nu mai
+   are spatiul de sus pe care i-l dadea sectiunea de descriere pe paginile normale. */
+/* "~" nu "+": pe pagina de colectie sunt 5 sectiuni una dupa alta (doar
+   una vizibila), deci nu toate sunt vecin imediat. */
+.pd2-explorer ~ .product-story{
+  padding-top: 80px;
+}
+
+/* ---- Caracteristici, mutate in buy-box (langa masti/CTA), sub descriere
+   si specificatii (acum in .product-story, mai jos pe pagina). ---- */
+.pd2-features{
+  margin-top: 32px;
+}
+.pd2-features h3{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(17,15,10,0.5);
+  margin: 0 0 14px;
+}
+
+@media (max-width: 1024px){
+  .pd2-explorer{ flex-direction: column; }
+  .pd2-media{ position: relative; align-self: auto; flex: 0 0 auto; height: 60vh; }
+  .pd2-panel{ width: 100%; min-height: 0; box-shadow:none; padding: 40px 6vw 50px; }
+  .pd2-picker{ bottom: 20px; gap: 8px; }
+  .pd2-pick{ --pick-size: clamp(36px, 11vw, 52px); }
+  /* Arc mai plat: pe latimea telefonului, ridicarea de pe desktop ar scoate
+     bulina din mijloc din cadrul imaginii. */
+  .pd2-pick:nth-child(2), .pd2-pick:nth-child(4){ --arc: -12px; }
+  .pd2-pick:nth-child(3){ --arc: -16px; }
+}

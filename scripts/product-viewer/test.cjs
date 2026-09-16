@@ -1,0 +1,88 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const os=require('node:os');
+const assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'../..');
+const out=path.join(root,'design-review/aether-3d');
+const runtime=process.env.CODEX_NODE_MODULES || 'C:/Users/ramon/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules';
+const {chromium}=require(path.join(runtime,'playwright'));
+process.env.NODE_ENV='test';
+process.env.DB_PATH=path.join(os.tmpdir(),`product-viewer-${Date.now()}.db`);
+const {createApp}=require('../../server/index');
+const {db}=require('../../server/db');
+const axe=fs.readFileSync(path.join(out,'tooling/node_modules/axe-core/axe.min.js'),'utf8');
+(async()=>{
+ const app=createApp({stripeSecretKey:'sk_test_FAKE_FOR_LOCAL_VIEWER_QA',stripeWebhookSecret:'whsec_fake',baseUrl:'http://127.0.0.1'});
+ const server=app.listen(0,'127.0.0.1');await new Promise(resolve=>server.once('listening',resolve));
+ const url=`http://127.0.0.1:${server.address().port}/aether.html`;
+ const browser=await chromium.launch({headless:true,channel:'chrome',args:['--enable-webgl','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+ const report={};
+ try{
+  const page=await browser.newPage({viewport:{width:1440,height:1050},deviceScaleFactor:1});
+  let modelRequests=0;const errors=[];
+  page.on('request',r=>{if(r.url().includes('aether-v2.glb'))modelRequests++;});
+  page.on('requestfailed',r=>console.log('FAILED REQUEST',r.url(),r.failure()?.errorText));
+  page.on('pageerror',e=>{errors.push(e.message);console.log('PAGE ERROR',e.message);});
+  page.on('console',m=>{if(m.type()==='error'||m.type()==='warning')console.log('BROWSER',m.text());});
+  await page.goto(url,{waitUntil:'networkidle'});
+  const section=page.locator('[data-product-viewer]');await section.scrollIntoViewIfNeeded();
+  assert.equal(modelRequests,0,'GLB must not load before opt-in');
+  assert.equal(await page.locator('[data-viewer-parts] button').count(),12);
+  await page.locator('[data-viewer-load]').focus();
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(2000);
+  console.log('LOADER STATE',await page.locator('[data-viewer-status]').innerText());
+  await section.screenshot({path:path.join(out,'website-loading.png')});
+  await page.waitForFunction(()=>document.querySelector('[data-viewer-canvas]').aetherDiagnostics,null,{timeout:60000});
+  await page.waitForFunction(()=>document.querySelector('[data-viewer-launch]').hidden);
+  await page.waitForTimeout(1200);
+  const diagnostics=()=>page.evaluate(()=>document.querySelector('[data-viewer-canvas]').aetherDiagnostics());
+  report.initial=await diagnostics();assert.equal(report.initial.parts.length,12);assert.equal(modelRequests,1);
+  await section.screenshot({path:path.join(out,'website-desktop.png')});
+  for(const part of ['burner','ignition','stones','bowl','glass','hardware','cover','controls','handles','base','badge','body']){
+   await page.locator(`[data-part="${part}"]`).click();await page.waitForTimeout(100);
+   assert.equal((await diagnostics()).selected,part);
+  }
+  await page.locator('[data-part="ignition"]').click();await page.waitForTimeout(1000);
+  await section.screenshot({path:path.join(out,'website-ignition.png')});
+  assert.equal((await diagnostics()).coverVisible,false);
+  await page.locator('[data-viewer-action="cover"]').click();assert.equal((await diagnostics()).coverVisible,true);
+  await page.locator('[data-viewer-action="explode"]').click();assert.equal((await diagnostics()).exploded,true);
+  await page.waitForTimeout(1000);await section.screenshot({path:path.join(out,'website-exploded.png')});
+  await page.locator('[data-viewer-action="reset"]').click();await page.waitForTimeout(1000);
+  const canvas=page.locator('[data-viewer-canvas] canvas');await canvas.focus();
+  const before=(await diagnostics()).camera;await page.keyboard.press('ArrowLeft');
+  assert.notDeepEqual((await diagnostics()).camera,before,'Keyboard must rotate camera');
+  await page.keyboard.press('+');assert.notDeepEqual((await diagnostics()).camera,before);
+  await page.keyboard.press('Home');await page.waitForTimeout(1000);
+  // Drag must orbit, without selecting the component under the pointer.
+  const box=await canvas.boundingBox();
+  await page.mouse.move(box.x+box.width*.5,box.y+box.height*.5);await page.mouse.down();
+  await page.mouse.move(box.x+box.width*.66,box.y+box.height*.5,{steps:8});await page.mouse.up();
+  assert.equal((await diagnostics()).selected,'body');
+  report.afterDrag=await diagnostics();
+  await page.locator('.lang-btn[data-lang="en"]').first().focus();await page.keyboard.press('Enter');
+  assert.equal(await page.locator('[data-viewer-title]').innerText(),'Table body');
+  assert.match(await canvas.getAttribute('aria-label'),/Arrows/);
+  await page.evaluate(axe);
+  report.accessibility=await page.evaluate(async()=>{const r=await axe.run(document.querySelector('[data-product-viewer]'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}});return r.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}));});
+  assert.deepEqual(report.accessibility,[],'Viewer accessibility violations');
+  report.pageErrors=errors;assert.deepEqual(errors,[]);
+  await page.setViewportSize({width:390,height:844});await section.scrollIntoViewIfNeeded();await page.waitForTimeout(1000);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true,'Mobile overflow');
+  await section.screenshot({path:path.join(out,'website-mobile.png')});
+  report.mobile=await diagnostics();
+  // Failed model fetch leaves a useful fallback and allows retry.
+  const failure=await browser.newPage({viewport:{width:390,height:844}});
+  let fail=true;await failure.route('**/aether-v2.glb',route=>fail?route.abort():route.continue());
+  await failure.goto(url,{waitUntil:'networkidle'});
+  await failure.locator('[data-viewer-load]').focus();await failure.keyboard.press('Enter');
+  await failure.waitForFunction(()=>document.querySelector('[data-viewer-status]').textContent.includes('nu s-a putut'));
+  assert.equal(await failure.locator('[data-viewer-poster]').isVisible(),true);
+  fail=false;await failure.locator('[data-viewer-load]').focus();await failure.keyboard.press('Enter');
+  await failure.waitForFunction(()=>document.querySelector('[data-viewer-canvas]').aetherDiagnostics,null,{timeout:60000});
+  report.retry='passed';await failure.close();
+  fs.writeFileSync(path.join(out,'website-qa.json'),JSON.stringify(report,null,2));
+  console.log(JSON.stringify(report,null,2));
+ } finally {await browser.close();await new Promise(resolve=>server.close(resolve));db.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});
