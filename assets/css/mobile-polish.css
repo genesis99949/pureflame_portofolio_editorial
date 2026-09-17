@@ -1,0 +1,9 @@
+/* Vector icons remain monochrome on iOS, independent of emoji fonts. */
+.ce-card-arrow svg{display:block;width:18px;height:18px}
+@media(max-width:1024px){
+ .ce-card-arrow{width:36px;height:36px;right:12px;top:12px;background:rgba(254,255,253,.9);border:1px solid rgba(17,15,10,.08);box-shadow:none}
+ /* Let the dark header continue behind the iOS status area. */
+ html{background:#110f0a}
+ .site-header.site-header--home{padding-top:calc(16px + env(safe-area-inset-top,0px));padding-left:max(5vw,env(safe-area-inset-left,0px));padding-right:max(5vw,env(safe-area-inset-right,0px))}
+ .site-header.site-header--home::before{content:'';position:absolute;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);background:#110f0a;pointer-events:none}
+}
