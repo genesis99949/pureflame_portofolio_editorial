@@ -771,4 +771,4 @@ button.ce-accessory-card:focus-visible,
   .ce-handwritten.is-visible::after{ animation: none; }
 }
 
-@media(min-width:561px) and (max-width:900px){.ce-compare{min-width:0}.ce-table-scroll::before{content:"Glisează pentru toate detaliile →";display:block;padding:0 0 16px;font:500 12px var(--utility);color:var(--charcoal)}html[lang="en"] .ce-table-scroll::before{content:"Swipe for all details →"}}
+@media(min-width:561px) and (max-width:900px){.ce-compare{min-width:0}.ce-table-scroll::before{content:"Glisează pentru toate detaliile →︎";display:block;padding:0 0 16px;font:500 12px var(--utility);color:var(--charcoal)}html[lang="en"] .ce-table-scroll::before{content:"Swipe for all details →︎"}}

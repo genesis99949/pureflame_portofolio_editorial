@@ -16,7 +16,7 @@
     const current = product.id === currentId;
     return `<th scope="col" class="${current ? 'is-current' : ''}">
       ${current ? `<span class="epp-compare-current">${bilingual('Model curent', 'Current model')}</span>` : ''}
-      ${current ? `<strong>${product.name}</strong>` : `<a href="${product.href}">${product.name}<span aria-hidden="true"> ↗</span></a>`}
+      ${current ? `<strong>${product.name}</strong>` : `<a href="${product.href}">${product.name}<span aria-hidden="true"> ↗︎</span></a>`}
     </th>`;
   }).join('');
 
@@ -31,7 +31,7 @@
       <h2>${bilingual('Compară modelele', 'Compare the models')}</h2>
       <span>${bilingual('Alege după spațiu, proporții și material — diferențele care contează în utilizarea de zi cu zi.', 'Choose by space, proportions and material — the differences that matter in everyday use.')}</span>
     </div>
-    <p class="epp-compare-swipe">${bilingual('Glisează pentru a vedea toate modelele →', 'Swipe to see all models →')}</p>
+    <p class="epp-compare-swipe">${bilingual('Glisează pentru a vedea toate modelele →︎', 'Swipe to see all models →︎')}</p>
     <div class="epp-compare-scroll" tabindex="0" role="region" aria-label="Comparație modele PureFlame">
       <table>
         <thead><tr><th scope="col">${bilingual('Criteriu', 'Criterion')}</th>${headers}</tr></thead>

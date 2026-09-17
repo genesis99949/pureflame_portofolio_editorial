@@ -41,7 +41,7 @@
   function render(){
    const data=['Aether','Embera','Flavo','Fera','Ignite'];
    panels.collection.removeAttribute('aria-labelledby');panels.collection.setAttribute('aria-label',text('Colecție','Collection'));
-   panels.collection.innerHTML=`<ul class="lh-collection-list">${data.map(name=>`<li><a href="${name.toLowerCase()}.html">${name}</a></li>`).join('')}</ul><a class="lh-collection-all" href="colectie.html">${text('Toată colecția','Full collection')} ↗</a>`;
+   panels.collection.innerHTML=`<ul class="lh-collection-list">${data.map(name=>`<li><a href="${name.toLowerCase()}.html">${name}</a></li>`).join('')}</ul><a class="lh-collection-all" href="colectie.html">${text('Toată colecția','Full collection')} ↗︎</a>`;
    renderCart();cart.setAttribute('aria-label',text('Deschide coșul','Open cart'));
   }
   function renderCart(){
@@ -61,7 +61,7 @@
    }else{const empty=document.createElement('p');empty.className='lh-cart-empty';empty.textContent=text('Coșul este gol.','Your cart is empty.');p.append(empty);}
    const foot=document.createElement('div');foot.className='lh-footer lh-cart-footer';
    if(items.length){const row=document.createElement('div');row.className='lh-cart-total';const label=document.createElement('span'),value=document.createElement('strong');label.textContent='Subtotal';value.textContent=money(window.PFCart.getTotalBani());row.append(label,value);foot.append(row);}
-   const link=document.createElement('a');link.href=items.length?'cos-cumparaturi.html':'colectie.html';link.textContent=items.length?text('Vezi coșul →','View cart →'):text('Descoperă colecția →','Explore the collection →');foot.append(link);p.append(foot);
+   const link=document.createElement('a');link.href=items.length?'cos-cumparaturi.html':'colectie.html';link.textContent=items.length?text('Vezi coșul →︎','View cart →︎'):text('Descoperă colecția →︎','Explore the collection →︎');foot.append(link);p.append(foot);
   }
   function open(mode,keyboard=false){
    clearTimeout(leaveTimer);clearTimeout(hoverTimer);if(active===mode)return;

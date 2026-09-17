@@ -56,7 +56,7 @@
 .rail-close:hover{transform:rotate(90deg)}
 #rail-menu nav{margin:auto 0;padding:48px 0;gap:0}
 #rail-menu nav a{position:relative;overflow:hidden;padding:18px 0;gap:24px;font-size:clamp(38px,4.7vw,76px);line-height:1.13;border-bottom-color:var(--line-dark)}
-#rail-menu nav a::after{content:'↗';margin-left:auto;align-self:center;font:300 24px/1 var(--utility);color:var(--ember);opacity:0;transform:translate(-12px,8px);transition:opacity .3s,transform .4s}
+#rail-menu nav a::after{content:'↗︎';margin-left:auto;align-self:center;font:300 24px/1 var(--utility);color:var(--ember);opacity:0;transform:translate(-12px,8px);transition:opacity .3s,transform .4s}
 #rail-menu nav a:hover::after,#rail-menu nav a:focus-visible::after{opacity:1;transform:none}
 #rail-menu nav a[aria-current]{color:var(--cream)}
 #rail-menu nav a:hover,#rail-menu nav a:focus-visible{color:var(--ember-bright)}

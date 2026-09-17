@@ -64,7 +64,7 @@
     <div class="epp-reviews-layout">
       <div class="epp-reviews-list-wrap">
         <div class="epp-reviews-list" data-review-list aria-live="polite"></div>
-        <button type="button" class="epp-reviews-more" data-review-more hidden>${bilingual('Vezi toate recenziile', 'View all reviews')} <span aria-hidden="true">↓</span></button>
+        <button type="button" class="epp-reviews-more" data-review-more hidden>${bilingual('Vezi toate recenziile', 'View all reviews')} <span aria-hidden="true">↓︎</span></button>
       </div>
       <div class="epp-review-form-card">
         <p class="epp-review-form-eyebrow">${bilingual('Ai acest model?', 'Do you own this model?')}</p>
@@ -149,8 +149,8 @@
     listEl.classList.toggle('is-expanded');
     const expanded = listEl.classList.contains('is-expanded');
     moreBtn.innerHTML = expanded
-      ? `${bilingual('Arată mai puține', 'Show fewer')} <span aria-hidden="true">↑</span>`
-      : `${bilingual('Vezi toate recenziile', 'View all reviews')} <span aria-hidden="true">↓</span>`;
+      ? `${bilingual('Arată mai puține', 'Show fewer')} <span aria-hidden="true">↑︎</span>`
+      : `${bilingual('Vezi toate recenziile', 'View all reviews')} <span aria-hidden="true">↓︎</span>`;
     applySavedLanguage();
   });
 
