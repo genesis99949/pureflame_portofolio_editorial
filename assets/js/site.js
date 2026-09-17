@@ -73,6 +73,7 @@
   function open(openedByPointer){
     header?.classList.remove('hidden');
     header?.classList.add('menu-open');
+    document.documentElement.classList.add('pf-mobile-menu-open');
     nav.classList.add('nav-open');
     nav.classList.toggle('nav-open-pointer', !!openedByPointer);
     toggle.setAttribute('aria-expanded', 'true');
@@ -83,6 +84,7 @@
   }
   function close(){
     header?.classList.remove('menu-open');
+    document.documentElement.classList.remove('pf-mobile-menu-open');
     nav.classList.remove('nav-open');
     nav.classList.remove('nav-open-pointer');
     toggle.setAttribute('aria-expanded', 'false');
