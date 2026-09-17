@@ -196,11 +196,13 @@ body.epp-lightbox-open{ overflow: hidden; }
   min-width: 0;
   padding: 132px clamp(24px, 4vw, 5vw) 70px clamp(24px, 3.4vw, 56px);
 }
-.epp-eyebrow{ margin: 0 0 12px; color: var(--ember); font-family: var(--body); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; }
+.epp-buy-panel > *{ width:100%; max-width:520px; margin-left:auto; margin-right:auto; }
+.epp-heading{ display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:end; gap:16px 24px; }
+.epp-heading .epp-rating{ justify-self:end; margin-top:0; padding-bottom:2px; }.epp-eyebrow{ margin: 0 0 12px; color: var(--ember); font-family: var(--body); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; }
 .epp-title{
   margin: 0;
   font-family: var(--product-name);
-  font-style: italic;
+  font-style: normal;
   font-weight: 500;
   /* 48px la desktop, aceeași treaptă pe care o folosește Apple pentru
      titlul de produs. Scade fluid pe ecrane mici; clamp-ul acoperă tot
@@ -237,7 +239,7 @@ body.epp-lightbox-open{ overflow: hidden; }
   color: rgba(17,15,10,0.72);
 }
 .epp-fit-note{
-  margin: -10px 0 26px;
+  margin: 22px auto 28px;
   padding: 13px 15px;
   border-left: 2px solid var(--ember);
   background: rgba(184,78,43,0.045);
@@ -378,19 +380,19 @@ body.epp-lightbox-open{ overflow: hidden; }
 .epp-story-section{ padding: clamp(80px, 9vw, 150px) 5vw; background: var(--charcoal); color: #eee8df; }
 .epp-story-intro{ display: grid; grid-template-columns: 0.65fr 2fr; align-items: start; gap: 24px; margin-bottom: clamp(44px, 6vw, 82px); }
 .epp-story-intro p{ margin: 10px 0 0; font-family: var(--body); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; color: var(--ember-bright); }
-.epp-story-intro h2{ max-width: 1000px; margin: 0; font-family: var(--display); font-weight: 400; text-transform: none; letter-spacing: -0.025em; font-size: clamp(40px, 6vw, 90px); line-height: 0.98; }
+.epp-story-intro h2{ max-width: 1000px; margin: 0; font-family: var(--display); font-weight: 400; text-transform: none; letter-spacing: -0.025em; font-size: clamp(40px, 6vw, 90px); line-height: 1.2; }
 .epp-story-editorial{ display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(300px, .75fr); align-items: start; gap: clamp(36px, 6vw, 96px); }
 .epp-story-visual{ position: relative; margin: 0; overflow: hidden; background: #24211d; }
 .epp-story-visual::after{ content: ''; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(238,232,223,.12); }
 .epp-story-visual picture{ display: block; width: 100%; height: 100%; }
 .epp-story-visual img{ width: 100%; aspect-ratio: 3 / 2; display: block; object-fit: cover; }
 .epp-story-copy{ padding-top: clamp(4px, 2vw, 28px); }
-.epp-story-lead{ margin: 0 0 clamp(34px, 5vw, 64px); font-family: var(--product-name); font-size: clamp(24px, 2.7vw, 39px); font-style: italic; line-height: 1.12; color: #f3ede4; }
+.epp-story-lead{ margin: 0 0 clamp(34px, 5vw, 64px); font-family: var(--product-name); font-size: clamp(24px, 2.7vw, 39px); font-style: normal; line-height: 1.12; color: #f3ede4; }
 .epp-story-points{ margin: 0; padding: 0; list-style: none; }
 .epp-story-points li{ display: grid; grid-template-columns: 34px 1fr; gap: 10px; padding: 20px 0 22px; border-top: 1px solid rgba(238,232,223,.28); }
 .epp-story-points li:last-child{ border-bottom: 1px solid rgba(238,232,223,.28); }
 .epp-story-points > li > span{ padding-top: 5px; font-family: var(--body); font-size: 11px; color: var(--ember-bright); }
-.epp-story-points h3{ margin: 0 0 6px; font-family: var(--product-name); font-size: clamp(20px, 1.8vw, 27px); font-style: italic; font-weight: 500; line-height: 1.1; }
+.epp-story-points h3{ margin: 0 0 6px; font-family: var(--product-name); font-size: clamp(20px, 1.8vw, 27px); font-style: normal; font-weight: 500; line-height: 1.1; }
 .epp-story-points p{ margin: 0; font-family: var(--body); font-size: 14px; line-height: 1.55; color: rgba(238,232,223,.66); }
 
 @media (min-width: 1025px){
@@ -485,11 +487,11 @@ body.epp-lightbox-open{ overflow: hidden; }
 .epp-measure-copy a:hover{ color: var(--ember); }
 
 /* ---- Reviews ---- */
-.epp-review-section{ padding: clamp(56px, 6vw, 88px) clamp(20px,5vw,80px); background: var(--cream); }
+.epp-review-section{ padding: clamp(72px, 8vw, 112px) 5vw; background: var(--cream); }
 .epp-review-section > p:first-child{ margin: 0 0 22px; color: var(--ember); font-family: var(--body); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; }
 .epp-review-section h2{ margin: 0 auto 16px; max-width: 720px; font-family: var(--display); font-weight: 400; text-transform: none; letter-spacing: -0.02em; font-size: clamp(30px, 4vw, 52px); line-height: 1.05; color: var(--charcoal); }
 .epp-review-empty{ margin: 0 auto 32px; max-width: 460px; font-family: var(--condensed); font-size: 15px; line-height: 1.6; color: rgba(17,15,10,0.62); }
-.epp-review-quote{ margin: 0 auto 32px; max-width: 560px; font-family: var(--condensed); font-style: italic; font-size: 17px; line-height: 1.6; color: rgba(17,15,10,0.75); }
+.epp-review-quote{ margin: 0 auto 32px; max-width: 560px; font-family: var(--condensed); font-style: normal; font-size: 17px; line-height: 1.6; color: rgba(17,15,10,0.75); }
 .epp-review-quote cite{ display: block; margin-top: 14px; font-style: normal; font-family: var(--body); font-size: 13px; font-weight: 600; letter-spacing: 0.04em; color: var(--charcoal); }
 .epp-reviews-head{ width: 100%; max-width: 1240px; margin: 0 auto 32px; }
 .epp-reviews-head > p{ margin: 0 0 14px; color: var(--ember); font-family: var(--body); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; }
@@ -498,6 +500,7 @@ body.epp-lightbox-open{ overflow: hidden; }
 .epp-reviews-summary strong{ color: var(--charcoal); font-size: 14px; }
 .epp-review-stars{ color: var(--ember); font-family: var(--body); font-size: 14px; letter-spacing: 0.08em; white-space: nowrap; }
 .epp-reviews-layout{ display: grid; grid-template-columns: minmax(300px,.78fr) minmax(0,1.22fr); gap: clamp(30px,4vw,58px); align-items: start; width: 100%; max-width: 1240px; margin: 0 auto; }
+.epp-review-section > .epp-demo-note{ width:100%; max-width:1240px; margin:clamp(36px,5vw,64px) auto 0; padding-top:18px; border-top:1px solid var(--line); color:rgba(17,15,10,.52); font-size:11px; letter-spacing:.04em; }
 .epp-reviews-list-wrap{ grid-column: 2; grid-row: 1; min-width: 0; }
 .epp-reviews-list{ display: grid; gap: 14px; }
 .epp-review-card{ margin: 0; padding: 18px 0 20px; border-top: 1px solid var(--line); }
@@ -609,7 +612,7 @@ a.epp-collection-nav-card:hover .epp-collection-nav-image img{ transform: scale(
   display: flex; align-items: center; justify-content: space-between; gap: 8px;
   padding: 12px 4px 0;
 }
-.epp-collection-nav-name{ font-family: var(--product-name); font-style: italic; font-weight: 500; font-size: 17px; color: var(--charcoal); }
+.epp-collection-nav-name{ font-family: var(--product-name); font-style: normal; font-weight: 500; font-size: 17px; color: var(--charcoal); }
 .epp-collection-nav-arrow{ font-size: 13px; color: rgba(17,15,10,0.4); transition: transform .2s ease, color .2s ease; }
 a.epp-collection-nav-card:hover .epp-collection-nav-arrow{ transform: translate(2px, -2px); color: var(--ember); }
 
@@ -626,7 +629,8 @@ a.epp-collection-nav-card:hover .epp-collection-nav-arrow{ transform: translate(
   .epp-hero{ grid-template-columns: 1fr; }
   .epp-gallery{ padding-top: 118px; }
   .epp-gallery-wrap{ position: relative; top: auto; height: auto; min-height: 460px; max-height: none; aspect-ratio: 4 / 3; }
-  .epp-buy-panel{ padding-top: 44px; }
+  .epp-buy-panel{ padding-top:44px; }
+  .epp-heading{ grid-template-columns:1fr auto; }
   .epp-story-intro{ grid-template-columns: 1fr; gap: 26px; }
   .epp-story-editorial{ grid-template-columns: 1fr; }
   .epp-story-copy{ max-width: 720px; padding-top: 0; }
@@ -677,7 +681,9 @@ a.epp-collection-nav-card:hover .epp-collection-nav-arrow{ transform: translate(
   .epp-visual-label{ left: 10px; }
   .epp-visual-count{ right: 10px; }
 
-  .epp-buy-panel{ padding: 34px 20px 56px; }
+  .epp-buy-panel{ padding:34px 20px 56px; }
+  .epp-heading{ grid-template-columns:1fr; gap:12px; }
+  .epp-heading .epp-rating{ justify-self:start; padding-bottom:0; }
   .epp-rating{ flex-wrap: wrap; }
   .epp-delivery-note{ grid-template-columns: 1fr; }
   .epp-mask{ min-height: 44px; padding-right: 8px; }

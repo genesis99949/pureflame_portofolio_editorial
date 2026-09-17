@@ -1,0 +1,20 @@
+/* Editorial product gallery: generous image, quiet horizontal contact sheet. */
+.product-detail-page .epp-gallery{background:var(--cream);padding-bottom:36px}
+.product-detail-page .epp-gallery-topline{height:auto;min-height:30px;align-items:center;margin-bottom:20px;font-size:12px;font-weight:400;letter-spacing:.025em;text-transform:none}
+.product-detail-page .epp-code{font-size:10px;letter-spacing:.12em}
+.product-detail-page .epp-gallery-wrap{position:relative;top:auto;display:flex;flex-direction:column-reverse;gap:18px;aspect-ratio:auto;min-height:0;max-height:none;height:auto}
+.product-detail-page .epp-main-visual{width:100%;height:auto;min-height:0;aspect-ratio:4/3;border-radius:0;background:var(--cream-soft)}
+.product-detail-page .epp-main-visual--contain img{object-fit:contain}
+.product-detail-page .epp-thumbs{display:flex;flex-direction:row;align-items:flex-start;gap:10px;padding:0 0 10px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scroll-padding:0;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.product-detail-page .epp-thumb{box-sizing:border-box;flex:0 0 76px;width:76px;height:62px;border:0;border-bottom:2px solid transparent;border-radius:0;padding:0 0 5px;background:transparent;opacity:.6;cursor:pointer;transition:opacity .25s,border-color .25s}
+.product-detail-page .epp-thumb img{object-fit:cover;background:var(--cream-soft)}
+.product-detail-page .epp-thumb:hover,.product-detail-page .epp-thumb.is-active{opacity:1;border-bottom-color:var(--ember-deep)}
+.product-detail-page .epp-thumb:focus-visible{outline-offset:-2px}
+.product-detail-page .epp-thumb-play{bottom:5px;background:rgba(17,15,10,.45);font:500 12px var(--utility);letter-spacing:.1em}
+.product-detail-page .epp-visual-label,.product-detail-page .epp-visual-count{bottom:16px;padding:8px 11px;font:400 12px/1.4 var(--utility);letter-spacing:.025em;text-transform:none;background:rgba(254,255,253,.9)}
+.product-detail-page .epp-visual-label{left:16px;max-width:65%}
+.product-detail-page .epp-visual-count{right:16px;font-variant-numeric:tabular-nums}
+.epp-gallery-hint{display:flex;justify-content:space-between;gap:16px;margin:2px 0 0;padding-top:12px;border-top:1px solid var(--line);font:400 12px/1.6 var(--utility);color:rgba(17,15,10,.65)}
+@media(min-width:1025px){.product-detail-page .epp-gallery{padding-right:clamp(24px,3vw,48px)}}
+@media(max-width:700px){.product-detail-page .epp-gallery{padding-inline:20px}.product-detail-page .epp-gallery-topline{padding:0}.product-detail-page .epp-gallery-wrap{gap:14px}.product-detail-page .epp-thumb{flex-basis:68px;width:68px;height:58px}.product-detail-page .epp-visual-label,.product-detail-page .epp-visual-count{bottom:10px;font-size:11px}.product-detail-page .epp-visual-label{left:10px}.product-detail-page .epp-visual-count{right:10px}.epp-gallery-hint{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.product-detail-page .epp-thumb{transition:none}}

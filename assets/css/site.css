@@ -591,7 +591,7 @@ button{ font-family: inherit; cursor: pointer; }
 
 .hero-copy-title{
   font-family: var(--condensed);
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   text-transform: lowercase;
   letter-spacing: 0;
@@ -636,7 +636,7 @@ button{ font-family: inherit; cursor: pointer; }
   margin: 0;
   max-width: min(320px, 44vw);
   font-family: var(--condensed);
-  font-style: italic;
+  font-style: normal;
   font-size: clamp(14px, 1.5vw, 17px);
   line-height: 1.45;
   letter-spacing: 0.005em;
@@ -871,7 +871,7 @@ button{ font-family: inherit; cursor: pointer; }
 .showcase-name{
   margin: 0;
   font-family: var(--product-name);
-  font-style: italic;
+  font-style: normal;
   font-weight: 500;
   font-size: clamp(26px, 2.4vw, 36px);
   letter-spacing: 0.01em;
@@ -1087,23 +1087,32 @@ button{ font-family: inherit; cursor: pointer; }
   border-bottom: 1px solid rgba(235,227,210,.16);
 }
 .craft-side{ position: relative; min-width: 0; min-height: 0; overflow: hidden; }
-.craft-pin-media{ position: absolute; inset: 0; overflow: hidden; background: #090908; }
-.craft-pin-media::after{ content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, transparent 68%, rgba(9,8,7,.24)); }
+.craft-pin-media{ position: absolute; inset: 0; overflow: hidden; background: #090908; isolation: isolate; }
+.craft-pin-media::before{
+  content: ''; position: absolute; inset: -12%; z-index: 1; pointer-events: none;
+  background: radial-gradient(circle at 72% 42%, rgba(168,84,30,.3), transparent 42%), linear-gradient(115deg, transparent 25%, rgba(9,8,7,.62) 58%, transparent 82%);
+  opacity: 0; transform: translateX(-8%) scale(1.06);
+  transition: opacity .7s ease, transform 1.05s cubic-bezier(.22,1,.36,1);
+}
+.craft-pin-media::after{ content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(90deg, transparent 62%, rgba(9,8,7,.32)); }
 .craft-pin-video{
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; background: #090908;
-  opacity: 1;
-  /* Crossfade catre fundalul deja intunecat la schimbarea pasului — nu spre
-     alb, nu taie brusc cadrul. */
-  transition: opacity .32s ease;
+  opacity: 1; transform: scale(1.001); filter: blur(0) saturate(1);
+  transition: opacity .72s cubic-bezier(.22,1,.36,1), transform 1.15s cubic-bezier(.22,1,.36,1), filter .72s ease;
 }
-.craft-pin-video.is-switching{ opacity: 0; }
+.craft-pin-video.is-switching{ opacity: .12; transform: scale(1.035); filter: blur(5px) saturate(.72); }
+.craft-pin.is-changing .craft-pin-media::before{ opacity: 1; transform: translateX(5%) scale(1); }
 .craft-pin-copy{ position: absolute; inset: 0; display: flex; align-items: center; padding: clamp(34px, 5vw, 78px); }
 .craft-pin-panels{ position: relative; display: grid; width: 100%; }
-.craft-pin-panel{ grid-area: 1 / 1; margin: 0; opacity: 0; visibility: hidden; transform: translateY(18px); transition: opacity .45s ease, transform .55s cubic-bezier(.22,1,.36,1), visibility 0s linear .55s; }
-.craft-pin-panel.is-active{ opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.craft-pin-panel{
+  grid-area: 1 / 1; margin: 0; opacity: 0; visibility: hidden;
+  transform: translate3d(0,24px,0); filter: blur(3px); clip-path: inset(0 0 18% 0);
+  transition: opacity .5s ease, transform .72s cubic-bezier(.22,1,.36,1), filter .55s ease, clip-path .72s cubic-bezier(.22,1,.36,1), visibility 0s linear .72s;
+}
+.craft-pin-panel.is-active{ opacity: 1; visibility: visible; transform: translate3d(0,0,0); filter: blur(0); clip-path: inset(0); transition-delay: .16s; }
 .craft-pin-panel:last-child{ margin-bottom: 0; }
 .craft-pin-num{ display: block; margin: 0 0 24px; font-family: var(--body); font-size: 11px; font-weight: 600; letter-spacing: .15em; color: var(--ember); }
-.craft-pin-title{ display: block; margin: 0 0 20px; font-family: var(--product-name); font-size: clamp(34px, 3.4vw, 54px); font-style: italic; font-weight: 500; line-height: 1.02; letter-spacing: -.025em; color: var(--cream); }
+.craft-pin-title{ display: block; margin: 0 0 20px; font-family: var(--product-name); font-size: clamp(34px, 3.4vw, 54px); font-style: normal; font-weight: 500; line-height: 1.02; letter-spacing: -.025em; color: var(--cream); }
 .craft-pin-detail{ display: block; max-width: 38ch; font-size: 15px; line-height: 1.7; color: rgba(254,255,253,.67); }
 
 @media (max-width: 860px){
@@ -1332,7 +1341,7 @@ button{ font-family: inherit; cursor: pointer; }
   .footer-links div:first-child a{
     font-family: var(--display);
     font-size: 18px;
-    font-style: italic;
+    font-style: normal;
     color: var(--cream);
   }
   .footer-static{ color: rgba(254,255,253,.42); }
@@ -1366,7 +1375,7 @@ button{ font-family: inherit; cursor: pointer; }
     max-width: 15ch;
     font-family: var(--display);
     font-size: clamp(22px, 7vw, 28px);
-    font-style: italic;
+    font-style: normal;
     line-height: 1.22;
     color: var(--cream);
   }
@@ -2328,3 +2337,8 @@ html:not(.has-gsap) .hdr-panel.is-open{ transition-delay: 0s; }
 .flame-mark--confirmation{display:block;width:72px;height:110px;margin:0 auto 24px}
 @media(min-width:1025px){.rail-item .flame-mark--rail{width:28px;height:44px;transform:rotate(90deg)}.rail-item .flame-mark img,.rail-toggle:hover .rail-item .flame-mark img{width:100%;height:100%;transform:none;animation:none}}
 @media(prefers-reduced-motion:reduce){.flame-mark video{display:none}.flame-mark.is-playing img{opacity:1}}
+
+@media (prefers-reduced-motion: reduce){
+  .craft-pin-video,.craft-pin-media::before,.craft-pin-panel{transition:none;transform:none;filter:none;clip-path:none}
+  .craft-pin-video.is-switching{opacity:0}
+}

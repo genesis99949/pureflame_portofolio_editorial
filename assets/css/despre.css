@@ -57,7 +57,7 @@
   margin: 0;
   font-family: var(--display);
   font-size: clamp(52px, 6.8vw, 100px);
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   letter-spacing: -.035em;
   line-height: .98;
@@ -459,7 +459,7 @@
   margin: 28px 0 0;
   font-family: var(--display);
   font-size: 17px;
-  font-style: italic;
+  font-style: normal;
   line-height: 1.5;
   color: rgba(17,15,10,.68);
 }

@@ -132,7 +132,7 @@
 .ce-card-no{ font-family: var(--body); font-size: 10px; font-weight: 600; letter-spacing: 0.05em; color: var(--ember); }
 .ce-card-name{
   font-family: var(--product-name);
-  font-style: italic;
+  font-style: normal;
   font-weight: 500;
   font-size: clamp(24px, 2.6vw, 40px);
   line-height: 1;
@@ -250,7 +250,7 @@
 .ce-compare-table tbody th{
   font-family: var(--product-name);
   font-size: 27px;
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
 }
 .ce-compare-table tbody td{
@@ -653,7 +653,7 @@ button.ce-accessory-card:focus-visible,
   .ce-compare-card-head strong{
     font-family: var(--product-name);
     font-size: 28px;
-    font-style: italic;
+    font-style: normal;
     font-weight: 400;
     line-height: 1;
   }

@@ -4,7 +4,7 @@
 .cx-heading{grid-column:1/-1;display:grid;grid-template-columns:72px 1fr auto;align-items:baseline;gap:24px;margin-bottom:32px}
 .cx-index{font:500 10px/1.5 var(--utility);letter-spacing:.15em;color:var(--ember-deep)}
 .cx-heading h2{font:400 clamp(76px,10vw,156px)/.85 var(--editorial);letter-spacing:-.065em;margin:0}
-.cx-heading-note{font:italic 18px/1.4 var(--editorial);max-width:18ch}
+.cx-heading-note{font:normal 18px/1.4 var(--editorial);max-width:18ch}
 .ce-experiment .ce-card{grid-column:1/9;margin:0;align-self:start;min-width:0}
 .ce-experiment .ce-card-image{aspect-ratio:4/3}
 .ce-experiment .ce-card-image img{transition:none;object-position:center}

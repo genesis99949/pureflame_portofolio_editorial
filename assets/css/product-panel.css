@@ -92,7 +92,7 @@
 }
 .pd2-title{
   font-family: var(--product-name);
-  font-style: italic;
+  font-style: normal;
   font-weight: 500;
   text-transform: none;
   font-size: clamp(44px, 6vw, 66px);
@@ -103,7 +103,7 @@
 }
 .pd2-subtitle{
   font-family: var(--condensed);
-  font-style: italic;
+  font-style: normal;
   font-size: 16px;
   color: rgba(17,15,10,0.6);
   margin: 0 0 16px;
@@ -131,7 +131,7 @@
   padding: 2px 0 2px 18px;
   border-left: 2px solid var(--ember);
   font-family: var(--condensed);
-  font-style: italic;
+  font-style: normal;
   font-size: 14.5px;
   line-height: 1.6;
   color: rgba(17,15,10,0.75);

@@ -82,6 +82,20 @@
     section.setAttribute('aria-labelledby', headingId);
 
     const shelf = section.querySelector('.ce-accessory-grid');
+    shelf.tabIndex = 0;
+    shelf.setAttribute('role', 'region');
+    shelf.setAttribute('aria-label', 'Accesorii — derulează orizontal / Accessories — scroll horizontally');
+    shelf.addEventListener('keydown', (event) => {
+      if (event.target !== shelf || !window.matchMedia('(max-width: 1024px)').matches) return;
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();
+      const card = shelf.querySelector('.ce-accessory-card');
+      const gap = parseFloat(getComputedStyle(shelf).columnGap) || 0;
+      shelf.scrollBy({
+        left: (card.getBoundingClientRect().width + gap) * (event.key === 'ArrowRight' ? 1 : -1),
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      });
+    });
     const status = section.querySelector('.ce-accessory-status');
     const resetTimers = new WeakMap();
 

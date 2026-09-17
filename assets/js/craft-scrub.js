@@ -16,6 +16,7 @@
   var animationId = 0;
   var pendingAutoplay = false;
   var preloadLink = null;
+  var transitionTimer = 0;
 
   if (!video || !steps.length || sources.length !== panels.length) return;
 
@@ -87,6 +88,8 @@
     video.pause();
     // Fade lin catre fundalul deja intunecat cat timp se incarca noul clip —
     // fara flash, fara taietura brusca. Reapare la 'loadeddata'.
+    clearTimeout(transitionTimer);
+    pin.classList.add('is-changing');
     video.classList.add('is-switching');
     pendingAutoplay = shouldPlay;
     video.poster = posters[currentStep];
@@ -96,7 +99,12 @@
   }
 
   video.addEventListener('loadeddata', function () {
-    video.classList.remove('is-switching');
+    var reveal = function () {
+      video.classList.remove('is-switching');
+      transitionTimer = setTimeout(function () { pin.classList.remove('is-changing'); }, reducedMotion ? 0 : 760);
+    };
+    if (reducedMotion) reveal();
+    else requestAnimationFrame(function () { requestAnimationFrame(reveal); });
     if (pendingAutoplay) { pendingAutoplay = false; playVideo(); }
   });
   video.addEventListener('play', function () {
