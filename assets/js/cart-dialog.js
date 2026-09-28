@@ -20,7 +20,7 @@
   }
   function finish(){panel.close();document.body.style.overflow=overflow;trigger?.setAttribute('aria-expanded','false');trigger?.focus({preventScroll:true});}
   function hide(immediate=false){motion?.kill();if(!panel.open)return;if(!immediate&&window.gsap&&!matchMedia('(prefers-reduced-motion:reduce)').matches){motion=gsap.to(panel,{y:-40,opacity:0,duration:.25,ease:'power2.in',onComplete:finish});}else finish();}
-  document.addEventListener('click',e=>{const link=e.target.closest('.pf-floating-cart,#rail-menu a[href="cos-cumparaturi.html"]');if(!link||e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();e.stopImmediatePropagation();
+  document.addEventListener('click',e=>{const link=e.target.closest('.pf-floating-cart,.rail-cart,#rail-menu a[href="cos-cumparaturi.html"]');if(!link||e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();e.stopImmediatePropagation();
    if(panel.open){hide();return;}
    // Close the navigation first so its scroll lock cannot outlive the cart.
    const rail=document.querySelector('#rail-menu');if(rail?.open){rail.dispatchEvent(new Event('pf-close-now'));}

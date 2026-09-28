@@ -1,0 +1,83 @@
+/* PureFlame micro-typography polish — Work Sans */
+:root{
+  --ui-copy-size:15px;
+  --ui-small-size:13px;
+  --ui-label-size:12px;
+  --ui-label-spacing:.075em;
+}
+
+/* Functional copy should read like copy, not like a decorative caption. */
+body{font-optical-sizing:auto}
+button,input,select,textarea{font-family:var(--utility)}
+small,.note{font-size:var(--ui-small-size);line-height:1.55}
+
+/* Navigation and actions. */
+.site-header a,.site-header button,
+#siteNav a,#siteNav button,
+#rail-menu a,#rail-menu button,
+.lh-footer,.lh-cart-list,
+.cart-continue,.checkout-summary-cta,.finalize-submit{
+  font-weight:500;
+}
+#rail-menu .menu-models h2,#siteNav .menu-models h2,
+#rail-menu .menu-useful-links a,#siteNav .menu-useful-links a{
+  font-size:13px;
+  letter-spacing:.035em;
+}
+
+/* Recurrent editorial labels: still precise, but no longer tiny or over-spaced. */
+.ce-kicker,.ce-section-kicker,.cx-index,
+.epp-eyebrow,.epp-section-kicker,.av-kicker,
+.epp-story-intro p,.epp-measure-method,.epp-measure-copy>p:first-child,
+.epp-review-section>p:first-child,.epp-reviews-head>p,
+.epp-review-form-eyebrow,.epp-compare-head>p,.epp-collection-nav-eyebrow,
+.checkout-heading-kicker,.checkout-card-eyebrow,
+.cart-editorial .checkout-heading-kicker,
+.finalize-editorial .checkout-card-eyebrow{
+  font-size:var(--ui-label-size);
+  line-height:1.5;
+  font-weight:600;
+  letter-spacing:var(--ui-label-spacing);
+}
+
+/* Product information and commerce copy must remain comfortably readable. */
+.epp-price-row>span,.epp-option-block legend,
+.epp-gallery-topline,.epp-gallery-hint,
+.epp-accessories .ce-accessory-price,.epp-accessories .ce-accessory-variant,
+.av-launch p,.av-hint,.av-detail p,.av-note,
+.cart-editorial .checkout-delivery-eta,.cart-editorial .cart-line-meta,
+.cart-editorial .cart-line-price,.cart-editorial .checkout-summary-note,
+.cart-editorial .checkout-secure-note,.finalize-editorial .checkout-summary-note,
+.finalize-summary-item-qty{
+  font-size:13px;
+  line-height:1.6;
+  letter-spacing:0;
+}
+
+/* Steps and chapter navigation stay compact, but are no longer hairline microtext. */
+.checkout-steps,.cart-editorial .checkout-steps,.finalize-editorial .checkout-steps,
+.epp-path-nav a{
+  font-size:12px;
+  font-weight:600;
+  line-height:1.45;
+  letter-spacing:.065em;
+}
+
+/* Secondary actions. */
+.cart-line-remove,.addon-variant,.epp-reviews-more,
+.epp-measure-copy a,.product-viewer button,.av-part-list button,.av-options button{
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:.015em;
+}
+
+/* Preserve genuinely decorative indices and dimension markers at micro scale. */
+.ce-card-no,.epp-measure-dimension,.av-detail-number,.craft-pin-num{
+  font-variant-numeric:tabular-nums;
+}
+
+@media(max-width:700px){
+  .checkout-steps,.cart-editorial .checkout-steps,.finalize-editorial .checkout-steps,
+  .epp-path-nav a{font-size:11px;letter-spacing:.055em}
+  #rail-menu .menu-useful-links a,#siteNav .menu-useful-links a{font-size:14px}
+}

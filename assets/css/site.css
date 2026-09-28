@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Italianno&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+@font-face{font-family:'Locke';src:url('../fonts/locke-regular.otf') format('opentype');font-style:normal;font-weight:400;font-display:swap;}
 
 :root{
   /* Sistem tipografic: Georgia aduce vocea editoriala, Work Sans tine
@@ -6,7 +7,7 @@
      Italianno e un accent de scriere de mana, folosit punctual (ex.
      filigranul din spatele galeriei Lifestyle), nu ca voce principala. */
   --editorial: Georgia, 'Times New Roman', serif;
-  --utility: 'Work Sans', 'Helvetica Neue', Arial, sans-serif;
+  --utility: 'Work Sans', Arial, sans-serif;
   --script: 'Italianno', 'Brush Script MT', cursive;
   --product-name: var(--editorial);
   --cream: #FEFFFD;
@@ -768,7 +769,7 @@ button{ font-family: inherit; cursor: pointer; }
   letter-spacing: -0.015em;
   font-size: clamp(32px, 5vw, 58px);
   margin:0;
-  line-height: 1;
+  line-height: 1.06;
 }
 .section-head p{
   max-width: 360px;
@@ -1151,7 +1152,7 @@ button{ font-family: inherit; cursor: pointer; }
   text-transform: none;
   letter-spacing: -0.025em;
   font-size: clamp(36px, 6vw, 86px);
-  line-height: 0.98;
+  line-height: 1.04;
   text-wrap: balance;
   margin: 0 0 34px;
 }
@@ -2341,4 +2342,19 @@ html:not(.has-gsap) .hdr-panel.is-open{ transition-delay: 0s; }
 @media (prefers-reduced-motion: reduce){
   .craft-pin-video,.craft-pin-media::before,.craft-pin-panel{transition:none;transform:none;filter:none;clip-path:none}
   .craft-pin-video.is-switching{opacity:0}
+}
+
+/* Cart feedback: a short label slides out beside the cart icon when an item lands. */
+.pf-cart-flag{position:fixed;z-index:120;display:flex;align-items:baseline;gap:8px;padding:11px 15px;border:1px solid var(--line-dark);background:var(--charcoal);color:var(--cream-soft);font:500 12px/1.35 var(--utility);letter-spacing:.02em;white-space:nowrap;box-shadow:0 12px 34px rgba(17,15,10,.24);opacity:0;pointer-events:none;transition:opacity .28s ease,transform .5s cubic-bezier(.22,1,.36,1)}
+.pf-cart-flag b{max-width:min(210px,42vw);overflow:hidden;text-overflow:ellipsis;font-weight:500;color:var(--ember-bright)}
+.pf-cart-flag[data-side=right]{transform:translate(-12px,-50%)}
+.pf-cart-flag[data-side=left]{transform:translate(12px,-50%)}
+.pf-cart-flag.is-visible{opacity:1;transform:translate(0,-50%)}
+.rail-cart.is-cart-added,.cart-link.is-cart-added{color:var(--ember-bright)}
+.rail-cart.is-cart-added .cart-badge,.cart-link.is-cart-added .cart-badge{animation:pf-badge-pop .55s cubic-bezier(.22,1,.36,1)}
+@keyframes pf-badge-pop{0%{transform:scale(.55)}55%{transform:scale(1.18)}100%{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){
+ .pf-cart-flag{transition:opacity .2s ease}
+ .pf-cart-flag[data-side=right],.pf-cart-flag[data-side=left]{transform:translate(0,-50%)}
+ .rail-cart.is-cart-added .cart-badge,.cart-link.is-cart-added .cart-badge{animation:none}
 }

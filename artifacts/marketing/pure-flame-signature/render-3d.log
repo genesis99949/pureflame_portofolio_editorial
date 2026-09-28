@@ -1,0 +1,23 @@
+Blender Codex MCP addon registered
+Blender Codex MCP addon unregistered
+14:35:05 | INFO: Data are loaded, start creating Blender stuff
+14:35:05 | INFO: Blender create Mesh node Cube.054
+14:35:05 | INFO: Blender create Mesh node Inset plinth
+14:35:05 | INFO: Blender create Mesh node AETHER | Main concrete shell • Ø 835 mm
+14:35:05 | INFO: Blender create Mesh node Deep stainless burner bowl
+14:35:05 | INFO: Blender create Mesh node Torus
+14:35:05 | INFO: Blender create Mesh node Cube.038
+14:35:05 | INFO: Blender create Mesh node Cylinder.076
+14:35:05 | INFO: Blender create Mesh node Curved tempered glass • panel 1
+14:35:05 | INFO: Blender create Mesh node Cube.003
+14:35:05 | INFO: Blender create Mesh node Cube.006
+14:35:05 | INFO: Blender create Mesh node Cube
+14:35:05 | INFO: Blender create Mesh node Icosphere.170
+14:35:05 | INFO: glTF import finished in 0.44s
+F:\Projects\Pureflame\Website\PF Copy - Git - Editorial Integration\artifacts\marketing\pure-flame-signature\render_3d.py:15: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name);m.use_nodes=True
+00:32.703  render           | Saved: 'F:\Projects\Pureflame\Website\PF Copy - Git - Editorial Integration\artifacts\marketing\pure-flame-signature\photography-3d.png'
+Info: Saved as "aether-editorial.blend"
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 02:38:20)
+
+Blender quit

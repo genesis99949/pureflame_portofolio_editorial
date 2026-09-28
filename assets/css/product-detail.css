@@ -550,7 +550,7 @@ body.epp-lightbox-open{ overflow: hidden; }
 }
 .epp-compare-head{ max-width: 680px; margin-bottom: 38px; }
 .epp-compare-head > p{ margin: 0 0 12px; font-family: var(--body); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ember); }
-.epp-compare-head h2{ margin: 0 0 13px; font-family: var(--display); font-size: clamp(42px,5vw,72px); font-weight: 400; line-height: 0.94; color: var(--charcoal); }
+.epp-compare-head h2{ margin: 0 0 13px; font-family: var(--display); font-size: clamp(42px,5vw,72px); font-weight: 400; line-height: 1.02; color: var(--charcoal); }
 .epp-compare-head > span{ font-family: var(--condensed); font-size: 15px; line-height: 1.6; color: rgba(17,15,10,0.66); }
 .epp-compare-scroll{ overflow-x: auto; border-top: 1px solid var(--charcoal); scrollbar-width: thin; }
 .epp-compare-scroll:focus-visible{ outline: 2px solid var(--ember); outline-offset: 4px; }
@@ -728,11 +728,11 @@ a.epp-collection-nav-card:hover .epp-collection-nav-arrow{ transform: translate(
 }
 
 /* ---- Cifre în coloane ----
-   Work Sans are cifre proporționale: „1" e vizibil mai îngust decât „4", deci
+   Georgia are cifre proporționale: „1" e vizibil mai îngust decât „4", deci
    prețurile și dimensiunile așezate unele sub altele nu se aliniază pe verticală.
    Peste tot unde cifrele chiar stau în coloană trecem pe cifre tabulare; în text
    curgător rămân cele proporționale, care se citesc mai natural.
-   Doar elemente setate în Work Sans — Georgia (`--display`) are cifre de tip text
+   Doar elemente setate în Georgia — Georgia (`--display`) are cifre de tip text
    și nu răspunde previzibil la proprietatea asta. */
 .epp-compare-section th,
 .epp-compare-section td,

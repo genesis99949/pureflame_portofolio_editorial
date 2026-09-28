@@ -1,0 +1,518 @@
+/* Following homepage sections: preserve their independent layout rules. */
+.home-lifestyle{
+  position: relative;
+  padding: clamp(84px, 10vw, 150px) 5vw clamp(100px, 12vw, 180px);
+  overflow: hidden;
+  isolation: isolate;
+  background: #12110e;
+  color: var(--cream);
+}
+.home-lifestyle-heading{
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(260px, .45fr);
+  align-items: end;
+  gap: clamp(40px, 8vw, 130px);
+  max-width: 1500px;
+  margin: 0 auto;
+}
+.home-section-kicker{
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0 0 22px;
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.home-section-number{ color: var(--ember); }
+.home-lifestyle .home-section-kicker{ color: rgba(254,255,253,.72); }
+.home-lifestyle h2{
+  max-width: 980px;
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(52px, 8.5vw, 128px);
+  font-weight: 400;
+  line-height: .88;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+.home-lifestyle-aside{
+  max-width: 390px;
+  padding-bottom: 5px;
+}
+.home-lifestyle-aside p{
+  margin: 0;
+  font-family: var(--condensed);
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.55;
+  color: rgba(254,255,253,.7);
+}
+/* Hover identic cu linkurile din header (.nav a din site.css): culoarea trece
+   pe ember si o linie se deseneaza de la stanga la dreapta. Linia statica
+   ramane la locul ei — ::after o acopera exact (bottom:-1px peste border-ul
+   de 1px), ca linkul sa arate a link si in repaus, nu doar la hover. */
+.home-lifestyle-aside a{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(254,255,253,.65);
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--cream);
+  transition: color .35s ease;
+}
+.home-lifestyle-aside a::after{
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .3s ease;
+}
+/* Fundal inchis (#12110e) — ember-bright, ca in headerul de pe desktop. */
+.home-lifestyle-aside a:hover{ color: var(--ember-bright); }
+.home-lifestyle-aside a:hover::after{ transform: scaleX(1); transform-origin: left; }
+.home-lifestyle-aside a span:last-child{ transition: transform .2s ease; }
+.home-lifestyle-aside a:hover span:last-child{ transform: translateX(4px); }
+.home-lifestyle-gallery{
+  position: relative;
+  max-width: 1600px;
+  height: clamp(680px, 68vw, 1040px);
+  margin: clamp(72px, 9vw, 135px) auto 0;
+}
+.home-lifestyle-wordmark{
+  position: absolute;
+  z-index: 0;
+  left: -1vw;
+  top: -9vw;
+  font-family: var(--script);
+  font-size: clamp(120px, 22vw, 340px);
+  font-weight: 400;
+  font-style: normal;
+  line-height: .8;
+  letter-spacing: 0;
+  white-space: nowrap;
+  /* Italianno e desenat pt. minuscule legate — literele mari sunt majuscule
+     ornamentale separate, ilizibile pe un cuvant intreg scris cu CAPS. */
+  text-transform: lowercase;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(254,255,253,.16);
+}
+.home-lifestyle-frame{
+  position: absolute;
+  display: block;
+  margin: 0;
+  overflow: hidden;
+  background: #28251f;
+  color: var(--cream);
+  box-shadow: 0 30px 80px rgba(0,0,0,.3);
+}
+.home-lifestyle-frame-main{
+  z-index: 1;
+  left: 12%;
+  top: 0;
+  width: 76%;
+  aspect-ratio: 16 / 9;
+}
+.home-lifestyle-frame-aether{
+  z-index: 3;
+  left: 0;
+  bottom: 1%;
+  width: 32%;
+  aspect-ratio: 4 / 3;
+}
+.home-lifestyle-frame-ignite{
+  z-index: 4;
+  right: 0;
+  bottom: 8%;
+  width: 35%;
+  aspect-ratio: 4 / 3;
+}
+.home-lifestyle-frame img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+/* Keep the Embera table fully visible in the desktop landscape crop. */
+.home-lifestyle-frame-main img{
+  object-position: center bottom;
+}
+.home-lifestyle-frame::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 58%, rgba(8,7,5,.65));
+}
+.home-lifestyle-caption{
+  position: absolute;
+  z-index: 2;
+  left: 18px;
+  right: 18px;
+  bottom: 15px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--body);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.home-lifestyle-caption > span:last-child{
+  font-variant-numeric: tabular-nums;
+  color: var(--ember);
+}
+
+/* ============================================================
+   HOME — CHOOSE BY SPACE
+   ============================================================ */
+.home-space-guide{
+  padding: clamp(80px, 10vw, 140px) 5vw;
+  background: var(--cream);
+  color: var(--charcoal);
+}
+.home-space-guide-head{
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, .6fr);
+  align-items: end;
+  gap: 30px;
+  margin-bottom: clamp(54px, 7vw, 90px);
+}
+.home-space-guide-head .home-section-kicker{
+  grid-column: 1 / -1;
+  margin-bottom: -4px;
+  color: rgba(17,15,10,.55);
+}
+.home-space-guide-head h2{
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(42px, 6.7vw, 92px);
+  font-weight: 400;
+  line-height: .94;
+  letter-spacing: -.03em;
+}
+.home-space-guide-head > p:last-child{
+  max-width: 420px;
+  margin: 0 0 4px;
+  font-family: var(--condensed);
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.55;
+  color: rgba(17,15,10,.66);
+}
+.home-space-method{
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 18px;
+  font-family: var(--body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  line-height: 1.45;
+  text-align: right;
+  text-transform: uppercase;
+  color: rgba(17,15,10,.52);
+}
+.home-space-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.home-space-card{
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 22px clamp(18px, 2vw, 30px) 26px;
+  color: inherit;
+  background: transparent;
+  transition: background-color .3s ease;
+}
+.home-space-card + .home-space-card{ border-left: 1px solid var(--line); }
+.home-space-card:hover,
+.home-space-card:focus-visible{ background: var(--cream-soft); }
+.home-space-card-topline{
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(17,15,10,.48);
+}
+.home-space-card-topline > span:first-child{ color: var(--ember); }
+.home-space-diagram{
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  margin: 22px 0 18px;
+  padding: 38px 28px 34px;
+  overflow: hidden;
+  background-color: var(--cream-soft);
+  background-image:
+    linear-gradient(rgba(17,15,10,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17,15,10,.055) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.home-space-scale{
+  position: relative;
+  display: block;
+  width: min(92%, 520px);
+  aspect-ratio: 5 / 3;
+}
+.home-space-footprint{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  border: 1px solid rgba(17,15,10,.42);
+  background: linear-gradient(145deg, rgba(255,255,255,.5), rgba(17,15,10,.08));
+  box-shadow: inset 0 0 0 5px rgba(255,255,255,.3), 0 12px 26px rgba(17,15,10,.09);
+  transform: translate(-50%, -50%);
+  transition: border-color .3s ease, box-shadow .3s ease;
+}
+.home-space-card-aether .home-space-footprint{
+  width: 52.1875%;
+  height: 86.9792%;
+  border-radius: 50%;
+}
+.home-space-card-flavo .home-space-footprint{
+  width: 60%;
+  height: 100%;
+}
+.home-space-card-fera .home-space-footprint{
+  width: 100%;
+  height: 71.875%;
+}
+.home-space-burner{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  border: 1px solid rgba(17,15,10,.55);
+  background: var(--charcoal);
+  box-shadow: 0 0 0 5px rgba(17,15,10,.1);
+  transform: translate(-50%, -50%);
+}
+.home-space-burner::after{
+  content: "";
+  position: absolute;
+  inset: 26%;
+  border-radius: inherit;
+  background: var(--ember);
+  opacity: .78;
+}
+.home-space-card-aether .home-space-burner{
+  width: 52%;
+  height: 52%;
+  border-radius: 50%;
+}
+.home-space-card-flavo .home-space-burner{
+  width: 50%;
+  height: 50%;
+  border-radius: 2px;
+}
+.home-space-card-flavo .home-space-burner::after{ border-radius: 50%; }
+.home-space-card-fera .home-space-burner{
+  width: 76%;
+  height: 34%;
+  border-radius: 999px;
+}
+.home-space-measure{
+  position: absolute;
+  z-index: 2;
+  display: block;
+  padding: 2px 5px;
+  font-family: var(--body);
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+  line-height: 1;
+  white-space: nowrap;
+  color: rgba(17,15,10,.62);
+  background: var(--cream-soft);
+}
+.home-space-measure-x{
+  left: 50%;
+  bottom: -22px;
+  transform: translateX(-50%);
+}
+.home-space-measure-y{
+  top: 50%;
+  left: -30px;
+  transform: translateY(-50%) rotate(-90deg);
+}
+.home-space-card:hover .home-space-footprint,
+.home-space-card:focus-visible .home-space-footprint{
+  border-color: var(--ember);
+  box-shadow: inset 0 0 0 5px rgba(255,255,255,.3), 0 16px 32px rgba(17,15,10,.14);
+}
+.home-space-card-meta{
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.home-space-card-meta > span:first-child{
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.home-space-card-meta strong{
+  font-family: var(--product-name);
+  font-size: clamp(28px, 2.6vw, 40px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+}
+.home-space-card-meta small{
+  max-width: 220px;
+  font-family: var(--condensed);
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(17,15,10,.58);
+}
+.home-space-dims{
+  padding-top: 6px;
+  font-family: var(--body);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  color: rgba(17,15,10,.58);
+}
+.home-space-arrow{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 18px;
+  color: var(--ember);
+  transform: translate(-4px, 4px);
+  opacity: 0;
+  transition: transform .25s ease, opacity .25s ease;
+}
+.home-space-card:hover .home-space-arrow,
+.home-space-card:focus-visible .home-space-arrow{
+  transform: translate(0, 0);
+  opacity: 1;
+}
+.home-space-guide-cta{
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(48px, 6vw, 78px);
+}
+/* Acelasi hover ca in header — vezi nota de la .home-lifestyle-aside a. */
+.home-space-guide-cta a{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid currentColor;
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  transition: color .35s ease;
+}
+.home-space-guide-cta a::after{
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .3s ease;
+}
+/* Fundal crem — ember (nu ember-bright, care s-ar pierde pe deschis). */
+.home-space-guide-cta a:hover{ color: var(--ember); }
+.home-space-guide-cta a:hover::after{ transform: scaleX(1); transform-origin: left; }
+.home-space-guide-cta a span:last-child{ transition: transform .2s ease; }
+.home-space-guide-cta a:hover span:last-child{ transform: translateX(4px); }
+
+@media (max-width: 900px){
+  .home-lifestyle-heading{ display: block; }
+  .home-lifestyle-aside{ margin-top: 30px; }
+  .home-lifestyle-gallery{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    height: auto;
+    margin-top: 68px;
+  }
+  .home-lifestyle-wordmark{ display: none; }
+  .home-lifestyle-frame{
+    position: relative;
+    inset: auto;
+    width: auto;
+  }
+  .home-lifestyle-frame-main{
+    grid-column: 1 / -1;
+    aspect-ratio: 4 / 3;
+  }
+  .home-lifestyle-frame-aether,
+  .home-lifestyle-frame-ignite{ aspect-ratio: 4 / 3; }
+  .home-space-guide-head{ display: block; }
+  .home-space-guide-head .home-section-kicker{ margin-bottom: 22px; }
+  .home-space-guide-head > p:last-child{ margin-top: 24px; }
+  .home-space-grid{ grid-template-columns: 1fr; }
+  .home-space-card + .home-space-card{
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .home-space-diagram{
+    aspect-ratio: 16 / 9;
+    max-height: 440px;
+  }
+}
+
+@media (max-width: 560px){
+  .home-lifestyle{ padding-inline: 18px; }
+  .home-lifestyle-gallery{ grid-template-columns: 1fr; }
+  .home-lifestyle-frame-main,
+  .home-lifestyle-frame-aether,
+  .home-lifestyle-frame-ignite{ grid-column: auto; }
+  .home-space-card{ padding-inline: 0; }
+  .home-space-card:hover,
+  .home-space-card:focus-visible{ background: transparent; }
+  .home-space-method{
+    justify-content: flex-start;
+    text-align: left;
+  }
+  .home-space-diagram{
+    aspect-ratio: 4 / 3;
+    padding-inline: 22px;
+  }
+  .home-space-scale{ width: 90%; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .home-lifestyle-frame img,
+  .home-lifestyle-aside a span:last-child,
+  .home-space-card,
+  .home-space-footprint,
+  .home-space-arrow,
+  .home-space-guide-cta a span:last-child{ transition: none; }
+}

@@ -15,11 +15,14 @@
 
   window.gsap.registerPlugin(window.ScrollTrigger);
 
+  // Pinul se opreste cel tarziu cand colectia a trecut complet: pe ecranele
+  // unde colectia e mai scurta decat hero-ul (tableta, desktop inalt), hero-ul
+  // fixat ar iesi altfel sub ea, peste inceputul sectiunii urmatoare.
   var stackTrigger = window.ScrollTrigger.create({
     id: 'home-card-stack',
     trigger: hero,
     start: 'top top',
-    end: function () { return '+=' + hero.offsetHeight; },
+    end: function () { return '+=' + Math.min(hero.offsetHeight, collection.offsetHeight); },
     pin: hero,
     pinSpacing: false,
     anticipatePin: 1,
@@ -29,4 +32,14 @@
   window.addEventListener('pageshow', function () {
     stackTrigger.refresh();
   });
+
+  // Schimbarea modelului din colectie ii poate modifica inaltimea.
+  if ('ResizeObserver' in window) {
+    var collectionHeight = collection.offsetHeight;
+    new ResizeObserver(function () {
+      if (collection.offsetHeight === collectionHeight) return;
+      collectionHeight = collection.offsetHeight;
+      stackTrigger.refresh();
+    }).observe(collection);
+  }
 })();

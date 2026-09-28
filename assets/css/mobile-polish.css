@@ -1,3 +1,4 @@
+@import url('./type-polish.css?v=20260925');
 /* Vector icons remain monochrome on iOS, independent of emoji fonts. */
 .ce-card-arrow svg{display:block;width:18px;height:18px}
 @media(max-width:1024px){

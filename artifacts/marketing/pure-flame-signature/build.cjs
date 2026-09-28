@@ -1,0 +1,8 @@
+const fs=require('fs'),path=require('path');
+const dir=__dirname,root=path.resolve(dir,'../../..');
+const encode=p=>'data:image/png;base64,'+fs.readFileSync(p).toString('base64');
+const html=`<!doctype html><html lang="ro"><meta charset="utf-8"><title>Pure Flame — Mai stai puțin.</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500&display=swap');
+*{box-sizing:border-box}html,body{margin:0;width:1080px;height:1350px;overflow:hidden;background:#f4f1ea;color:#29261f}main{position:relative;width:1080px;height:1350px;overflow:hidden}.scene{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}header{position:absolute;left:86px;top:84px}.eyebrow{font:500 15px 'Work Sans',Arial,sans-serif;letter-spacing:4px;margin:0 0 32px}h1{font:400 110px/.99 Georgia,serif;letter-spacing:-5px;margin:0}h1 em{font-weight:400;color:#a65e31}p{font:400 23px/1.5 'Work Sans',Arial,sans-serif;letter-spacing:-.3px;margin:27px 0 0}.brand{position:absolute;bottom:64px;left:86px;width:267px;height:auto}.name{position:absolute;right:88px;bottom:86px;font:400 20px Georgia,serif;letter-spacing:1px}
+</style><main><img class="scene" src="${encode(path.join(dir,'photography.png'))}" alt="Masă Aether cu foc pe o terasă luminoasă"><header><div class="eyebrow">ÎN JURUL FOCULUI</div><h1>Mai stai<br><em>puțin.</em></h1><p>Mese cu foc pentru serile de afară.</p></header><img class="brand" src="${encode(path.join(root,'assets/brand/pf-inline.png'))}" alt="Pure Flame"><span class="name">Aether</span></main></html>`;
+fs.writeFileSync(path.join(dir,'pure-flame-signature.html'),html);

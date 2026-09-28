@@ -907,7 +907,7 @@ body:has(.checkout-page) .site-footer{ margin-top: auto; }
 }
 
 /* Sume în coloană: preț pe linie, accesorii, subtotal. Totalul rămâne pe dinafară,
-   fiind setat în Georgia (`--display`), nu în Work Sans. */
+   fiind setat în Georgia (`--display`), nu în Georgia. */
 .cart-line-price,
 .addon-price,
 .checkout-summary-row:not(.is-total) > span:last-child{ font-variant-numeric: tabular-nums; }

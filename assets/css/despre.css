@@ -156,7 +156,7 @@
   font-size: clamp(44px, 6vw, 86px);
   font-weight: 400;
   letter-spacing: -.04em;
-  line-height: .98;
+  line-height: 1.04;
   text-wrap: balance;
   justify-self: end;
   text-align: right;
@@ -235,7 +235,7 @@
   font-size: clamp(48px, 6.4vw, 92px);
   font-weight: 400;
   letter-spacing: -.045em;
-  line-height: .94;
+  line-height: 1.02;
   text-wrap: balance;
 }
 .despre-materials-head h2 em{ color: var(--ember-deep); font-weight: 400; }

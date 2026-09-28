@@ -173,3 +173,72 @@
 #rail-menu{left:0;width:100vw;padding-left:56px}
 .rail-modal-toggle{position:absolute;inset:0 auto 0 0;width:56px;height:100%;min-height:100dvh;background:var(--charcoal);border-right:1px solid var(--line-dark);z-index:5}
 @media(prefers-reduced-motion:reduce){.rail-single-icon i{transition:none}}
+
+/* Rail as a real header: home mark, menu, cart and language in one column.
+   Scoped to .editorial-rail so the cloned toggle inside the open menu keeps
+   its own full-height layout. */
+@media(min-width:1025px){
+ .editorial-rail{display:flex;flex-direction:column;align-items:center;gap:10px;padding:22px 0 14px}
+ .rail-home{flex:none;display:flex;align-items:center;justify-content:center;width:100%;height:34px;color:var(--cream)}
+ .rail-home img{width:19px;height:30px;object-fit:contain}
+ .rail-home:hover img{animation:rail-flame-pulse-static 1.1s ease-in-out 1}
+ .rail-home:focus-visible{outline:2px solid var(--ember);outline-offset:-4px}
+ .editorial-rail > .rail-toggle{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;width:100%;height:auto;min-height:0}
+ .editorial-rail > .rail-toggle .rail-single-icon{position:relative;flex:none;left:auto;bottom:auto}
+ .editorial-rail > .rail-toggle .rail-single-label{position:relative;inset:auto;flex:none;display:flex}
+ .rail-cart{position:relative;flex:none;display:flex;align-items:center;justify-content:center;width:44px;height:44px;color:var(--cream);transition:color .25s}
+ .rail-cart svg{width:20px;height:20px}
+ .rail-cart:hover{color:var(--ember-bright)}
+ .rail-cart:focus-visible{outline:2px solid var(--ember);outline-offset:-4px}
+ .rail-cart .cart-badge{top:3px;right:5px}
+ .rail-lang{flex:none;flex-direction:column;gap:0;padding-bottom:2px}
+ .rail-lang .lang-btn{min-width:0;width:36px;min-height:32px;padding:0;border:0;border-radius:0;background:transparent;font-size:10px;letter-spacing:.1em;color:var(--cream-soft);transition:color .2s}
+ .rail-lang .lang-btn:hover{color:var(--cream)}
+ .rail-lang .lang-btn.active{color:var(--ember-bright)}
+ .rail-lang .lang-btn:focus-visible{outline:2px solid var(--ember);outline-offset:-2px}
+ /* The rail carries the cart now; the floating button would be a second one. */
+ body.home-rail-page .pf-floating-cart{display:none}
+}
+@keyframes rail-flame-pulse-static{0%,100%{transform:scale(1);filter:none}32%{transform:scale(1.09);filter:drop-shadow(0 0 4px rgba(240,145,63,.45))}62%{transform:scale(.99);filter:none}80%{transform:scale(1.025)}}
+@media(prefers-reduced-motion:reduce){.rail-home:hover img{animation:none}.rail-cart,.rail-lang .lang-btn{transition:none}}
+
+/* Hamburger hover: the asymmetry swaps — the top bar retracts while the bottom
+   one extends — with a small stagger and a warm-up. Width was missing from the
+   transition list, so the old hover snapped instead of easing. */
+@media(min-width:1025px){
+ .editorial-rail > .rail-toggle .rail-single-icon i{transition:transform .5s cubic-bezier(.22,1,.36,1),top .5s cubic-bezier(.22,1,.36,1),width .5s cubic-bezier(.22,1,.36,1),background-color .35s ease}
+ .editorial-rail > .rail-toggle:not([aria-expanded="true"]):hover .rail-single-icon i,
+ .editorial-rail > .rail-toggle:not([aria-expanded="true"]):focus-visible .rail-single-icon i{width:14px;top:5px;background:var(--ember-bright)}
+ .editorial-rail > .rail-toggle:not([aria-expanded="true"]):hover .rail-single-icon i+i,
+ .editorial-rail > .rail-toggle:not([aria-expanded="true"]):focus-visible .rail-single-icon i+i{width:20px;top:14px;transition-delay:.06s}
+}
+@media(prefers-reduced-motion:reduce){.editorial-rail > .rail-toggle .rail-single-icon i{transition:none}}
+
+/* Treat the desktop rail as one quiet, olive hover surface. */
+@media(min-width:1025px) and (hover:hover){
+ .editorial-rail{
+  transition:background-color .32s ease,border-color .32s ease,color .32s ease;
+ }
+ .editorial-rail:hover{
+  background:var(--olive);
+  border-right-color:var(--olive);
+  color:var(--cream);
+ }
+ .editorial-rail:hover > .rail-toggle{
+  background:transparent;
+ }
+ .editorial-rail:hover > .rail-toggle:not([aria-expanded="true"]):is(:hover,:focus-visible) .rail-single-icon i{
+  background:var(--cream);
+ }
+ .editorial-rail:hover > .rail-cart,
+ .editorial-rail:hover > .rail-lang .lang-btn,
+ .editorial-rail:hover > .rail-lang .lang-btn.active{
+  color:var(--cream);
+ }
+}
+@media(min-width:1025px){
+ .editorial-rail > .rail-toggle::after{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ .editorial-rail{transition:none}
+}
