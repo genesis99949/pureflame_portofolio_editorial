@@ -60,7 +60,11 @@
       content: '#smooth-content',
       smooth: 1.2,
       effects: true,
-      normalizeScroll: true
+      normalizeScroll: {
+        debounce: true,
+        content: '#smooth-content',
+        allowNestedScroll: true
+      }
     });
 
     // Modalele/meniul mobil blocheaza scroll-ul cu body.style.overflow =

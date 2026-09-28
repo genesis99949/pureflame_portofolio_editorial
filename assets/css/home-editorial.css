@@ -43,6 +43,7 @@
 .hec-options button:hover { border-bottom-color: var(--ember); background: var(--cream-soft); }
 .hec-status { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 @media (hover:hover) { .hec-feature-image:hover img { transform: scale(1.025); } }
+@media (any-pointer:coarse) { .hec-showcase { touch-action: pan-y; overscroll-behavior-inline: contain; } }
 @media (max-width:699px) {
   .hec-countmark { display: none; }
   .hec-feature { grid-template-columns: 1fr; gap: 0; }

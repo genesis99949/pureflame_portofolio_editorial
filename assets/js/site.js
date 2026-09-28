@@ -1,58 +1,87 @@
-// ---- Adaptive header: vizibil sus, se ascunde cand cobori, reapare
-// imediat cand urci — indiferent de pagina sau de cat ai derulat deja. ----
+// ---- Adaptive header: vizibil sus, se ascunde cand cobori, reapare cand
+// urci suficient. Pe touch asteapta finalul gestului, ca micile inversari
+// produse cat timp degetul este pe ecran sa nu faca headerul sa palpaie. ----
 (function(){
   const header = document.getElementById('header');
   if (!header) return;
   const HIDE_AFTER = 80;
+  const coarsePointer = window.matchMedia('(any-pointer: coarse)');
   const getScrollY = () => window.PFScroll ? window.PFScroll.get() : window.scrollY;
   const show = () => header.classList.remove('hidden');
   const hide = () => header.classList.add('hidden');
+  const distanceToHide = () => coarsePointer.matches ? 56 : 10;
+  const distanceToShow = () => coarsePointer.matches ? 84 : 10;
 
-  // ScrollSmoother continua sa interpoleze pozitia dupa un gest de scroll.
-  // Compararea fiecarui pixel intermediar producea inversari false de directie
-  // si headerul palpaita. ScrollTrigger cunoaste directia normalizata a
-  // aceluiasi motor si este sursa stabila atunci cand pluginul este prezent.
+  let anchorY = Math.max(0, getScrollY());
+  let touchAnchorY = anchorY;
+  let touching = false;
+  let ticking = false;
+
+  function applyPosition(y) {
+    y = Math.max(0, y);
+    if (y <= HIDE_AFTER) {
+      show();
+      anchorY = y;
+      return;
+    }
+
+    if (header.classList.contains('hidden')) {
+      // Cat timp continuam in jos, varful curent devine reperul de la care
+      // trebuie sa urcam intentionat pentru a readuce bara.
+      if (y > anchorY) anchorY = y;
+      else if (anchorY - y >= distanceToShow()) {
+        show();
+        anchorY = y;
+      }
+    } else {
+      // Cat timp continuam in sus, minimul curent devine reperul pentru
+      // urmatoarea coborare; oscilatiile scurte nu schimba starea.
+      if (y < anchorY) anchorY = y;
+      else if (y - anchorY >= distanceToHide()) {
+        hide();
+        anchorY = y;
+      }
+    }
+  }
+
+  function update() {
+    if (!touching) applyPosition(getScrollY());
+    ticking = false;
+  }
+
+  function queueUpdate() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }
+
   if (window.ScrollTrigger) {
     ScrollTrigger.create({
       start: 0,
       end: 'max',
-      onUpdate: (self) => {
-        const y = getScrollY();
-        if (y <= HIDE_AFTER || self.direction < 0) show();
-        else if (self.direction > 0) hide();
-      }
+      onUpdate: queueUpdate
     });
-    show();
-    return;
+  } else {
+    document.addEventListener('scroll', queueUpdate, { passive: true });
   }
 
-  // Fallback pentru paginile pe care GSAP nu s-a incarcat. Pragul elimina
-  // tremurul de 1-2px al browserului si pastreaza directia pana exista o
-  // deplasare intentionata suficient de clara.
-  const DIRECTION_THRESHOLD = 10;
-  let anchorY = getScrollY();
-  let ticking = false;
-  const update = () => {
-    const y = Math.max(0, getScrollY());
-    const delta = y - anchorY;
-    if (y <= HIDE_AFTER) {
-      show();
-      anchorY = y;
-    } else if (delta >= DIRECTION_THRESHOLD) {
-      hide();
-      anchorY = y;
-    } else if (delta <= -DIRECTION_THRESHOLD) {
-      show();
-      anchorY = y;
-    }
-    ticking = false;
-  };
-  document.addEventListener('scroll', () => {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(update);
-    }
+  document.addEventListener('touchstart', (event) => {
+    if (!coarsePointer.matches || event.touches.length !== 1) return;
+    touching = true;
+    touchAnchorY = Math.max(0, getScrollY());
+    anchorY = touchAnchorY;
   }, { passive: true });
+
+  const finishTouch = () => {
+    if (!touching) return;
+    touching = false;
+    anchorY = touchAnchorY;
+    queueUpdate();
+  };
+  document.addEventListener('touchend', finishTouch, { passive: true });
+  document.addEventListener('touchcancel', finishTouch, { passive: true });
+
+  coarsePointer.addEventListener('change', () => { anchorY = Math.max(0, getScrollY()); });
   show();
 })();
 
