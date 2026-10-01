@@ -265,7 +265,7 @@
   font-family: var(--display);
   font-size: clamp(42px, 6.7vw, 92px);
   font-weight: 400;
-  line-height: .94;
+  line-height: 1;
   letter-spacing: -.03em;
 }
 .home-space-guide-head > p:last-child{
