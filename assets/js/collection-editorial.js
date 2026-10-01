@@ -78,8 +78,58 @@
   if (!shelf || !window.PFCart) return;
 
   const resetTimers = new WeakMap();
+  let touchStart = null;
+  let observedScrollLeft = shelf.scrollLeft;
+  let suppressTouchClick = false;
+  let suppressTimer;
+
+  // A horizontal swipe can still synthesize a click on the button under the
+  // finger in some touch browsers. Track horizontal intent and discard only
+  // that generated click, while preserving ordinary taps and vertical scroll.
+  shelf.addEventListener('touchstart', (event) => {
+    if (event.touches.length !== 1) {
+      touchStart = null;
+      return;
+    }
+    const touch = event.touches[0];
+    touchStart = { x: touch.clientX, y: touch.clientY };
+    suppressTouchClick = false;
+  }, { passive: true });
+
+  shelf.addEventListener('touchmove', (event) => {
+    if (!touchStart || event.touches.length !== 1) return;
+    const touch = event.touches[0];
+    const deltaX = touch.clientX - touchStart.x;
+    const deltaY = touch.clientY - touchStart.y;
+    if (Math.abs(deltaX) >= 10 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      suppressTouchClick = true;
+    }
+  }, { passive: true });
+
+  shelf.addEventListener('scroll', () => {
+    if (Math.abs(shelf.scrollLeft - observedScrollLeft) >= 2) {
+      suppressTouchClick = true;
+      observedScrollLeft = shelf.scrollLeft;
+      clearTimeout(suppressTimer);
+      suppressTimer = setTimeout(() => { suppressTouchClick = false; }, 250);
+    }
+  }, { passive: true });
+
+  const finishTouch = () => {
+    touchStart = null;
+    if (!suppressTouchClick) return;
+    clearTimeout(suppressTimer);
+    suppressTimer = setTimeout(() => { suppressTouchClick = false; }, 250);
+  };
+  shelf.addEventListener('touchend', finishTouch, { passive: true });
+  shelf.addEventListener('touchcancel', finishTouch, { passive: true });
 
   shelf.addEventListener('click', (event) => {
+    if (suppressTouchClick) {
+      event.preventDefault();
+      suppressTouchClick = false;
+      return;
+    }
     const variant = event.target.closest('.ce-accessory-variant');
     if (variant) {
       const variantCard = variant.closest('.ce-accessory-card');

@@ -13,6 +13,28 @@
  html.pf-mobile-menu-open,html.pf-mobile-menu-open body{background:#110f0a;overscroll-behavior:none}
  html.pf-mobile-menu-open{overflow:hidden}
  html.pf-mobile-menu-open body::after{content:'';position:fixed;inset:0;z-index:99;background:#110f0a;pointer-events:none}
- #siteNav.nav-open{box-sizing:border-box;inset:0;width:100%;height:100vh;height:100dvh;max-height:none;background:#110f0a;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;overscroll-behavior:contain;padding-top:calc(88px + env(safe-area-inset-top,0px));padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));padding-left:max(8vw,env(safe-area-inset-left,0px));padding-right:max(8vw,env(safe-area-inset-right,0px))}
+ /* The drawer surface itself never animates: it covers the complete viewport
+    immediately, while only its contents ease in. This prevents the header
+    background and the bottom link area from appearing as separate bands. */
+ #siteNav.nav-open{box-sizing:border-box;position:fixed;inset:0;width:100%;min-height:100vh;height:100dvh;max-height:none;z-index:201;overflow-x:hidden;overflow-y:auto;background:#110f0a;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;transform:none;animation:none;overscroll-behavior:contain;padding-top:calc(88px + env(safe-area-inset-top,0px));padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));padding-left:max(8vw,env(safe-area-inset-left,0px));padding-right:max(8vw,env(safe-area-inset-right,0px))}
+ .site-header.menu-open{transition:none}
+ #siteNav.nav-open > .mobile-nav-close,
+ #siteNav.nav-open > a,
+ #siteNav.nav-open > .menu-discovery,
+ #siteNav.nav-open > .nav-social,
+ #siteNav.nav-open > .nav-lang-mobile{animation:pf-mobile-nav-content-in .3s cubic-bezier(.22,1,.36,1) both}
+ #siteNav.nav-open > a:nth-of-type(2){animation-delay:.025s}
+ #siteNav.nav-open > a:nth-of-type(3){animation-delay:.05s}
+ #siteNav.nav-open > a:nth-of-type(4){animation-delay:.075s}
+ #siteNav.nav-open > .menu-discovery{animation-delay:.1s}
+ @keyframes pf-mobile-nav-content-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+
+ /* Mobile header uses the lettering from the current lockup, cropped so the
+    flame icon stays outside the visible link. Desktop and footer stay intact. */
+ .site-header .brand-link{display:block;width:91px;height:34px;overflow:hidden}
+ .site-header .brand-lockup-inline{width:auto;max-width:none;height:34px;transform:translateX(-29px)}
  #siteNav.nav-open .mobile-nav-close{top:calc(20px + env(safe-area-inset-top,0px))}
+}
+@media(max-width:1024px) and (prefers-reduced-motion:reduce){
+ #siteNav.nav-open > *{animation:none!important}
 }
