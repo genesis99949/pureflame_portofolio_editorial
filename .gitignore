@@ -23,3 +23,9 @@ assets/products/*/raw/*
 
 # Video mare folosit local, nu intra in repo
 assets/home/pf-party.mp4
+
+# Materiale de lucru generate local (raman pe disc, nu in repo)
+artifacts/
+tmp/
+output/*
+!output/mockups/
