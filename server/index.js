@@ -52,8 +52,8 @@ function createApp({ stripeSecretKey, stripeWebhookSecret, baseUrl, rateLimits }
         directives: {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'"],
-          styleSrc: ["'self'", 'https://fonts.googleapis.com'],
-          fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+          styleSrc: ["'self'"],
+          fontSrc: ["'self'"],
           imgSrc: ["'self'", 'data:'],
           mediaSrc: ["'self'", 'https://d8j0ntlcm91z4.cloudfront.net'],
           connectSrc: ["'self'"],
