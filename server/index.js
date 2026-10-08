@@ -14,7 +14,6 @@ const { buildContactRouter } = require('./routes/contact');
 const { buildReviewsRouter } = require('./routes/reviews');
 const { buildSubscribeRouter } = require('./routes/subscribe');
 const { buildRateLimiters } = require('./middleware/rateLimit');
-const { db } = require('./db');
 
 const PROJECT_ROOT = path.join(__dirname, '..');
 
@@ -91,19 +90,6 @@ function createApp({ stripeSecretKey, stripeWebhookSecret, baseUrl, rateLimits }
   app.use('/api', buildContactRouter());
   app.use('/api', buildReviewsRouter());
   app.use('/api', buildSubscribeRouter(baseUrl));
-
-  // Verificare de sanatate pentru monitorizare (UptimeRobot etc.): 200 daca serverul
-  // raspunde si baza de date poate fi interogata, 503 altfel. Nu expune detalii interne.
-  app.get('/health', (req, res) => {
-    res.set('Cache-Control', 'no-store');
-    try {
-      db.prepare('SELECT 1').get();
-      res.json({ status: 'ok' });
-    } catch (err) {
-      console.error('[health] baza de date indisponibila', err);
-      res.status(503).json({ status: 'error' });
-    }
-  });
 
   app.get('/', (req, res) => res.sendFile(path.join(PROJECT_ROOT, 'index.html')));
   PUBLIC_PAGES.forEach((file) => {
