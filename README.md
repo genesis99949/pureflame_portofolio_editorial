@@ -4,7 +4,7 @@ Site de prezentare și magazin online pentru o colecție de mese cu foc pe gaz, 
 
 Proiectul combină un front-end editorial (design, animații, responsive) cu un backend Node.js care procesează comenzi, plăți, newsletter, contact și recenzii.
 
-**Demo online (doar front-end):** https://pureflame-portofolio-editorial.vercel.app/ — pe Vercel rulează doar paginile statice. Plata, formularul de contact, newsletter-ul și recenziile au nevoie de backend și funcționează doar local (vezi „Instalare și rulare").
+**Demo online (doar front-end):** https://pureflameportofolioeditorial.vercel.app/ — pe Vercel rulează doar paginile statice. Plata, formularul de contact, newsletter-ul și recenziile au nevoie de backend și funcționează doar local (vezi „Instalare și rulare").
 
 ## Capturi
 
