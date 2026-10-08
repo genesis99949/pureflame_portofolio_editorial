@@ -380,3 +380,55 @@ test('formularul de contact este limitat dupa cereri repetate', async () => {
   }
   assert.ok(statuses.includes(429), `asteptam un 429 in ${JSON.stringify(statuses)}`);
 });
+
+// ---- Cos multi-produs si plata ramburs (POST /api/order) ----
+
+const { PAYLOAD_CUSTOMER } = (() => {
+  const { productId, color, quantity, ...customer } = VALID_ORDER_PAYLOAD;
+  return { PAYLOAD_CUSTOMER: customer };
+})();
+
+test('ramburs: inregistreaza un cos cu mai multe linii si ignora preturile trimise de client', async () => {
+  const res = await postJson('/api/order', {
+    ...PAYLOAD_CUSTOMER,
+    paymentMethod: 'ramburs',
+    items: [
+      { id: 'aether', color: 'Gri', qty: 1, unitAmountBani: 1, name: 'Fals' }, // pret/nume falsificate
+      { id: 'addon-husa', qty: 2, unitAmountBani: 1 },
+    ],
+  });
+  assert.equal(res.status, 201);
+  const { orderId } = await res.json();
+  const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(orderId);
+  assert.equal(order.status, 'cod');
+  assert.equal(order.payment_method, 'ramburs');
+  assert.equal(order.amount, 298900 + 2 * 14900); // 328.700 bani, calculat pe server
+  assert.equal(JSON.parse(order.items_json)[0].name, 'Aether');
+});
+
+test('ramburs: respinge accesoriu necunoscut, culoare invalida si metoda de plata gresita', async () => {
+  const base = { ...PAYLOAD_CUSTOMER, paymentMethod: 'ramburs' };
+  assert.equal((await postJson('/api/order', { ...base, items: [{ id: 'addon-inexistent', qty: 1 }] })).status, 400);
+  assert.equal((await postJson('/api/order', { ...base, items: [{ id: 'aether', color: 'Roz', qty: 1 }] })).status, 400);
+  assert.equal((await postJson('/api/order', { ...base, paymentMethod: 'card', items: [{ id: 'aether', qty: 1 }] })).status, 400);
+  assert.equal((await postJson('/api/order', { ...base, items: [] })).status, 400);
+});
+
+test('ramburs: limita de 3 mese se aplica si aici', async () => {
+  const res = await postJson('/api/order', {
+    ...PAYLOAD_CUSTOMER,
+    paymentMethod: 'ramburs',
+    items: [{ id: 'aether', qty: 2 }, { id: 'embera', qty: 2 }],
+  });
+  assert.equal(res.status, 400);
+});
+
+test('checkout-session accepta formatul coșului (items) fara productId la nivel de body', async () => {
+  // Stripe are cheie falsa, deci la apelul real primim 500 — important e ca NU mai primim 400 "Produs necunoscut".
+  const res = await postJson('/api/checkout-session', {
+    ...PAYLOAD_CUSTOMER,
+    paymentMethod: 'card',
+    items: [{ id: 'aether', color: 'Gri', qty: 1 }],
+  });
+  assert.notEqual(res.status, 400);
+});

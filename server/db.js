@@ -34,10 +34,16 @@ db.exec(`
   )
 `);
 
+// Migrare usoara pentru baze create inainte de coșul multi-produs.
+// items_json = liniile comenzii (preturile recalculate pe server); payment_method = card | ramburs.
+const orderColumns = db.prepare(`PRAGMA table_info(orders)`).all().map((c) => c.name);
+if (!orderColumns.includes('items_json')) db.exec(`ALTER TABLE orders ADD COLUMN items_json TEXT`);
+if (!orderColumns.includes('payment_method')) db.exec(`ALTER TABLE orders ADD COLUMN payment_method TEXT NOT NULL DEFAULT 'card'`);
+
 function createOrder(order) {
   const stmt = db.prepare(`
-    INSERT INTO orders (product_id, product_name, color, quantity, amount, currency, customer_first_name, customer_last_name, customer_email, customer_phone, address_street, address_number, address_postal_code, status, stripe_session_id, created_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?)
+    INSERT INTO orders (product_id, product_name, color, quantity, amount, currency, customer_first_name, customer_last_name, customer_email, customer_phone, address_street, address_number, address_postal_code, status, stripe_session_id, created_at, items_json, payment_method)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
   const info = stmt.run(
     order.productId,
@@ -53,10 +59,17 @@ function createOrder(order) {
     order.addressStreet,
     order.addressNumber,
     order.addressPostalCode,
-    order.stripeSessionId,
-    new Date().toISOString()
+    order.status || 'pending',
+    order.stripeSessionId || null,
+    new Date().toISOString(),
+    order.items ? JSON.stringify(order.items) : null,
+    order.paymentMethod || 'card'
   );
   return Number(info.lastInsertRowid);
+}
+
+function getOrderById(id) {
+  return db.prepare(`SELECT * FROM orders WHERE id = ?`).get(id) || null;
 }
 
 function markOrderPaid(stripeSessionId, paymentIntentId) {
@@ -69,6 +82,10 @@ function markOrderPaid(stripeSessionId, paymentIntentId) {
 
 function markEmailSent(stripeSessionId) {
   db.prepare(`UPDATE orders SET email_sent = 1 WHERE stripe_session_id = ?`).run(stripeSessionId);
+}
+
+function markEmailSentById(id) {
+  db.prepare(`UPDATE orders SET email_sent = 1 WHERE id = ?`).run(id);
 }
 
 function getOrderBySessionId(stripeSessionId) {
@@ -232,8 +249,10 @@ function listSubscribers() {
 module.exports = {
   db,
   createOrder,
+  getOrderById,
   markOrderPaid,
   markEmailSent,
+  markEmailSentById,
   getOrderBySessionId,
   listOrders,
   createContactMessage,

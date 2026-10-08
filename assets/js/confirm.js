@@ -53,8 +53,13 @@
     const total = order.amount * order.quantity;
     const fullAddress = `${order.addressStreet} ${order.addressNumber}, ${order.addressPostalCode}`;
 
+    // Comanda cu mai multe linii: un rand per produs, in loc de "rezumat × 1".
+    const productRows = Array.isArray(order.items) && order.items.length > 1
+      ? order.items.map((item, index) => makeRow(index === 0 ? `#${order.id}` : '', null, `${item.color ? `${item.name} (${item.color})` : item.name} × ${item.qty}`))
+      : [makeRow(`#${order.id}`, null, `${label} × ${order.quantity}`)];
+
     summaryEl.replaceChildren(
-      makeRow(`#${order.id}`, null, `${label} × ${order.quantity}`),
+      ...productRows,
       makeRow('Total', 'Total', formatAmount(total, order.currency)),
       makeRow('Livrare la', 'Shipping to', fullAddress)
     );

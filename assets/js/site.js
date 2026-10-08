@@ -44,8 +44,21 @@
     }
   }
 
+  // Firul ember de sub bara mobila (mobile-header.css) arata cat din pagina
+  // a fost parcurs. Se actualizeaza si in timpul gestului, spre deosebire de
+  // ascunderea barei.
+  const maxScroll = () => window.ScrollTrigger
+    ? ScrollTrigger.maxScroll(window)
+    : document.documentElement.scrollHeight - window.innerHeight;
+  function paintProgress(y) {
+    const max = maxScroll();
+    header.style.setProperty('--pf-scroll', max > 0 ? Math.min(1, Math.max(0, y / max)).toFixed(4) : '0');
+  }
+
   function update() {
-    if (!touching) applyPosition(getScrollY());
+    const y = getScrollY();
+    paintProgress(y);
+    if (!touching) applyPosition(y);
     ticking = false;
   }
 
@@ -83,6 +96,7 @@
 
   coarsePointer.addEventListener('change', () => { anchorY = Math.max(0, getScrollY()); });
   show();
+  paintProgress(getScrollY());
 })();
 
 // ---- Meniu mobil (hamburger) ----
@@ -97,40 +111,65 @@
   const closeBtn = document.getElementById('mobileNavClose');
   const header = nav.closest('.site-header');
 
-  function isOpen(){ return nav.classList.contains('nav-open'); }
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let closeTimer = null;
+
+  function isOpen(){ return nav.classList.contains('nav-open') && !nav.classList.contains('is-closing'); }
+
+  // Butonul de meniu ramane deasupra panoului si devine butonul de inchidere,
+  // deci si numele lui accesibil trebuie sa spuna ce face acum.
+  function label(opened){
+    toggle.dataset.ariaRo = opened ? 'Închide meniul' : 'Deschide meniul';
+    toggle.dataset.ariaEn = opened ? 'Close menu' : 'Open menu';
+    toggle.setAttribute('aria-label', document.documentElement.lang === 'en' ? toggle.dataset.ariaEn : toggle.dataset.ariaRo);
+  }
 
   function open(openedByPointer){
+    clearTimeout(closeTimer);
+    nav.classList.remove('is-closing');
     header?.classList.remove('hidden');
     header?.classList.add('menu-open');
     document.documentElement.classList.add('pf-mobile-menu-open');
     nav.classList.add('nav-open');
     nav.classList.toggle('nav-open-pointer', !!openedByPointer);
     toggle.setAttribute('aria-expanded', 'true');
+    label(true);
     document.body.style.overflow = 'hidden';
-    // Focusul ramane in panoul deschis pentru tastatura/screen reader, dar nu
-    // mai selecteaza vizual primul link dupa un tap pe hamburger.
-    closeBtn?.focus({ preventScroll: true });
   }
-  function close(){
+  function finish(){
+    nav.classList.remove('is-closing');
     header?.classList.remove('menu-open');
     document.documentElement.classList.remove('pf-mobile-menu-open');
     nav.classList.remove('nav-open');
     nav.classList.remove('nav-open-pointer');
+  }
+  // immediate: fara animatia de iesire — pentru navigare si pentru cosul care
+  // se deschide imediat dupa (cart-dialog.js), ca blocarea scroll-ului sa nu
+  // se suprapuna peste a lui.
+  function close(immediate){
+    if (!isOpen()) return;
     toggle.setAttribute('aria-expanded', 'false');
+    label(false);
     document.body.style.overflow = '';
-    toggle.focus();
+    toggle.focus({ preventScroll: true });
+    clearTimeout(closeTimer);
+    if (immediate === true || calm.matches) return finish();
+    // Continutul se retrage intai; suprafata dispare la final dintr-o data,
+    // la fel cum a aparut, ca sa nu apara benzi intre header si panou.
+    nav.classList.add('is-closing');
+    closeTimer = setTimeout(finish, 220);
   }
 
   toggle.addEventListener('click', (event) => { isOpen() ? close() : open(event.detail !== 0); });
-  closeBtn?.addEventListener('click', close);
+  closeBtn?.addEventListener('click', () => close(true));
   // Guardat cu isOpen(): pe desktop nav-ul e acelasi element, dar niciodata deschis,
   // deci clicurile pe linkuri nu trebuie sa mute focusul pe hamburger-ul ascuns.
-  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (isOpen()) close(); }));
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) close(); });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => close(true)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
   // daca fereastra trece pe desktop cat timp meniul e deschis, il inchidem
   const mq = window.matchMedia('(min-width: 1025px)');
-  mq.addEventListener('change', (e) => { if (e.matches && isOpen()) close(); });
+  mq.addEventListener('change', (e) => { if (e.matches) close(true); });
 })();
 
 

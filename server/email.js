@@ -16,6 +16,13 @@ function formatAmount(amount, currency) {
   return `${(amount / 100).toFixed(2)} ${currency.toUpperCase()}`;
 }
 
+function productLines(order) {
+  if (order.product_id === 'cart') {
+    return ['Produse:', ...JSON.parse(order.items_json || '[]').map((i) => `  - ${i.color ? `${i.name} (${i.color})` : i.name} × ${i.qty}`)];
+  }
+  return [`Produs: ${order.product_name}${order.color ? ` (${order.color})` : ''} × ${order.quantity}`];
+}
+
 async function sendOrderConfirmationEmail(order) {
   const subject = `Comanda ta PureFlame — ${order.product_name}`;
   const total = order.amount * order.quantity;
@@ -24,8 +31,10 @@ async function sendOrderConfirmationEmail(order) {
     ``,
     `Iti multumim pentru comanda! Iata detaliile:`,
     ``,
-    `Produs: ${order.product_name}${order.color ? ` (${order.color})` : ''} × ${order.quantity}`,
-    `Suma platita: ${formatAmount(total, order.currency)}`,
+    ...productLines(order),
+    order.payment_method === 'ramburs'
+      ? `Total de plata la livrare (ramburs): ${formatAmount(total, order.currency)}`
+      : `Suma platita: ${formatAmount(total, order.currency)}`,
     `Adresa de livrare: ${order.address_street} ${order.address_number}, cod postal ${order.address_postal_code}`,
     `Telefon: ${order.customer_phone}`,
     `Numar comanda: #${order.id}`,
