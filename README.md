@@ -6,6 +6,12 @@ Proiectul combină un front-end editorial (design, animații, responsive) cu un 
 
 **Demo online (doar front-end):** https://pureflame-portofolio-editorial.vercel.app/ — pe Vercel rulează doar paginile statice. Plata, formularul de contact, newsletter-ul și recenziile au nevoie de backend și funcționează doar local (vezi „Instalare și rulare").
 
+## Capturi
+
+![Pagina de acasă](docs/screenshots/acasa.webp)
+
+![Pagina Colecție](docs/screenshots/colectie.webp)
+
 ## Ce este implementat
 
 **Front-end** (HTML, CSS și JavaScript vanilla, fără framework sau bundler)
@@ -93,3 +99,4 @@ test/             teste automate
 - **Nu are integrare continuă (CI)** în acest moment.
 - **Nu are audit de accesibilitate** efectuat (Lighthouse/axe) și nici teste end-to-end în browser.
 - Prețurile și produsele sunt fictive și nu corespund unei oferte reale.
+- **Recenziile de pe paginile de produs sunt demonstrative** (text generat pentru portofoliu, definit în `assets/js/product-reviews.js`). Nu provin de la clienți reali. Formularul de recenzii funcționează și salvează recenziile noi spre moderare în baza de date.

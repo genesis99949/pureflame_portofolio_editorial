@@ -60,6 +60,7 @@
       <p>${bilingual('Recenzii', 'Reviews')}</p>
       <h2>${bilingual(`Păreri despre ${productName}.`, `Thoughts on ${productName}.`)}</h2>
       <div class="epp-reviews-summary" data-review-summary></div>
+      <p class="epp-demo-note">${bilingual("Recenzii demonstrative: conținut fictiv, creat pentru acest proiect de portofoliu. Nu provin de la clienți reali.", "Demo reviews: fictional content created for this portfolio project. They do not come from real customers.")}</p>
     </div>
     <div class="epp-reviews-layout">
       <div class="epp-reviews-list-wrap">
@@ -87,8 +88,7 @@
           <p class="epp-review-moderation">${bilingual('Recenzia va apărea după verificare. Publicăm și opiniile critice, dacă respectă regulile de limbaj.', 'Your review will appear after moderation. We also publish critical opinions when they follow our language guidelines.')}</p>
         </form>
       </div>
-    </div>
-    <p class="epp-demo-note">${bilingual("Recenzii ilustrative pentru acest concept de portofoliu.", "Illustrative reviews for this portfolio concept.")}</p>`;
+    </div>`;
 
   const listEl = mount.querySelector('[data-review-list]');
   const summaryEl = mount.querySelector('[data-review-summary]');
