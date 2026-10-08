@@ -75,12 +75,6 @@
       submitRo: 'Continuă spre plată',
       submitEn: 'Continue to payment',
     },
-    ramburs: {
-      ro: 'Plata se face către curier, în numerar sau card, la livrare.',
-      en: 'Pay the courier by cash or card on delivery.',
-      submitRo: 'Trimite comanda',
-      submitEn: 'Place order',
-    },
   };
 
   function updatePaymentMethodUI(){
@@ -128,11 +122,8 @@
 
       try {
         // Card/Apple Pay/Google Pay: redirecteaza spre Stripe Checkout, care
-        // stie sa afiseze fiecare wallet. Ramburs: comanda se inregistreaza
-        // direct, fara pasul de plata online.
-        const isInstantPayment = paymentMethod === 'card' || paymentMethod === 'applepay' || paymentMethod === 'googlepay';
-        const endpoint = isInstantPayment ? '/api/checkout-session' : '/api/order';
-        const res = await fetch(endpoint, {
+        // stie sa afiseze fiecare wallet. Singura cale de plata este online.
+        const res = await fetch('/api/checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
@@ -140,14 +131,8 @@
         const result = await res.json();
         if (!res.ok) throw new Error(result.error || 'A apărut o eroare.');
 
-        if (isInstantPayment && result.url){
-          window.location.href = result.url;
-          return;
-        }
-
-        window.PFCart.clear();
-        contentEl.hidden = true;
-        successEl.hidden = false;
+        if (!result.url) throw new Error('A apărut o eroare. Încearcă din nou.');
+        window.location.href = result.url;
       } catch (err) {
         errorEl.textContent = err.message || 'A apărut o eroare. Încearcă din nou.';
         errorEl.hidden = false;

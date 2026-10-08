@@ -1,7 +1,6 @@
 const express = require('express');
 const { getProduct, getAccessory } = require('../products');
-const { createOrder, getOrderById, getOrderBySessionId, markEmailSentById } = require('../db');
-const { sendOrderConfirmationEmail } = require('../email');
+const { createOrder, getOrderBySessionId } = require('../db');
 const { isString, isValidEmail, isValidPhone, isValidPostalCode } = require('../validation');
 
 const MAX_QUANTITY = 3; // mese per comanda
@@ -132,32 +131,6 @@ function buildCheckoutRouter(stripe, baseUrl) {
     } catch (err) {
       console.error('[checkout-session] eroare:', err.message);
       res.status(500).json({ error: 'A aparut o eroare la initierea platii. Incearca din nou.' });
-    }
-  });
-
-  // Ramburs: fara plata online; comanda se inregistreaza direct si clientul plateste la livrare.
-  router.post('/order', async (req, res) => {
-    try {
-      const body = req.body || {};
-      if (body.paymentMethod !== 'ramburs') {
-        return res.status(400).json({ error: 'Metoda de plata invalida.' });
-      }
-      const cart = resolveCart(body);
-      if (cart.error) return res.status(400).json({ error: cart.error });
-      const customerError = validateCustomer(body);
-      if (customerError) return res.status(400).json({ error: customerError });
-
-      const id = createOrder(buildOrderRecord(body, cart.lines, { status: 'cod', paymentMethod: 'ramburs' }));
-      try {
-        await sendOrderConfirmationEmail(getOrderById(id));
-        markEmailSentById(id);
-      } catch (err) {
-        console.error('[order] eroare la trimiterea emailului pentru comanda:', id, err.message);
-      }
-      res.status(201).json({ ok: true, orderId: id });
-    } catch (err) {
-      console.error('[order] eroare:', err.message);
-      res.status(500).json({ error: 'A aparut o eroare la inregistrarea comenzii. Incearca din nou.' });
     }
   });
 

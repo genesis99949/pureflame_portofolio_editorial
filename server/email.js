@@ -32,9 +32,7 @@ async function sendOrderConfirmationEmail(order) {
     `Iti multumim pentru comanda! Iata detaliile:`,
     ``,
     ...productLines(order),
-    order.payment_method === 'ramburs'
-      ? `Total de plata la livrare (ramburs): ${formatAmount(total, order.currency)}`
-      : `Suma platita: ${formatAmount(total, order.currency)}`,
+    `Suma platita: ${formatAmount(total, order.currency)}`,
     `Adresa de livrare: ${order.address_street} ${order.address_number}, cod postal ${order.address_postal_code}`,
     `Telefon: ${order.customer_phone}`,
     `Numar comanda: #${order.id}`,

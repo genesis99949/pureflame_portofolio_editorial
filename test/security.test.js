@@ -381,54 +381,66 @@ test('formularul de contact este limitat dupa cereri repetate', async () => {
   assert.ok(statuses.includes(429), `asteptam un 429 in ${JSON.stringify(statuses)}`);
 });
 
-// ---- Cos multi-produs si plata ramburs (POST /api/order) ----
+// ---- Cos multi-produs (POST /api/checkout-session) ----
 
-const { PAYLOAD_CUSTOMER } = (() => {
-  const { productId, color, quantity, ...customer } = VALID_ORDER_PAYLOAD;
-  return { PAYLOAD_CUSTOMER: customer };
-})();
-
-test('ramburs: inregistreaza un cos cu mai multe linii si ignora preturile trimise de client', async () => {
-  const res = await postJson('/api/order', {
-    ...PAYLOAD_CUSTOMER,
-    paymentMethod: 'ramburs',
-    items: [
-      { id: 'aether', color: 'Gri', qty: 1, unitAmountBani: 1, name: 'Fals' }, // pret/nume falsificate
-      { id: 'addon-husa', qty: 2, unitAmountBani: 1 },
-    ],
-  });
-  assert.equal(res.status, 201);
-  const { orderId } = await res.json();
-  const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(orderId);
-  assert.equal(order.status, 'cod');
-  assert.equal(order.payment_method, 'ramburs');
-  assert.equal(order.amount, 298900 + 2 * 14900); // 328.700 bani, calculat pe server
-  assert.equal(JSON.parse(order.items_json)[0].name, 'Aether');
-});
-
-test('ramburs: respinge accesoriu necunoscut, culoare invalida si metoda de plata gresita', async () => {
-  const base = { ...PAYLOAD_CUSTOMER, paymentMethod: 'ramburs' };
-  assert.equal((await postJson('/api/order', { ...base, items: [{ id: 'addon-inexistent', qty: 1 }] })).status, 400);
-  assert.equal((await postJson('/api/order', { ...base, items: [{ id: 'aether', color: 'Roz', qty: 1 }] })).status, 400);
-  assert.equal((await postJson('/api/order', { ...base, paymentMethod: 'card', items: [{ id: 'aether', qty: 1 }] })).status, 400);
-  assert.equal((await postJson('/api/order', { ...base, items: [] })).status, 400);
-});
-
-test('ramburs: limita de 3 mese se aplica si aici', async () => {
-  const res = await postJson('/api/order', {
-    ...PAYLOAD_CUSTOMER,
-    paymentMethod: 'ramburs',
-    items: [{ id: 'aether', qty: 2 }, { id: 'embera', qty: 2 }],
-  });
-  assert.equal(res.status, 400);
-});
-
-test('checkout-session accepta formatul coșului (items) fara productId la nivel de body', async () => {
+test('checkout-session accepta formatul cosului (items) fara productId la nivel de body', async () => {
   // Stripe are cheie falsa, deci la apelul real primim 500 — important e ca NU mai primim 400 "Produs necunoscut".
+  const { productId, color, quantity, ...customer } = VALID_ORDER_PAYLOAD;
   const res = await postJson('/api/checkout-session', {
-    ...PAYLOAD_CUSTOMER,
+    ...customer,
     paymentMethod: 'card',
     items: [{ id: 'aether', color: 'Gri', qty: 1 }],
   });
   assert.notEqual(res.status, 400);
+});
+
+test('checkout-session respinge accesoriu necunoscut, culoare invalida si cos gol', async () => {
+  const { productId, color, quantity, ...customer } = VALID_ORDER_PAYLOAD;
+  assert.equal((await postJson('/api/checkout-session', { ...customer, items: [{ id: 'addon-inexistent', qty: 1 }] })).status, 400);
+  assert.equal((await postJson('/api/checkout-session', { ...customer, items: [{ id: 'aether', color: 'Roz', qty: 1 }] })).status, 400);
+  assert.equal((await postJson('/api/checkout-session', { ...customer, items: [] })).status, 400);
+});
+
+// ---- Webhook: tranzitii de stare (cu semnatura valida generata local) ----
+
+const Stripe = require('stripe');
+const { createOrder, getOrderBySessionId } = require('../server/db');
+
+function newPendingOrder(sessionId) {
+  createOrder({
+    productId: 'aether', productName: 'Aether', color: 'Gri', quantity: 1, amount: 298900, currency: 'ron',
+    customerFirstName: 'Ion', customerLastName: 'Popescu', customerEmail: 'ion@example.com', customerPhone: '0722123456',
+    addressStreet: 'Str. Exemplu', addressNumber: '10', addressPostalCode: '010101', stripeSessionId: sessionId,
+  });
+}
+
+async function sendSignedEvent(type, sessionId) {
+  const payload = JSON.stringify({ id: `evt_${sessionId}_${type}`, object: 'event', type, data: { object: { id: sessionId, payment_intent: 'pi_test' } } });
+  const signature = Stripe.webhooks.generateTestHeaderString({ payload, secret: FAKE_WEBHOOK_SECRET });
+  return fetch(`${baseUrl}/api/webhook`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Stripe-Signature': signature }, body: payload });
+}
+
+test('webhook: checkout.session.completed marcheaza comanda platita, iar un eveniment repetat nu rescrie paid_at', async () => {
+  newPendingOrder('cs_test_completed_1');
+  assert.equal((await sendSignedEvent('checkout.session.completed', 'cs_test_completed_1')).status, 200);
+  const first = getOrderBySessionId('cs_test_completed_1');
+  assert.equal(first.status, 'paid');
+  assert.ok(first.paid_at);
+
+  await new Promise((resolve) => setTimeout(resolve, 15));
+  assert.equal((await sendSignedEvent('checkout.session.completed', 'cs_test_completed_1')).status, 200);
+  assert.equal(getOrderBySessionId('cs_test_completed_1').paid_at, first.paid_at);
+});
+
+test('webhook: checkout.session.expired marcheaza comanda pending ca expired', async () => {
+  newPendingOrder('cs_test_expired_1');
+  assert.equal((await sendSignedEvent('checkout.session.expired', 'cs_test_expired_1')).status, 200);
+  assert.equal(getOrderBySessionId('cs_test_expired_1').status, 'expired');
+});
+
+test('webhook: o comanda deja platita nu devine expired', async () => {
+  newPendingOrder('cs_test_paid_then_expired');
+  await sendSignedEvent('checkout.session.completed', 'cs_test_paid_then_expired');
+  await sendSignedEvent('checkout.session.expired', 'cs_test_paid_then_expired');
+  assert.equal(getOrderBySessionId('cs_test_paid_then_expired').status, 'paid');
 });

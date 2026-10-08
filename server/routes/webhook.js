@@ -1,5 +1,5 @@
 const express = require('express');
-const { markOrderPaid, markEmailSent, getOrderBySessionId } = require('../db');
+const { markOrderPaid, markOrderExpired, markEmailSent, getOrderBySessionId } = require('../db');
 const { sendOrderConfirmationEmail } = require('../email');
 
 function buildWebhookRouter(stripe, webhookSecret) {
@@ -38,6 +38,10 @@ function buildWebhookRouter(stripe, webhookSecret) {
           console.error('[webhook] eroare la trimiterea emailului pentru comanda:', order.id, err.message);
         }
       }
+    }
+
+    if (event.type === 'checkout.session.expired') {
+      markOrderExpired(event.data.object.id);
     }
 
     res.json({ received: true });
