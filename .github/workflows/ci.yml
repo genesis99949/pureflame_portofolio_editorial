@@ -19,4 +19,3 @@ jobs:
       # Neblocant pana urcam nodemailer la v10 (vulnerabilitate high, necesita salt de major).
       # Dupa upgrade, sterge linia continue-on-error ca auditul sa blocheze din nou.
       - run: npm audit --omit=dev --audit-level=high
-        continue-on-error: true
