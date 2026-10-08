@@ -33,3 +33,12 @@ output/*
 # Rapoarte Lighthouse salvate local
 lighthouse*.json
 vercel_lighthouse*.json
+
+# Scripturi de lucru, unelte AI si materiale vechi — raman local, nu in repo
+scripts/*
+!scripts/backup-db.js
+!scripts/restore-db.js
+!scripts/product-viewer/
+assets/legacy/
+.codex/
+.claude/

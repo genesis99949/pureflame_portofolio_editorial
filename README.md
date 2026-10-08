@@ -86,8 +86,9 @@ npm run backup    # copie comprimată (și criptată, dacă ai BACKUP_ENCRYPTION
 *.html            paginile site-ului
 assets/           CSS, JS, imagini, fonturi, video
 server/           index.js (aplicația), routes/, db.js, email.js, products.js, validation.js
-scripts/          backup/restore și utilitare de lucru
+scripts/          backup/restore al bazei de date și sursa vizualizării 3D (product-viewer/)
 test/             teste automate
+docs/             capturi de ecran și documentație explicată pe înțeles (docs/documentatie/)
 ```
 
 ## Limite cunoscute
