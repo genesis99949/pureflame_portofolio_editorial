@@ -20,3 +20,6 @@ assets/products/*/raw/*
 
 # Fisiere temporare de siguranta
 *.bak
+
+# Video mare folosit local, nu intra in repo
+assets/home/pf-party.mp4
