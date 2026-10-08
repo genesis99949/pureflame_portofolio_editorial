@@ -1892,9 +1892,15 @@ body.page-confirm{
   flex-direction:column;
   min-height: 100vh;
 }
+/* ScrollSmoother muta continutul in #smooth-content (div obisnuit) si body-ul flex
+   nu mai ajunge la sectiune/footer — aceeasi regula trebuie pusa pe invelis. */
+body.page-confirm #smooth-content{
+  display:flex;
+  flex-direction:column;
+  min-height: 100vh;
+}
 .confirm-section{
   flex: 1;
-  min-height: 70vh;
   display:flex;
   align-items:center;
   justify-content:center;

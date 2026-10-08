@@ -62,7 +62,14 @@
     .fromTo(panel.querySelector('.pf-cart-handle'),{scaleX:.3,opacity:0},{scaleX:1,opacity:1,duration:.7,ease:'back.out(2.4)'},.2)
     .fromTo(panel.querySelectorAll('.pf-cart-head,.pf-cart-row,.pf-cart-empty-mark,.pf-cart-empty,.pf-cart-total,.pf-cart-actions'),{y:28,opacity:0},{y:0,opacity:1,duration:.65,stagger:.06,ease:'power3.out'},.12);
   }
-  document.addEventListener('click',e=>{const link=e.target.closest('.pf-floating-cart,.rail-cart,.site-header .cart-link,#rail-menu a[href="cos-cumparaturi.html"]');if(!link||e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();e.stopImmediatePropagation();
+  // No stopPropagation here: on touch, GSAP's normalizeScroll (scroll-fx.js) listens for clicks
+  // on <html>; if it misses the native one it replays the tap as a synthetic click 80ms later,
+  // which would close the sheet that just opened. preventDefault alone already stops the
+  // navigation and the page curtain (page-transition.js checks defaultPrevented).
+  let lastToggle=0;
+  document.addEventListener('click',e=>{const link=e.target.closest('.pf-floating-cart,.rail-cart,.site-header .cart-link,#rail-menu a[href="cos-cumparaturi.html"]');if(!link||e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();
+   // A second click for the same tap must not undo the first one.
+   const now=performance.now();if(now-lastToggle<400)return;lastToggle=now;
    if(panel.open){hide();return;}
    show(link);
   },true);

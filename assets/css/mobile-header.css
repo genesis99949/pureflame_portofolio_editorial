@@ -205,21 +205,35 @@
   /* Butonul de meniu devine butonul de inchidere; × separat nu mai e necesar. */
   #siteNav.nav-open > .mobile-nav-close{ display: none; }
 
+  /* Panoul se deruleaza de sub bara, de sus in jos, ca o cortina, si se
+     strange inapoi in ea la inchidere. Bara ramane opaca deasupra, deci
+     marginea cortinei porneste mereu din linia ei de jos. */
+  #siteNav.nav-open{
+    padding-top: calc(80px + env(safe-area-inset-top, 0px));
+    animation: pf-mnav-curtain-down .62s cubic-bezier(.76,0,.24,1) both;
+  }
+  #siteNav.nav-open.is-closing{ animation: pf-mnav-curtain-up .42s cubic-bezier(.76,0,.24,1) .06s both; }
+  /* Stratul opac din spate (mobile-polish.css) acopera zonele sigure iOS.
+     Apare abia cand cortina a ajuns jos — altfel ar intuneca pagina dintr-o
+     data si cortina nu s-ar mai vedea — si dispare cand ea incepe sa urce. */
+  html.pf-mobile-menu-open body::after{ animation: pf-mnav-cover 0s linear .62s both; }
+  html.pf-mobile-menu-closing body::after{ display: none; }
+
   #siteNav.nav-open > a,
   #siteNav.nav-open > .menu-discovery,
   #siteNav.nav-open > .nav-social,
   #siteNav.nav-open > .nav-lang-mobile{ animation: pf-mnav-rise .75s cubic-bezier(.22,1,.36,1) both; }
-  #siteNav.nav-open > a:nth-of-type(1){ animation-delay: .04s; }
-  #siteNav.nav-open > a:nth-of-type(2){ animation-delay: .1s; }
-  #siteNav.nav-open > a:nth-of-type(3){ animation-delay: .16s; }
-  #siteNav.nav-open > a:nth-of-type(4){ animation-delay: .22s; }
-  #siteNav.nav-open > .menu-discovery{ animation-delay: .3s; }
-  #siteNav.nav-open > .nav-lang-mobile{ animation-delay: .36s; }
-  /* Iesirea: continutul se retrage, suprafata dispare abia la final. */
+  #siteNav.nav-open > a:nth-of-type(1){ animation-delay: .16s; }
+  #siteNav.nav-open > a:nth-of-type(2){ animation-delay: .22s; }
+  #siteNav.nav-open > a:nth-of-type(3){ animation-delay: .28s; }
+  #siteNav.nav-open > a:nth-of-type(4){ animation-delay: .34s; }
+  #siteNav.nav-open > .menu-discovery{ animation-delay: .42s; }
+  #siteNav.nav-open > .nav-lang-mobile{ animation-delay: .48s; }
+  /* Iesirea: continutul se retrage intai, cortina urca imediat dupa. */
   #siteNav.nav-open.is-closing > a,
   #siteNav.nav-open.is-closing > .menu-discovery,
   #siteNav.nav-open.is-closing > .nav-social,
-  #siteNav.nav-open.is-closing > .nav-lang-mobile{ animation: pf-mnav-out .22s cubic-bezier(.55,0,1,.45) both; }
+  #siteNav.nav-open.is-closing > .nav-lang-mobile{ animation: pf-mnav-out .2s cubic-bezier(.55,0,1,.45) both; }
 
   /* ---------- Cosul: foaie de jos ---------- */
   #pf-cart-dialog{
@@ -368,6 +382,9 @@
 @keyframes pf-hdr-draw{ from{ clip-path: inset(0 100% 0 0); } to{ clip-path: inset(0 0 0 0); } }
 @keyframes pf-mnav-rise{ from{ opacity: 0; transform: translateY(28px); } to{ opacity: 1; transform: none; } }
 @keyframes pf-mnav-out{ to{ opacity: 0; transform: translateY(-10px); } }
+@keyframes pf-mnav-curtain-down{ from{ clip-path: inset(0 0 100% 0); } to{ clip-path: inset(0 0 0 0); } }
+@keyframes pf-mnav-curtain-up{ from{ clip-path: inset(0 0 0 0); } to{ clip-path: inset(0 0 100% 0); } }
+@keyframes pf-mnav-cover{ from{ opacity: 0; } to{ opacity: 1; } }
 @keyframes pf-bag-drop{
   0%{ transform: none; }
   28%{ transform: translateY(-5px) rotate(-7deg); }
@@ -384,7 +401,9 @@
   .site-header .nav-toggle-bars span,
   .site-header .cart-link,
   .site-header .cart-link svg,
+  #siteNav.nav-open,
   #siteNav.nav-open > *,
+  html.pf-mobile-menu-open body::after,
   #pf-cart-dialog .pf-cart-primary::after{ animation: none !important; }
   .site-header.site-header--home::after{ transition: none; }
 }

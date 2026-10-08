@@ -127,6 +127,7 @@
   function open(openedByPointer){
     clearTimeout(closeTimer);
     nav.classList.remove('is-closing');
+    document.documentElement.classList.remove('pf-mobile-menu-closing');
     header?.classList.remove('hidden');
     header?.classList.add('menu-open');
     document.documentElement.classList.add('pf-mobile-menu-open');
@@ -139,7 +140,7 @@
   function finish(){
     nav.classList.remove('is-closing');
     header?.classList.remove('menu-open');
-    document.documentElement.classList.remove('pf-mobile-menu-open');
+    document.documentElement.classList.remove('pf-mobile-menu-open', 'pf-mobile-menu-closing');
     nav.classList.remove('nav-open');
     nav.classList.remove('nav-open-pointer');
   }
@@ -154,10 +155,11 @@
     toggle.focus({ preventScroll: true });
     clearTimeout(closeTimer);
     if (immediate === true || calm.matches) return finish();
-    // Continutul se retrage intai; suprafata dispare la final dintr-o data,
-    // la fel cum a aparut, ca sa nu apara benzi intre header si panou.
+    // Continutul se retrage, apoi cortina urca inapoi sub bara
+    // (mobile-header.css); durata de aici acopera ambele animatii.
     nav.classList.add('is-closing');
-    closeTimer = setTimeout(finish, 220);
+    document.documentElement.classList.add('pf-mobile-menu-closing');
+    closeTimer = setTimeout(finish, 500);
   }
 
   toggle.addEventListener('click', (event) => { isOpen() ? close() : open(event.detail !== 0); });

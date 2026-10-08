@@ -54,7 +54,16 @@
   // pe paginile care depind de un sidebar sticky (coșul / finalizarea comenzii).
   var hasStickyConflict = !!document.querySelector('.checkout-area-summary, .checkout-side, .product-detail-page');
 
-  if (!hasStickyConflict && wrapForSmoother()) {
+  // Pe telefon si tableta (atingere, fara mouse) scroll-ul ramane nativ.
+  // Acolo ScrollSmoother nu netezeste oricum (smoothTouch e oprit implicit);
+  // singurul lui efect ar fi normalizeScroll, care preia gesturile in
+  // JavaScript: derularea se simte artificial, iar dupa un swipe pe o banda
+  // orizontala (capitolele de pe despre-noi) GSAP crede ca a fost un tap si
+  // "apasa" singur pe linkul atins. ScrollTrigger lucreaza la fel de bine
+  // pe scroll-ul nativ, ca pe paginile de produs.
+  var touchOnly = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+  if (!hasStickyConflict && !touchOnly && wrapForSmoother()) {
     smoother = ScrollSmoother.create({
       wrapper: '#smooth-wrapper',
       content: '#smooth-content',
