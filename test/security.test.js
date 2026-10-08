@@ -380,3 +380,10 @@ test('formularul de contact este limitat dupa cereri repetate', async () => {
   }
   assert.ok(statuses.includes(429), `asteptam un 429 in ${JSON.stringify(statuses)}`);
 });
+
+test('GET /health raspunde 200 cu status ok si nu se cache-uieste', async () => {
+  const res = await fetch(`${baseUrl}/health`);
+  assert.equal(res.status, 200);
+  assert.equal(res.headers.get('cache-control'), 'no-store');
+  assert.deepEqual(await res.json(), { status: 'ok' });
+});

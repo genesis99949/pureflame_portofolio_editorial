@@ -19,7 +19,6 @@
   --ember: #D9772E;
   --ember-bright: #F0913F;
   --ember-deep: #A8541E;
-  --brass: #CCC575;
   --line: rgba(17,15,10,0.12);
   --line-dark: rgba(254,255,253,0.14);
 
@@ -1178,8 +1177,8 @@ button{ font-family: inherit; cursor: pointer; }
 .btn-outline:hover{ transform: translateY(-2px); background: rgba(28,27,24,0.08); }
 
 /* ---------- CTA strap: capitol final editorial (doar homepage) ----------
-   Scoped cu .home-cta ca sa nu atinga .cta-strap de pe despre-noi.html si
-   embera-copy.html, care raman pe varianta ember originala. Fundal charcoal
+   Scoped cu .home-cta ca sa nu atinga .cta-strap de pe despre-noi.html,
+   care ramane pe varianta ember originala. Fundal charcoal
    identic cu Craft si Footer — cele trei sectiuni curg ca un singur pasaj
    intunecat, fara nicio linie intre ele (o bordura de 1px pe fundalul
    transformat de GSAP ScrollSmoother randa instabil/tremurat in timpul
@@ -1666,84 +1665,6 @@ button{ font-family: inherit; cursor: pointer; }
   background: var(--ember);
   margin-top: 8px;
   flex-shrink: 0;
-}
-
-.product-specs{
-  background: var(--charcoal);
-  color: var(--cream);
-  padding: 70px 5vw;
-}
-.product-specs-grid{
-  max-width: 780px;
-  margin: 0 auto;
-  display:grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-}
-@media (max-width: 700px){
-  .product-specs-grid{ grid-template-columns: repeat(2, 1fr); }
-}
-.spec-item{ text-align:left; }
-.spec-label{
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  color: var(--brass);
-  text-transform: uppercase;
-  display:block;
-  margin-bottom: 8px;
-}
-.spec-value{
-  font-family: var(--condensed);
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--cream);
-}
-
-.cross-collection{
-  padding: 100px 5vw;
-}
-.cross-collection h3{
-  font-family: var(--display);
-  font-weight: 400;
-  text-transform: none;
-  letter-spacing: -0.015em;
-  font-size: clamp(26px, 4vw, 40px);
-  line-height: 1.05;
-  margin: 0 0 40px;
-  color: var(--charcoal);
-}
-.cross-grid{
-  display:grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-@media (max-width: 900px){
-  .cross-grid{ grid-template-columns: repeat(2, 1fr); }
-}
-.cross-card{
-  display:block;
-  position:relative;
-  aspect-ratio: 4/5;
-  overflow:hidden;
-  border-radius: 8px;
-  background: var(--charcoal-soft);
-}
-.cross-card img{
-  width:100%; height:100%; object-fit:cover;
-  transition: transform .4s ease;
-}
-.cross-card:hover img{ transform: scale(1.05); }
-.cross-card-label{
-  position:absolute;
-  bottom: 0; left:0; right:0;
-  padding: 16px;
-  background: linear-gradient(to top, rgba(28,27,24,0.75), transparent);
-  color: var(--cream);
-  font-family: var(--condensed);
-  font-weight: 500;
-  font-size: 16px;
 }
 
 /* ============================================================

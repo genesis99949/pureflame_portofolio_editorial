@@ -246,7 +246,7 @@
 
   // ---- Selector finisaj (culoare) ----
   // data-color ramane sursa canonica (RO) trimisa in cos, indiferent de limba
-  // afisata — la fel ca in restul site-ului (buybox.js foloseste acelasi tipar).
+  // afisata — la fel ca in restul site-ului.
   const colorGroup = page.querySelector('.buy-colors');
   const colorValueEl = document.getElementById('eppColorValue');
   function selectedColor() {

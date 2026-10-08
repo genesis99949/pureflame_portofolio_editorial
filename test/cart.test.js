@@ -22,6 +22,7 @@ function createCart(seed = []) {
   const document = {
     readyState: 'loading',
     addEventListener() {},
+    querySelector: () => null,
     querySelectorAll: () => [],
   };
   class CustomEvent {

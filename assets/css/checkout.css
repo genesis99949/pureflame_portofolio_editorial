@@ -79,9 +79,6 @@ body:has(.checkout-page) .site-footer{ margin-top: auto; }
     flex-direction: column;
     gap: 22px;
   }
-  #checkoutForm .form-row .form-row-narrow{
-    flex: initial;
-  }
 }
 .finalize-submit{
   display: block;

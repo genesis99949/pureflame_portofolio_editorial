@@ -35,6 +35,6 @@
  .lh-cart-total{display:flex;justify-content:space-between;margin-bottom:16px}
  .lh-cart-footer>a{justify-content:center;display:flex;background:var(--cream);color:var(--charcoal);min-height:48px}
  .lh-cart-footer>a:hover{background:var(--cream-soft);color:var(--charcoal)}
- .lh-panel :is(a,button):focus-visible,.site-header--home .lh-trigger:focus-visible{outline:2px solid var(--brass);outline-offset:5px}
+ .lh-panel :is(a,button):focus-visible,.site-header--home .lh-trigger:focus-visible{outline:2px solid var(--ember-bright);outline-offset:5px}
  .lh-panel[inert]{pointer-events:none}
 }
