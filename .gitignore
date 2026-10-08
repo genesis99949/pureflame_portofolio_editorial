@@ -29,3 +29,7 @@ artifacts/
 tmp/
 output/*
 !output/mockups/
+
+# Rapoarte Lighthouse salvate local
+lighthouse*.json
+vercel_lighthouse*.json
