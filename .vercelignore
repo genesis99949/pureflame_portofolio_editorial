@@ -1,0 +1,11 @@
+# Fisiere care nu fac parte din site-ul publicat pe Vercel (doar front-end).
+# Scoase din fiecare deployment ca sa economisim spatiul de stocare.
+output/
+docs/
+test/
+scripts/
+.github/
+README.md
+# Variante vechi, inlocuite de versiunile web (nu sunt referite de nicio pagina)
+assets/home/Webloop_1920x1080p.mp4
+assets/home/rail-collection-circle-v2.png
