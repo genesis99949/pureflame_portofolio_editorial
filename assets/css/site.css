@@ -1051,15 +1051,6 @@ button{ font-family: inherit; cursor: pointer; }
   cursor: pointer;
   transition: color .35s ease, border-color .35s ease;
 }
-.craft-pin-step::after{
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: 0;
-  width: var(--craft-progress, 0%);
-  height: 2px;
-  background: var(--ember);
-}
 .craft-pin-step.is-active{ border-color: var(--ember); color: var(--ember); }
 .craft-pin-step:hover{ color: var(--cream); border-color: rgba(235,227,210,.7); }
 .craft-pin-step:focus-visible,
@@ -1094,20 +1085,11 @@ button{ font-family: inherit; cursor: pointer; }
 }
 .craft-side{ position: relative; min-width: 0; min-height: 0; overflow: hidden; }
 .craft-pin-media{ position: absolute; inset: 0; overflow: hidden; background: #090908; isolation: isolate; }
-.craft-pin-media::before{
-  content: ''; position: absolute; inset: -12%; z-index: 1; pointer-events: none;
-  background: radial-gradient(circle at 72% 42%, rgba(168,84,30,.3), transparent 42%), linear-gradient(115deg, transparent 25%, rgba(9,8,7,.62) 58%, transparent 82%);
-  opacity: 0; transform: translateX(-8%) scale(1.06);
-  transition: opacity .7s ease, transform 1.05s cubic-bezier(.22,1,.36,1);
-}
 .craft-pin-media::after{ content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(90deg, transparent 62%, rgba(9,8,7,.32)); }
 .craft-pin-video{
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; background: #090908;
   opacity: 1; transform: scale(1.001); filter: blur(0) saturate(1);
-  transition: opacity .72s cubic-bezier(.22,1,.36,1), transform 1.15s cubic-bezier(.22,1,.36,1), filter .72s ease;
 }
-.craft-pin-video.is-switching{ opacity: .12; transform: scale(1.035); filter: blur(5px) saturate(.72); }
-.craft-pin.is-changing .craft-pin-media::before{ opacity: 1; transform: translateX(5%) scale(1); }
 .craft-pin-copy{ position: absolute; inset: 0; display: flex; align-items: center; padding: clamp(34px, 5vw, 78px); }
 .craft-pin-panels{ position: relative; display: grid; width: 100%; }
 .craft-pin-panel{
@@ -2273,8 +2255,7 @@ html:not(.has-gsap) .hdr-panel.is-open{ transition-delay: 0s; }
 @media(prefers-reduced-motion:reduce){.flame-mark video{display:none}.flame-mark.is-playing img{opacity:1}}
 
 @media (prefers-reduced-motion: reduce){
-  .craft-pin-video,.craft-pin-media::before,.craft-pin-panel{transition:none;transform:none;filter:none;clip-path:none}
-  .craft-pin-video.is-switching{opacity:0}
+  .craft-pin-panel{transition:none;transform:none;filter:none;clip-path:none}
 }
 
 /* Cart feedback: a short label slides out beside the cart icon when an item lands. */

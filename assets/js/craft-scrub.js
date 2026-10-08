@@ -13,10 +13,8 @@
   var currentStep = 0;
   var visible = false;
   var userPaused = reducedMotion;
-  var animationId = 0;
   var pendingAutoplay = false;
   var preloadLink = null;
-  var transitionTimer = 0;
 
   if (!video || !steps.length || sources.length !== panels.length) return;
 
@@ -33,22 +31,6 @@
     if (ro) ro.textContent = userPaused ? 'Continuă' : 'Pauză';
     if (en) en.textContent = userPaused ? 'Play' : 'Pause';
     toggle.setAttribute('aria-label', userPaused ? (isRomanian() ? 'Continuă animația' : 'Play animation') : (isRomanian() ? 'Pune animația pe pauză' : 'Pause animation'));
-  }
-
-  function updateProgress() {
-    var progress = video.duration ? Math.min(100, (video.currentTime / video.duration) * 100) : 0;
-    steps[currentStep].style.setProperty('--craft-progress', progress.toFixed(2) + '%');
-  }
-
-  function stopProgress() {
-    if (animationId) cancelAnimationFrame(animationId);
-    animationId = 0;
-  }
-
-  function trackProgress() {
-    updateProgress();
-    if (!video.paused && !video.ended) animationId = requestAnimationFrame(trackProgress);
-    else animationId = 0;
   }
 
   function playVideo() {
@@ -77,20 +59,13 @@
       var active = index === currentStep;
       step.classList.toggle('is-active', active);
       step.toggleAttribute('aria-current', active);
-      step.style.setProperty('--craft-progress', '0%');
     });
     panels.forEach(function (panel, index) {
       var active = index === currentStep;
       panel.classList.toggle('is-active', active);
       panel.setAttribute('aria-hidden', active ? 'false' : 'true');
     });
-    stopProgress();
     video.pause();
-    // Fade lin catre fundalul deja intunecat cat timp se incarca noul clip —
-    // fara flash, fara taietura brusca. Reapare la 'loadeddata'.
-    clearTimeout(transitionTimer);
-    pin.classList.add('is-changing');
-    video.classList.add('is-switching');
     pendingAutoplay = shouldPlay;
     video.poster = posters[currentStep];
     video.src = sources[currentStep];
@@ -99,27 +74,11 @@
   }
 
   video.addEventListener('loadeddata', function () {
-    var reveal = function () {
-      video.classList.remove('is-switching');
-      transitionTimer = setTimeout(function () { pin.classList.remove('is-changing'); }, reducedMotion ? 0 : 760);
-    };
-    if (reducedMotion) reveal();
-    else requestAnimationFrame(function () { requestAnimationFrame(reveal); });
     if (pendingAutoplay) { pendingAutoplay = false; playVideo(); }
   });
-  video.addEventListener('play', function () {
-    stopProgress();
-    animationId = requestAnimationFrame(trackProgress);
-  });
-  video.addEventListener('pause', function () {
-    stopProgress();
-    updateProgress();
-  });
   video.addEventListener('ended', function () {
-    stopProgress();
     setStep(currentStep + 1, true);
   });
-  video.addEventListener('loadedmetadata', updateProgress);
 
   steps.forEach(function (step, index) {
     step.addEventListener('click', function () {
@@ -145,7 +104,16 @@
   }, { threshold: .25 });
 
   pin.classList.add('is-auto');
-  setStep(0, false);
   updateToggle();
   observer.observe(pin);
+
+  // Primul clip (si prefetch-ul celui de-al doilea) se incarca abia cand sectiunea
+  // se apropie de ecran, nu la deschiderea paginii — altfel ~2,7 MB concureaza
+  // cu continutul din prima vedere.
+  var initialLoad = new IntersectionObserver(function (entries) {
+    if (!entries[0].isIntersecting) return;
+    initialLoad.disconnect();
+    setStep(0, false);
+  }, { rootMargin: '900px 0px' });
+  initialLoad.observe(pin);
 })();
