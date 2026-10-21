@@ -96,6 +96,14 @@ test('pagini de produs: culorile din configurator exista in catalog', () => {
   }
 });
 
+test('build: dist/ contine toate paginile randate si nimic din server', () => {
+  const { build } = require('../scripts/build');
+  const outDir = fs.mkdtempSync(path.join(os.tmpdir(), 'pf-dist-'));
+  build({ outDir, copyAssets: false });
+  assert.deepEqual(fs.readdirSync(outDir).sort(), Object.keys(pages).sort());
+  assert.equal(fs.readFileSync(path.join(outDir, 'embera.html'), 'utf8'), pages['embera.html']);
+});
+
 test('pagini: fiecare accesoriu din pagini exista in catalog, cu acelasi pret', () => {
   for (const [file, html] of Object.entries(pages)) {
     for (const m of html.matchAll(/data-(?:accessory|addon)-id="([^"]+)"[^>]*?data-(?:accessory|addon)-bani="(\d+)"/g)) {
