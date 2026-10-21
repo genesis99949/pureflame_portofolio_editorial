@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<!-- CSP dedicat panoului de administrare (recomandarea Sveltia CMS + API-ul GitHub).
+     Restul site-ului pastreaza politica stricta din server/index.js, fara surse externe. -->
+<meta http-equiv="Content-Security-Policy" content="style-src 'self' 'unsafe-inline'; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' blob: data: https://*.githubusercontent.com; media-src blob:; frame-src blob:; script-src 'self' https://unpkg.com; connect-src 'self' blob: data: https://unpkg.com https://api.github.com https://www.githubstatus.com; manifest-src blob:; object-src 'none'">
+<title>Administrare catalog — PureFlame</title>
+</head>
+<body>
+<!-- Versiune fixata: o actualizare a CMS-ului se face intentionat, nu automat. -->
+<script src="https://unpkg.com/@sveltia/cms@0.229.0/dist/sveltia-cms.js"></script>
+</body>
+</html>

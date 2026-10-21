@@ -18,6 +18,8 @@ function build({ outDir = path.join(PROJECT_ROOT, 'dist'), copyAssets = true } =
   fs.rmSync(outDir, { recursive: true, force: true });
   fs.mkdirSync(outDir, { recursive: true });
   pages.forEach((file) => fs.writeFileSync(path.join(outDir, file), renderPage(file, catalog)));
+  // Panoul CMS (src/admin) ajunge la /admin/ — fisiere statice, fara randare.
+  fs.cpSync(path.join(PROJECT_ROOT, 'src', 'admin'), path.join(outDir, 'admin'), { recursive: true });
 
   if (copyAssets) {
     fs.cpSync(path.join(PROJECT_ROOT, 'assets'), path.join(outDir, 'assets'), { recursive: true });

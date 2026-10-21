@@ -18,6 +18,7 @@ const { loadCatalog } = require('./catalog');
 const { renderPage } = require('./render');
 
 const PROJECT_ROOT = path.join(__dirname, '..');
+const ADMIN_DIR = path.join(PROJECT_ROOT, 'src', 'admin');
 
 // Lista alba a paginilor publice — NU folosim express.static() pe radacina proiectului,
 // altfel s-ar servi si server/, data/ (baza de date cu clienti), package.json etc.
@@ -112,6 +113,18 @@ function createApp({ stripeSecretKey, stripeWebhookSecret, baseUrl, rateLimits }
   Object.entries(RETIRED_PRODUCT_PAGES).forEach(([file, productId]) => {
     app.get(`/${file}`, (req, res) => res.redirect(302, `/colectie.html#${productId}`));
   });
+  // Panoul CMS (Sveltia) — doar doua fisiere statice. Pagina isi aduce propriul CSP
+  // printr-un <meta> (are nevoie de unpkg.com si api.github.com), asa ca aici scoatem
+  // politica stricta a site-ului; toate celelalte pagini o pastreaza.
+  // Accesul la date nu tine de server: fara token GitHub sau folderul local, CMS-ul nu poate salva nimic.
+  // Express trateaza implicit /admin si /admin/ la fel; CMS-ul cauta config.yml relativ
+  // la adresa paginii, deci il trimitem mereu pe varianta cu slash.
+  app.get('/admin/', (req, res) => {
+    if (!req.originalUrl.split('?')[0].endsWith('/')) return res.redirect(302, '/admin/');
+    res.removeHeader('Content-Security-Policy');
+    res.sendFile(path.join(ADMIN_DIR, 'index.html'));
+  });
+  app.get('/admin/config.yml', (req, res) => res.type('text/yaml').sendFile(path.join(ADMIN_DIR, 'config.yml')));
   // maxAge: 0 + ETag => browserul revalideaza de fiecare data si primeste 304 (raspuns
   // minuscul) daca fisierul nu s-a schimbat. Fara asta, un cache lung ar servi CSS/JS
   // vechi zile intregi dupa un deploy, fara ca noi sa avem cum sa invalidam.
