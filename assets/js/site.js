@@ -232,13 +232,14 @@ document.querySelectorAll('.header-cta, .btn-solid[data-scroll]').forEach(btn =>
   const header = document.querySelector('.site-header');
   if (!header) return;
 
-  const PRODUCTS = [
-    { name: 'Aether', href: 'aether.html', ro: 'Rotundă, joasă', en: 'Round, low' },
-    { name: 'Embera', href: 'embera.html', ro: 'Dreptunghiulară, joasă', en: 'Rectangular, low' },
-    { name: 'Flavo', href: 'flavo.html', ro: 'Pătrată, joasă', en: 'Square, low' },
-    { name: 'Fera', href: 'fera.html', ro: 'Dreptunghiulară, înaltă', en: 'Rectangular, tall' },
-    { name: 'Ignite', href: 'ignite.html', ro: 'Liniară, înaltă', en: 'Linear, tall' }
-  ];
+  // Modelele vin din catalogul randat in pagina de server (content/products/*.json).
+  // Textele sunt editabile din CMS, deci le escapam inainte de innerHTML.
+  const esc = (text) => String(text).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+  let PRODUCTS = [];
+  try {
+    PRODUCTS = JSON.parse(document.getElementById('pf-catalog').textContent).products
+      .map((p) => ({ name: esc(p.name), href: esc(p.href), ro: esc(p.guide.shape.ro), en: esc(p.guide.shape.en) }));
+  } catch (e) {}
   const bi = (ro, en) => `<span class="lang-ro">${ro}</span><span class="lang-en" hidden>${en}</span>`;
   // Panourile sunt injectate dupa ce comutatorul de limba si-a facut treaba,
   // deci isi aplica singure limba salvata — acelasi tipar ca in celelalte module.

@@ -3,20 +3,20 @@
   if (!mount) return;
 
   const currentId = document.querySelector('.epp-buy-panel')?.dataset.productId || '';
-  const products = [
-    { id: 'embera', name: 'Embera', href: 'embera.html', fitRo: 'Servire și grupuri mai mari', fitEn: 'Serving and larger groups', shapeRo: 'Dreptunghiulară, joasă', shapeEn: 'Rectangular, low', size: '169 × 95 × 44 cm', weight: '54 kg', materialRo: 'Metal texturat', materialEn: 'Textured metal', price: '4.797 lei' },
-    { id: 'aether', name: 'Aether', href: 'aether.html', fitRo: 'Terase compacte și zone lounge', fitEn: 'Compact terraces and lounge areas', shapeRo: 'Rotundă, joasă', shapeEn: 'Round, low', size: '83.5 × 83.5 × 37 cm', weight: '24 kg', materialRo: 'Beton fin texturat', materialEn: 'Fine-textured concrete', price: '2.989 lei' },
-    { id: 'flavo', name: 'Flavo', href: 'flavo.html', fitRo: 'Amenajări geometrice', fitEn: 'Geometric arrangements', shapeRo: 'Pătrată, joasă', shapeEn: 'Square, low', size: '96 × 96 × 38 cm', weight: '33 kg', materialRo: 'Metal', materialEn: 'Metal', price: '2.999 lei' },
-    { id: 'fera', name: 'Fera', href: 'fera.html', fitRo: 'Terase ample și zone liniare', fitEn: 'Spacious terraces and linear areas', shapeRo: 'Dreptunghiulară, înaltă', shapeEn: 'Rectangular, tall', size: '160 × 69 × 55 cm', weight: '53.5 kg', materialRo: 'Metal', materialEn: 'Metal', price: '4.299 lei' },
-    { id: 'ignite', name: 'Ignite', href: 'ignite.html', fitRo: 'Zone lounge și terase medii', fitEn: 'Lounge areas and medium terraces', shapeRo: 'Liniară, înaltă', shapeEn: 'Linear, tall', size: '146 × 36 × 66 cm', weight: '33.5 kg', materialRo: 'Metal antracit', materialEn: 'Anthracite metal', price: '3.099 lei' }
-  ];
+  // Datele vin din catalogul randat in pagina de server (content/products/*.json),
+  // aceeasi sursa ca preturile din Stripe — nu le mai copiem aici.
+  let products = [];
+  try { products = JSON.parse(document.getElementById('pf-catalog').textContent).products; } catch (e) { return; }
 
+  // Textele din catalog sunt editabile din CMS, deci le escapam inainte de innerHTML.
+  const esc = (text) => String(text).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
   const bilingual = (ro, en) => `<span class="lang-ro">${ro}</span><span class="lang-en" hidden>${en}</span>`;
+  const fromCatalog = (value) => bilingual(esc(value.ro), esc(value.en));
   const headers = products.map((product) => {
     const current = product.id === currentId;
     return `<th scope="col" class="${current ? 'is-current' : ''}">
       ${current ? `<span class="epp-compare-current">${bilingual('Model curent', 'Current model')}</span>` : ''}
-      ${current ? `<strong>${product.name}</strong>` : `<a href="${product.href}">${product.name}<span aria-hidden="true"> ↗︎</span></a>`}
+      ${current ? `<strong>${esc(product.name)}</strong>` : `<a href="${esc(product.href)}">${esc(product.name)}<span aria-hidden="true"> ↗︎</span></a>`}
     </th>`;
   }).join('');
 
@@ -36,12 +36,12 @@
       <table>
         <thead><tr><th scope="col">${bilingual('Criteriu', 'Criterion')}</th>${headers}</tr></thead>
         <tbody>
-          ${row('Potrivită pentru', 'Best for', (p) => bilingual(p.fitRo, p.fitEn))}
-          ${row('Formă', 'Shape', (p) => bilingual(p.shapeRo, p.shapeEn))}
-          ${row('Dimensiuni', 'Dimensions', (p) => bilingual(p.size.replace(/(\d)\.(\d)/g, '$1,$2'), p.size))}
-          ${row('Greutate netă', 'Net weight', (p) => bilingual(p.weight.replace(/(\d)\.(\d)/g, '$1,$2'), p.weight))}
-          ${row('Material', 'Material', (p) => bilingual(p.materialRo, p.materialEn))}
-          ${row('Preț', 'Price', (p) => `<strong>${p.price}</strong>`)}
+          ${row('Potrivită pentru', 'Best for', (p) => fromCatalog(p.guide.bestFor))}
+          ${row('Formă', 'Shape', (p) => fromCatalog(p.guide.shape))}
+          ${row('Dimensiuni', 'Dimensions', (p) => fromCatalog(p.dims))}
+          ${row('Greutate netă', 'Net weight', (p) => fromCatalog(p.weightNet))}
+          ${row('Material', 'Material', (p) => fromCatalog(p.material))}
+          ${row('Preț', 'Price', (p) => `<strong>${esc(p.priceLabel)}</strong>`)}
         </tbody>
       </table>
     </div>`;

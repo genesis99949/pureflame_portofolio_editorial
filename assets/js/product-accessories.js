@@ -1,55 +1,56 @@
 (function () {
+  // Accesoriile vin din catalogul randat in pagina de server (content/accessories/*.json),
+  // aceeasi sursa ca preturile din Stripe si din pagina de colectie.
+  let accessories = [];
+  try { accessories = JSON.parse(document.getElementById('pf-catalog').textContent).accessories; } catch (e) { return; }
+
+  // Textele din catalog sunt editabile din CMS, deci le escapam inainte de innerHTML.
+  const esc = (text) => String(text).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+  const bilingual = (ro, en) => `<span class="lang-ro">${ro}</span><span class="lang-en" hidden>${en}</span>`;
+  const action = `<span class="ce-accessory-action"><span class="ce-action-add">${bilingual('Adaugă în coș', 'Add to cart')}</span><span class="ce-action-added" hidden>${bilingual('Adăugat', 'Added')} ✓</span></span>`;
+
+  function cardMarkup(a) {
+    const data = `data-accessory-id="${esc(a.id)}" data-accessory-name="${esc(a.name)}" data-accessory-price="${esc(a.priceLabel)}" data-accessory-bani="${esc(a.priceBani)}" data-accessory-image="${esc(a.image)}"`;
+    const media = `<span class="ce-accessory-media"><img src="${esc(a.image)}" alt="" loading="lazy" width="1254" height="1254"></span>`;
+    const meta = `<span class="ce-accessory-meta"><span class="ce-accessory-name">${bilingual(esc(a.label.ro), esc(a.label.en))}</span><span class="ce-accessory-price">${esc(a.priceLabel)}</span>${action}</span>`;
+    if (!a.variants.length) {
+      return `<button class="ce-accessory-card" type="button" ${data}>${media}${meta}</button>`;
+    }
+    const variants = a.variants.map((v, i) => `<button type="button" class="ce-accessory-variant${i === 0 ? ' is-active' : ''}" data-color="${esc(v.color.ro)}" data-image="${esc(v.image)}" aria-pressed="${i === 0}"><span class="ce-swatch ce-swatch-${esc(v.swatch)}" aria-hidden="true"></span>${bilingual(esc(v.color.ro), esc(v.color.en))}</button>`).join('');
+    return `<article class="ce-accessory-card ce-accessory-card-mask" ${data} data-accessory-color="${esc(a.variants[0].color.ro)}">
+        <button class="ce-accessory-add" type="button">${media}${meta}</button>
+        <div class="ce-accessory-variants" role="group" aria-label="Culoarea: ${esc(a.label.ro)}">${variants}</div>
+      </article>`;
+  }
+
   const accessoryMarkup = `
     <div class="ce-accessories-head">
       <div>
-        <p class="ce-section-kicker"><span class="lang-ro">Accesorii</span><span class="lang-en" hidden>Accessories</span></p>
-        <h2><span class="lang-ro">Completează-ți masa</span><span class="lang-en" hidden>Complete your table</span></h2>
+        <p class="ce-section-kicker">${bilingual('Accesorii', 'Accessories')}</p>
+        <h2>${bilingual('Completează-ți masa', 'Complete your table')}</h2>
       </div>
-      <p><span class="lang-ro">Disponibile individual.</span><span class="lang-en" hidden>Available individually.</span></p>
+      <p>${bilingual('Disponibile individual.', 'Available individually.')}</p>
     </div>
 
     <div class="ce-accessory-grid">
-      <button class="ce-accessory-card" type="button" data-accessory-id="pietre" data-accessory-name="Set pietre vulcanice (rezervă)" data-accessory-price="89,00 lei" data-accessory-bani="8900" data-accessory-image="assets/accessories/lava-stones-bag.webp">
-        <span class="ce-accessory-media"><img src="assets/accessories/lava-stones-bag.webp" alt="" loading="lazy" width="1254" height="1254"></span>
-        <span class="ce-accessory-meta"><span class="ce-accessory-name"><span class="lang-ro">Pietre vulcanice</span><span class="lang-en" hidden>Volcanic stones</span></span><span class="ce-accessory-price">89,00 lei</span><span class="ce-accessory-action"><span class="ce-action-add"><span class="lang-ro">Adaugă în coș</span><span class="lang-en" hidden>Add to cart</span></span><span class="ce-action-added" hidden><span class="lang-ro">Adăugat</span><span class="lang-en" hidden>Added</span> ✓</span></span></span>
-      </button>
-
-      <article class="ce-accessory-card ce-accessory-card-mask" data-accessory-id="masca" data-accessory-name="Mască pătrată pentru butelie" data-accessory-price="99,00 lei" data-accessory-bani="9900" data-accessory-image="assets/accessories/mask-square-grey.webp" data-accessory-color="Gri">
-        <button class="ce-accessory-add" type="button">
-          <span class="ce-accessory-media"><img src="assets/accessories/mask-square-grey.webp" alt="" loading="lazy" width="1254" height="1254"></span>
-          <span class="ce-accessory-meta"><span class="ce-accessory-name"><span class="lang-ro">Mască pătrată</span><span class="lang-en" hidden>Square cylinder cover</span></span><span class="ce-accessory-price">99,00 lei</span><span class="ce-accessory-action"><span class="ce-action-add"><span class="lang-ro">Adaugă în coș</span><span class="lang-en" hidden>Add to cart</span></span><span class="ce-action-added" hidden><span class="lang-ro">Adăugat</span><span class="lang-en" hidden>Added</span> ✓</span></span></span>
-        </button>
-        <div class="ce-accessory-variants" role="group" aria-label="Culoarea măștii pătrate">
-          <button type="button" class="ce-accessory-variant is-active" data-color="Gri" data-image="assets/accessories/mask-square-grey.webp" aria-pressed="true"><span class="ce-swatch ce-swatch-grey" aria-hidden="true"></span><span class="lang-ro">Gri</span><span class="lang-en" hidden>Grey</span></button>
-          <button type="button" class="ce-accessory-variant" data-color="Negru" data-image="assets/accessories/mask-square-black.webp" aria-pressed="false"><span class="ce-swatch ce-swatch-black" aria-hidden="true"></span><span class="lang-ro">Negru</span><span class="lang-en" hidden>Black</span></button>
-        </div>
-      </article>
-
-      <article class="ce-accessory-card ce-accessory-card-mask" data-accessory-id="masca" data-accessory-name="Mască circulară pentru butelie" data-accessory-price="99,00 lei" data-accessory-bani="9900" data-accessory-image="assets/accessories/mask-round-grey.webp" data-accessory-color="Gri">
-        <button class="ce-accessory-add" type="button">
-          <span class="ce-accessory-media"><img src="assets/accessories/mask-round-grey.webp" alt="" loading="lazy" width="1254" height="1254"></span>
-          <span class="ce-accessory-meta"><span class="ce-accessory-name"><span class="lang-ro">Mască circulară</span><span class="lang-en" hidden>Circular cylinder cover</span></span><span class="ce-accessory-price">99,00 lei</span><span class="ce-accessory-action"><span class="ce-action-add"><span class="lang-ro">Adaugă în coș</span><span class="lang-en" hidden>Add to cart</span></span><span class="ce-action-added" hidden><span class="lang-ro">Adăugat</span><span class="lang-en" hidden>Added</span> ✓</span></span></span>
-        </button>
-        <div class="ce-accessory-variants" role="group" aria-label="Culoarea măștii circulare">
-          <button type="button" class="ce-accessory-variant is-active" data-color="Gri" data-image="assets/accessories/mask-round-grey.webp" aria-pressed="true"><span class="ce-swatch ce-swatch-grey" aria-hidden="true"></span><span class="lang-ro">Gri</span><span class="lang-en" hidden>Grey</span></button>
-          <button type="button" class="ce-accessory-variant" data-color="Negru" data-image="assets/accessories/mask-round-black.webp" aria-pressed="false"><span class="ce-swatch ce-swatch-black" aria-hidden="true"></span><span class="lang-ro">Negru</span><span class="lang-en" hidden>Black</span></button>
-        </div>
-      </article>
-
-      <button class="ce-accessory-card" type="button" data-accessory-id="husa" data-accessory-name="Husă de protecție impermeabilă" data-accessory-price="149,00 lei" data-accessory-bani="14900" data-accessory-image="assets/accessories/protective-cover.webp">
-        <span class="ce-accessory-media"><img src="assets/accessories/protective-cover.webp" alt="" loading="lazy" width="1254" height="1254"></span>
-        <span class="ce-accessory-meta"><span class="ce-accessory-name"><span class="lang-ro">Husă de protecție</span><span class="lang-en" hidden>Protective cover</span></span><span class="ce-accessory-price">149,00 lei</span><span class="ce-accessory-action"><span class="ce-action-add"><span class="lang-ro">Adaugă în coș</span><span class="lang-en" hidden>Add to cart</span></span><span class="ce-action-added" hidden><span class="lang-ro">Adăugat</span><span class="lang-en" hidden>Added</span> ✓</span></span></span>
-      </button>
-
-      <button class="ce-accessory-card" type="button" data-accessory-id="picioare" data-accessory-name="Set picioare de schimb" data-accessory-price="119,00 lei" data-accessory-bani="11900" data-accessory-image="assets/accessories/detachable-legs.webp">
-        <span class="ce-accessory-media"><img src="assets/accessories/detachable-legs.webp" alt="" loading="lazy" width="1254" height="1254"></span>
-        <span class="ce-accessory-meta"><span class="ce-accessory-name"><span class="lang-ro">Picioare detașabile</span><span class="lang-en" hidden>Detachable legs</span></span><span class="ce-accessory-price">119,00 lei</span><span class="ce-accessory-action"><span class="ce-action-add"><span class="lang-ro">Adaugă în coș</span><span class="lang-en" hidden>Add to cart</span></span><span class="ce-action-added" hidden><span class="lang-ro">Adăugat</span><span class="lang-en" hidden>Added</span> ✓</span></span></span>
-      </button>
+      ${accessories.map(cardMarkup).join('')}
     </div>
     <p class="sr-only ce-accessory-status" aria-live="polite"></p>`;
 
+  // Raftul se injecteaza dupa ce comutatorul de limba a rulat, deci isi aplica
+  // singur limba salvata — acelasi tipar ca in product-compare.js.
+  function syncLang(root) {
+    let lang = 'ro';
+    try { lang = localStorage.getItem('pf-lang') || 'ro'; } catch (e) {}
+    root.querySelectorAll('.lang-ro').forEach((el) => { el.hidden = lang === 'en'; });
+    root.querySelectorAll('.lang-en').forEach((el) => { el.hidden = lang !== 'en'; });
+  }
+
   function initializeShelf(section) {
-    if (!section.querySelector('.ce-accessory-grid')) section.innerHTML = accessoryMarkup;
+    if (!section.querySelector('.ce-accessory-grid')) {
+      section.innerHTML = accessoryMarkup;
+      syncLang(section);
+    }
 
     // Product cards keep browsing and colour selection separate from purchase.
     section.querySelectorAll('button.ce-accessory-card').forEach(button => {
