@@ -2,11 +2,28 @@
   "id": "masca-patrata",
   "order": 2,
   "name": "Mască pătrată pentru butelie",
-  "label": { "ro": "Mască pătrată", "en": "Square cylinder cover" },
+  "label": {
+    "ro": "Mască pătrată",
+    "en": "Square cylinder cover"
+  },
   "priceBani": 9900,
   "image": "assets/accessories/mask-square-grey.webp",
   "variants": [
-    { "color": { "ro": "Gri", "en": "Grey" }, "swatch": "grey", "image": "assets/accessories/mask-square-grey.webp" },
-    { "color": { "ro": "Negru", "en": "Black" }, "swatch": "black", "image": "assets/accessories/mask-square-black.webp" }
+    {
+      "color": {
+        "ro": "Gri",
+        "en": "Grey"
+      },
+      "swatch": "grey",
+      "image": "assets/accessories/mask-square-grey.webp"
+    },
+    {
+      "color": {
+        "ro": "Negru",
+        "en": "Black"
+      },
+      "swatch": "black",
+      "image": "assets/accessories/mask-square-black.webp"
+    }
   ]
 }

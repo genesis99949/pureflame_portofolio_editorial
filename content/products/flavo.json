@@ -3,18 +3,46 @@
   "order": 3,
   "name": "Flavo",
   "priceBani": 299900,
-  "colors": ["Gri", "Negru"],
+  "colors": [
+    "Gri",
+    "Negru"
+  ],
   "code": "HF35708AA",
-  "dimensionsCm": { "length": 96, "width": 96, "height": 38 },
-  "weightKg": { "net": 33, "gross": 41 },
-  "material": { "ro": "Metal", "en": "Metal" },
+  "dimensionsCm": {
+    "length": 96,
+    "width": 96,
+    "height": 38
+  },
+  "weightKg": {
+    "net": 33,
+    "gross": 41
+  },
+  "material": {
+    "ro": "Metal",
+    "en": "Metal"
+  },
   "collection": {
-    "label": { "ro": "Design geometric", "en": "Geometric design" },
-    "shape": { "ro": "Pătrată", "en": "Square" },
-    "bestFor": { "ro": "Terase compacte", "en": "Compact terraces" }
+    "label": {
+      "ro": "Design geometric",
+      "en": "Geometric design"
+    },
+    "shape": {
+      "ro": "Pătrată",
+      "en": "Square"
+    },
+    "bestFor": {
+      "ro": "Terase compacte",
+      "en": "Compact terraces"
+    }
   },
   "guide": {
-    "shape": { "ro": "Pătrată, joasă", "en": "Square, low" },
-    "bestFor": { "ro": "Amenajări geometrice", "en": "Geometric arrangements" }
+    "shape": {
+      "ro": "Pătrată, joasă",
+      "en": "Square, low"
+    },
+    "bestFor": {
+      "ro": "Amenajări geometrice",
+      "en": "Geometric arrangements"
+    }
   }
 }
