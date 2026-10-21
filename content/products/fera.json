@@ -1,0 +1,20 @@
+{
+  "id": "fera",
+  "order": 4,
+  "name": "Fera",
+  "priceBani": 429900,
+  "colors": ["Gri", "Negru"],
+  "code": "HF60501AA",
+  "dimensionsCm": { "length": 160, "width": 69, "height": 55 },
+  "weightKg": { "net": 53.5, "gross": 61.5 },
+  "material": { "ro": "Metal", "en": "Metal" },
+  "collection": {
+    "label": { "ro": "Finisaj gri sau negru", "en": "Grey or black finish" },
+    "shape": { "ro": "Liniară", "en": "Linear" },
+    "bestFor": { "ro": "Spații lungi și ample", "en": "Long, generous spaces" }
+  },
+  "guide": {
+    "shape": { "ro": "Dreptunghiulară, înaltă", "en": "Rectangular, tall" },
+    "bestFor": { "ro": "Terase ample și zone liniare", "en": "Spacious terraces and linear areas" }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "husa",
+  "order": 4,
+  "name": "Husă de protecție impermeabilă",
+  "label": { "ro": "Husă de protecție", "en": "Protective cover" },
+  "priceBani": 14900,
+  "image": "assets/accessories/protective-cover.webp",
+  "variants": []
+}

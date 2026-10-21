@@ -1,0 +1,20 @@
+{
+  "id": "embera",
+  "order": 1,
+  "name": "Embera",
+  "priceBani": 479700,
+  "colors": ["Negru Intens"],
+  "code": "HF60502AA",
+  "dimensionsCm": { "length": 169, "width": 95, "height": 44 },
+  "weightKg": { "net": 54, "gross": 63 },
+  "material": { "ro": "Metal texturat", "en": "Textured metal" },
+  "collection": {
+    "label": { "ro": "Metal texturat", "en": "Textured metal" },
+    "shape": { "ro": "Dreptunghiulară", "en": "Rectangular" },
+    "bestFor": { "ro": "Terase ample", "en": "Generous terraces" }
+  },
+  "guide": {
+    "shape": { "ro": "Dreptunghiulară, joasă", "en": "Rectangular, low" },
+    "bestFor": { "ro": "Servire și grupuri mai mari", "en": "Serving and larger groups" }
+  }
+}
