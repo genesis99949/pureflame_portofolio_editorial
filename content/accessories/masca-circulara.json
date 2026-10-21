@@ -1,0 +1,29 @@
+{
+  "id": "masca-circulara",
+  "order": 3,
+  "name": "Mască circulară pentru butelie",
+  "label": {
+    "ro": "Mască circulară",
+    "en": "Circular cylinder cover"
+  },
+  "priceBani": 9900,
+  "image": "assets/accessories/mask-round-grey.webp",
+  "variants": [
+    {
+      "color": {
+        "ro": "Gri",
+        "en": "Grey"
+      },
+      "swatch": "grey",
+      "image": "assets/accessories/mask-round-grey.webp"
+    },
+    {
+      "color": {
+        "ro": "Negru",
+        "en": "Black"
+      },
+      "swatch": "black",
+      "image": "assets/accessories/mask-round-black.webp"
+    }
+  ]
+}

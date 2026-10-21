@@ -1,21 +1,21 @@
-// Catalog produse — sursa unica a preturilor (RON, sumele in bani pentru Stripe).
-// Pentru a schimba un pret, editeaza doar valoarea `amount` de mai jos.
-const PRODUCTS = {
-  embera: { name: 'Embera', amount: 479700, currency: 'ron', colors: ['Negru Intens'] }, // finisaj unic
-  aether: { name: 'Aether', amount: 298900, currency: 'ron', colors: ['Gri', 'Negru'] },
-  flavo:  { name: 'Flavo',  amount: 299900, currency: 'ron', colors: ['Gri', 'Negru'] },
-  fera:   { name: 'Fera',   amount: 429900, currency: 'ron', colors: ['Gri', 'Negru'] },
-  ignite: { name: 'Ignite', amount: 309900, currency: 'ron', colors: [] }, // finisaj unic, integral metalic — fara variante de culoare
-};
+// Preturile pentru Stripe (RON, sumele in bani). Nu se mai editeaza aici: vin din
+// catalogul din content/ (vezi server/catalog.js), aceeasi sursa din care se
+// genereaza si preturile afisate in pagini.
+const { loadCatalog } = require('./catalog');
 
-// Accesorii — in cos apar cu id-ul "addon-<cheie>". Preturile sunt in bani si vin
-// intotdeauna de aici, niciodata din cos (clientul poate trimite orice valoare).
-const ACCESSORIES = {
-  pietre:   { name: 'Set pietre vulcanice (rezervă)', amount: 8900, currency: 'ron', colors: [] },
-  masca:    { name: 'Mască pentru butelie', amount: 9900, currency: 'ron', colors: ['Gri', 'Negru'] },
-  husa:     { name: 'Husă de protecție impermeabilă', amount: 14900, currency: 'ron', colors: [] },
-  picioare: { name: 'Set picioare de schimb', amount: 11900, currency: 'ron', colors: [] },
-};
+const catalog = loadCatalog();
+
+const PRODUCTS = Object.fromEntries(catalog.productList.map((p) => [
+  p.id,
+  { name: p.name, amount: p.priceBani, currency: 'ron', colors: p.colors },
+]));
+
+// Accesorii — in cos apar cu id-ul "addon-<cheie>". Preturile vin intotdeauna
+// de aici, niciodata din cos (clientul poate trimite orice valoare).
+const ACCESSORIES = Object.fromEntries(catalog.accessoryList.map((a) => [
+  a.id,
+  { name: a.name, amount: a.priceBani, currency: 'ron', colors: a.colors },
+]));
 
 function getProduct(id) {
   return Object.hasOwn(PRODUCTS, id) ? PRODUCTS[id] : null;

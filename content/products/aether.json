@@ -1,0 +1,48 @@
+{
+  "id": "aether",
+  "order": 2,
+  "name": "Aether",
+  "priceBani": 298900,
+  "colors": [
+    "Gri",
+    "Negru"
+  ],
+  "code": "HF30806AA",
+  "dimensionsCm": {
+    "length": 83.5,
+    "width": 83.5,
+    "height": 37
+  },
+  "weightKg": {
+    "net": 24,
+    "gross": 29.3
+  },
+  "material": {
+    "ro": "Beton fin texturat",
+    "en": "Fine-textured concrete"
+  },
+  "collection": {
+    "label": {
+      "ro": "Beton fin texturat",
+      "en": "Fine-textured concrete"
+    },
+    "shape": {
+      "ro": "Circulară",
+      "en": "Circular"
+    },
+    "bestFor": {
+      "ro": "Zone lounge compacte",
+      "en": "Compact lounge areas"
+    }
+  },
+  "guide": {
+    "shape": {
+      "ro": "Rotundă, joasă",
+      "en": "Round, low"
+    },
+    "bestFor": {
+      "ro": "Terase compacte și zone lounge",
+      "en": "Compact terraces and lounge areas"
+    }
+  }
+}

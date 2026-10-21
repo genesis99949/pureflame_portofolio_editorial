@@ -1,0 +1,128 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.229.0/schema/sveltia-cms.json
+#
+# Sveltia CMS pentru catalogul PureFlame (content/products, content/accessories).
+# Fiecare salvare devine un commit pe main; Vercel reconstruieste site-ul, iar
+# scripts/build.js valideaza datele — un catalog invalid opreste deploy-ul.
+#
+# Campurile marcate readonly depind de cod sau de imagini (id-ul = numele fisierului
+# si al paginii, culorile au fotografii si stiluri proprii, dimensiunile apar si in
+# textele editoriale ale paginii) — se modifica din cod, nu din CMS.
+
+backend:
+  name: github
+  repo: genesis99949/pureflame_portofolio_editorial
+  branch: main
+  # Doar token GitHub (fine-grained, limitat la acest repo). „Sign In with GitHub”
+  # ar cere un server OAuth separat, pe care un singur editor nu il justifica.
+  auth_methods: [token]
+  commit_messages:
+    update: 'Actualizeaza {{collection}} „{{slug}}” din CMS'
+
+# Obligatoriu pentru Sveltia, desi momentan niciun camp nu incarca imagini.
+media_folder: assets/uploads
+public_folder: /assets/uploads
+
+collections:
+  - name: produse
+    label: Produse
+    label_singular: Produs
+    description: Prețurile, specificațiile și textele scurte din colecție, comparație și pagina de produs.
+    folder: content/products
+    format: json
+    extension: json
+    identifier_field: name
+    summary: '{{name}}'
+    sortable_fields:
+      fields: [order, name, priceBani]
+      default: { field: order }
+    create: false
+    delete: false
+    editor: { preview: false }
+    fields:
+      - { name: id, label: ID, widget: string, readonly: true, hint: 'Numele fișierului și al paginii (ex. embera.html).' }
+      - { name: order, label: Ordine în colecție, widget: number, value_type: int, readonly: true }
+      - { name: name, label: Nume, widget: string, maxlength: 60 }
+      - name: priceBani
+        label: Preț
+        widget: number
+        value_type: int
+        min: 100
+        max: 10000000
+        after_input: bani
+        hint: 'În **bani**, ca la Stripe: 479700 = 4.797 lei. Se actualizează în pagini și la plată.'
+      - { name: colors, label: Culori, widget: list, readonly: true, required: false, hint: 'Fiecare culoare are fotografii proprii în pagină — se adaugă din cod.' }
+      - { name: code, label: Cod produs, widget: string, maxlength: 30 }
+      - name: dimensionsCm
+        label: Dimensiuni (cm)
+        widget: object
+        readonly: true
+        hint: 'Apar și în textele editoriale și în modelul 3D — se modifică din cod.'
+        fields:
+          - { name: length, label: Lungime, widget: number, value_type: float }
+          - { name: width, label: Lățime, widget: number, value_type: float }
+          - { name: height, label: Înălțime, widget: number, value_type: float }
+      - name: weightKg
+        label: Greutate (kg)
+        widget: object
+        fields:
+          - { name: net, label: Netă, widget: number, value_type: float, min: 0.1 }
+          - { name: gross, label: Brută, widget: number, value_type: float, min: 0.1 }
+      - name: material
+        label: Material (fișa tehnică)
+        widget: object
+        fields: &bilingual
+          - { name: ro, label: Română, widget: string, maxlength: 120 }
+          - { name: en, label: English, widget: string, maxlength: 120 }
+      - name: collection
+        label: Pagina Colecție
+        widget: object
+        fields:
+          - { name: label, label: Eticheta cardului, widget: object, fields: *bilingual }
+          - { name: shape, label: Formă (tabel), widget: object, fields: *bilingual }
+          - { name: bestFor, label: Potrivită pentru (tabel), widget: object, fields: *bilingual }
+      - name: guide
+        label: Ghidul de comparație (pagina de produs și meniul)
+        widget: object
+        fields:
+          - { name: shape, label: Formă, widget: object, fields: *bilingual }
+          - { name: bestFor, label: Potrivită pentru, widget: object, fields: *bilingual }
+
+  - name: accesorii
+    label: Accesorii
+    label_singular: Accesoriu
+    description: Accesoriile de pe paginile de produs, din colecție și din coș.
+    folder: content/accessories
+    format: json
+    extension: json
+    identifier_field: name
+    summary: '{{name}}'
+    sortable_fields:
+      fields: [order, name, priceBani]
+      default: { field: order }
+    create: false
+    delete: false
+    editor: { preview: false }
+    fields:
+      - { name: id, label: ID, widget: string, readonly: true, hint: 'În coș apare ca „addon-<id>”.' }
+      - { name: order, label: Ordine, widget: number, value_type: int, readonly: true }
+      - { name: name, label: Nume (coș și comandă), widget: string, maxlength: 60 }
+      - { name: label, label: Eticheta scurtă din raft, widget: object, fields: *bilingual }
+      - name: priceBani
+        label: Preț
+        widget: number
+        value_type: int
+        min: 100
+        max: 10000000
+        after_input: bani
+        hint: 'În **bani**: 8900 = 89,00 lei.'
+      - { name: image, label: Imagine, widget: string, readonly: true }
+      - name: variants
+        label: Variante de culoare
+        widget: list
+        readonly: true
+        required: false
+        hint: 'Fiecare variantă are imagine proprie — se modifică din cod.'
+        fields:
+          - { name: color, label: Culoare, widget: object, fields: *bilingual }
+          - { name: swatch, label: Swatch, widget: string }
+          - { name: image, label: Imagine, widget: string }

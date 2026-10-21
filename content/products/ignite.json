@@ -1,0 +1,45 @@
+{
+  "id": "ignite",
+  "order": 5,
+  "name": "Ignite",
+  "priceBani": 309900,
+  "colors": [],
+  "code": "HF54707AA",
+  "dimensionsCm": {
+    "length": 146,
+    "width": 36,
+    "height": 66
+  },
+  "weightKg": {
+    "net": 33.5,
+    "gross": 38.5
+  },
+  "material": {
+    "ro": "Metal antracit",
+    "en": "Anthracite metal"
+  },
+  "collection": {
+    "label": {
+      "ro": "Metal antracit",
+      "en": "Anthracite metal"
+    },
+    "shape": {
+      "ro": "Îngustă, înaltă",
+      "en": "Narrow, tall"
+    },
+    "bestFor": {
+      "ro": "Zone lounge",
+      "en": "Lounge areas"
+    }
+  },
+  "guide": {
+    "shape": {
+      "ro": "Liniară, înaltă",
+      "en": "Linear, tall"
+    },
+    "bestFor": {
+      "ro": "Zone lounge și terase medii",
+      "en": "Lounge areas and medium terraces"
+    }
+  }
+}

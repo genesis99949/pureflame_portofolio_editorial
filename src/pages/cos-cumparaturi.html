@@ -19,7 +19,8 @@
 <link rel="icon" type="image/png" sizes="16x16" href="assets/brand/favicon-16.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/css/liquid-header.css?v=20260917icons">
-<link rel="stylesheet" href="assets/css/home-rail.css?v=20260918icon"><link rel="stylesheet" href="assets/css/mobile-polish.css?v=20261001mobile"><link rel="stylesheet" href="assets/css/mobile-header.css?v=20261008c"></head>
+<link rel="stylesheet" href="assets/css/home-rail.css?v=20260918icon"><link rel="stylesheet" href="assets/css/mobile-polish.css?v=20261001mobile"><link rel="stylesheet" href="assets/css/mobile-header.css?v=20261008c"><script type="application/json" id="pf-catalog">{{{publicJson}}}</script>
+</head>
 <body class="home-rail-page">
 <div class="pf-page-transition" aria-hidden="true"><img src="assets/brand/pf-inline.png" alt="" width="1200" height="340" loading="lazy"></div>
 <div class="pf-intro" tabindex="-1" role="dialog" aria-modal="true" aria-label="PureFlame — intro"><div class="pf-intro-art"><video data-intro-src="assets/brand/signature-intro.webm?v=20260915c" muted playsinline preload="none" aria-hidden="true" width="1440" height="810"></video></div></div>
@@ -91,40 +92,40 @@
           </h2>
           <p class="checkout-card-intro"><span class="lang-ro">Selecție utilă pentru protecție, întreținere și integrarea buteliei.</span><span class="lang-en" hidden>A useful selection for protection, maintenance and discreet cylinder storage.</span></p>
           <div class="addon-row" id="addonRow" tabindex="0" role="region" aria-label="Accesorii" data-aria-ro="Accesorii" data-aria-en="Accessories">
-            <article class="addon-card" data-addon-id="husa" data-addon-name="Husă de protecție impermeabilă" data-addon-price="149,00 lei" data-addon-bani="14900" data-addon-image="assets/accessories/protective-cover.webp">
+            <article class="addon-card" data-addon-id="husa" data-addon-name="{{accessories.husa.name}}" data-addon-price="{{accessories.husa.priceLabel}}" data-addon-bani="{{accessories.husa.priceBani}}" data-addon-image="assets/accessories/protective-cover.webp">
               <div class="addon-image"><img src="assets/accessories/protective-cover.webp" alt="Husă de protecție impermeabilă pentru masa cu foc" width="1254" height="1254" loading="lazy" decoding="async"></div>
               <div class="addon-copy">
                 <p class="addon-name"><span class="lang-ro">Husă de protecție</span><span class="lang-en" hidden>Protective cover</span></p>
                 <p class="addon-benefit"><span class="lang-ro">Pentru perioadele în care masa nu este folosită.</span><span class="lang-en" hidden>For the periods when the table is not in use.</span></p>
-                <span class="addon-price">149,00 lei</span>
+                <span class="addon-price">{{accessories.husa.priceLabel}}</span>
               </div>
               <button type="button" class="addon-add" aria-label="Adaugă husa de protecție în coș">
                 <span class="lang-ro">Adaugă</span><span class="lang-en" hidden>Add</span><span aria-hidden="true">＋</span>
               </button>
             </article>
-            <article class="addon-card" data-addon-id="pietre" data-addon-name="Set pietre vulcanice (rezervă)" data-addon-price="89,00 lei" data-addon-bani="8900" data-addon-image="assets/accessories/lava-stones-bag.webp">
+            <article class="addon-card" data-addon-id="pietre" data-addon-name="{{accessories.pietre.name}}" data-addon-price="{{accessories.pietre.priceLabel}}" data-addon-bani="{{accessories.pietre.priceBani}}" data-addon-image="assets/accessories/lava-stones-bag.webp">
               <div class="addon-image"><img src="assets/accessories/lava-stones-bag.webp" alt="Săculeț cu pietre vulcanice de rezervă" width="1254" height="1254" loading="lazy" decoding="async"></div>
               <div class="addon-copy">
                 <p class="addon-name"><span class="lang-ro">Pietre vulcanice</span><span class="lang-en" hidden>Volcanic stones</span></p>
                 <p class="addon-benefit"><span class="lang-ro">Set de rezervă pentru completarea stratului decorativ.</span><span class="lang-en" hidden>A spare set for refreshing the decorative fire bed.</span></p>
-                <span class="addon-price">89,00 lei</span>
+                <span class="addon-price">{{accessories.pietre.priceLabel}}</span>
               </div>
               <button type="button" class="addon-add" aria-label="Adaugă pietrele vulcanice în coș">
                 <span class="lang-ro">Adaugă</span><span class="lang-en" hidden>Add</span><span aria-hidden="true">＋</span>
               </button>
             </article>
-            <article class="addon-card" data-addon-id="picioare" data-addon-name="Set picioare de schimb" data-addon-price="119,00 lei" data-addon-bani="11900" data-addon-image="assets/accessories/detachable-legs.webp">
+            <article class="addon-card" data-addon-id="picioare" data-addon-name="{{accessories.picioare.name}}" data-addon-price="{{accessories.picioare.priceLabel}}" data-addon-bani="{{accessories.picioare.priceBani}}" data-addon-image="assets/accessories/detachable-legs.webp">
               <div class="addon-image"><img src="assets/accessories/detachable-legs.webp" alt="Set de patru picioare negre de schimb" width="1254" height="1254" loading="lazy" decoding="async"></div>
               <div class="addon-copy">
                 <p class="addon-name"><span class="lang-ro">Picioare de schimb</span><span class="lang-en" hidden>Replacement legs</span></p>
                 <p class="addon-benefit"><span class="lang-ro">Set de rezervă pentru întreținerea pe termen lung.</span><span class="lang-en" hidden>A spare set for long-term maintenance.</span></p>
-                <span class="addon-price">119,00 lei</span>
+                <span class="addon-price">{{accessories.picioare.priceLabel}}</span>
               </div>
               <button type="button" class="addon-add" aria-label="Adaugă picioarele de schimb în coș">
                 <span class="lang-ro">Adaugă</span><span class="lang-en" hidden>Add</span><span aria-hidden="true">＋</span>
               </button>
             </article>
-            <article class="addon-card addon-card-mask" data-addon-id="masca-patrata" data-addon-name="Mască pătrată pentru butelie" data-addon-price="99,00 lei" data-addon-bani="9900" data-addon-image="assets/accessories/mask-square-grey.webp" data-addon-color="Gri">
+            <article class="addon-card addon-card-mask" data-addon-id="masca-patrata" data-addon-name="{{accessories.masca-patrata.name}}" data-addon-price="{{accessories.masca-patrata.priceLabel}}" data-addon-bani="{{accessories.masca-patrata.priceBani}}" data-addon-image="assets/accessories/mask-square-grey.webp" data-addon-color="Gri">
               <div class="addon-image"><img src="assets/accessories/mask-square-grey.webp" alt="Mască pătrată pentru butelie" width="1254" height="1254" loading="lazy" decoding="async"></div>
               <div class="addon-copy">
                 <p class="addon-name"><span class="lang-ro">Mască butelie pătrată</span><span class="lang-en" hidden>Square cylinder cover</span></p>
@@ -133,13 +134,13 @@
                   <button type="button" class="addon-variant is-active" data-color="Gri" data-image="assets/accessories/mask-square-grey.webp" aria-pressed="true"><span class="addon-swatch addon-swatch-grey" aria-hidden="true"></span><span class="lang-ro">Gri</span><span class="lang-en" hidden>Grey</span></button>
                   <button type="button" class="addon-variant" data-color="Negru" data-image="assets/accessories/mask-square-black.webp" aria-pressed="false"><span class="addon-swatch addon-swatch-black" aria-hidden="true"></span><span class="lang-ro">Negru</span><span class="lang-en" hidden>Black</span></button>
                 </div>
-                <span class="addon-price">99,00 lei</span>
+                <span class="addon-price">{{accessories.masca-patrata.priceLabel}}</span>
               </div>
               <button type="button" class="addon-add" aria-label="Adaugă masca pătrată în coș">
                 <span class="lang-ro">Adaugă</span><span class="lang-en" hidden>Add</span><span aria-hidden="true">＋</span>
               </button>
             </article>
-            <article class="addon-card addon-card-mask" data-addon-id="masca-circulara" data-addon-name="Mască circulară pentru butelie" data-addon-price="99,00 lei" data-addon-bani="9900" data-addon-image="assets/accessories/mask-round-grey.webp" data-addon-color="Gri">
+            <article class="addon-card addon-card-mask" data-addon-id="masca-circulara" data-addon-name="{{accessories.masca-circulara.name}}" data-addon-price="{{accessories.masca-circulara.priceLabel}}" data-addon-bani="{{accessories.masca-circulara.priceBani}}" data-addon-image="assets/accessories/mask-round-grey.webp" data-addon-color="Gri">
               <div class="addon-image"><img src="assets/accessories/mask-round-grey.webp" alt="Mască circulară pentru butelie" width="1254" height="1254" loading="lazy" decoding="async"></div>
               <div class="addon-copy">
                 <p class="addon-name"><span class="lang-ro">Mască butelie circulară</span><span class="lang-en" hidden>Circular cylinder cover</span></p>
@@ -148,7 +149,7 @@
                   <button type="button" class="addon-variant is-active" data-color="Gri" data-image="assets/accessories/mask-round-grey.webp" aria-pressed="true"><span class="addon-swatch addon-swatch-grey" aria-hidden="true"></span><span class="lang-ro">Gri</span><span class="lang-en" hidden>Grey</span></button>
                   <button type="button" class="addon-variant" data-color="Negru" data-image="assets/accessories/mask-round-black.webp" aria-pressed="false"><span class="addon-swatch addon-swatch-black" aria-hidden="true"></span><span class="lang-ro">Negru</span><span class="lang-en" hidden>Black</span></button>
                 </div>
-                <span class="addon-price">99,00 lei</span>
+                <span class="addon-price">{{accessories.masca-circulara.priceLabel}}</span>
               </div>
               <button type="button" class="addon-add" aria-label="Adaugă masca circulară în coș">
                 <span class="lang-ro">Adaugă</span><span class="lang-en" hidden>Add</span><span aria-hidden="true">＋</span>
@@ -338,7 +339,7 @@
 <script src="assets/js/vendor/gsap/ScrollTrigger.min.js?v=20260917icons"></script>
 <script src="assets/js/vendor/gsap/ScrollSmoother.min.js?v=20260917icons"></script>
 <script src="assets/js/scroll-fx.js?v=20261008native"></script>
-<script src="assets/js/home-rail.js?v=20260917icons"></script><script src="assets/js/site.js?v=20261008curtain"></script>
+<script src="assets/js/home-rail.js?v=20260917icons"></script><script src="assets/js/site.js?v=20261021catalog"></script>
 <script src="assets/js/cart.js?v=20260918flag2"></script>
 <script src="assets/js/checkout.js?v=20260917icons"></script>
 <script src="assets/js/contact.js?v=20260917icons"></script>

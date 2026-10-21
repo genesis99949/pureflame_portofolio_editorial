@@ -14,8 +14,11 @@ const { buildContactRouter } = require('./routes/contact');
 const { buildReviewsRouter } = require('./routes/reviews');
 const { buildSubscribeRouter } = require('./routes/subscribe');
 const { buildRateLimiters } = require('./middleware/rateLimit');
+const { loadCatalog } = require('./catalog');
+const { renderPage } = require('./render');
 
 const PROJECT_ROOT = path.join(__dirname, '..');
+const ADMIN_DIR = path.join(PROJECT_ROOT, 'src', 'admin');
 
 // Lista alba a paginilor publice — NU folosim express.static() pe radacina proiectului,
 // altfel s-ar servi si server/, data/ (baza de date cu clienti), package.json etc.
@@ -23,6 +26,7 @@ const PROJECT_ROOT = path.join(__dirname, '..');
 // propria pagina completa (galerie + configurare + cumparare, integrarea
 // editoriala) si au nevoie de ruta directa, nu de redirect. Doar copia de
 // concept embera-copy.html ramane retrasa — nu face parte din colectia reala.
+// Sabloanele stau in src/pages/ si se randeaza cu datele din catalog (vezi server/render.js).
 const PUBLIC_PAGES = ['index.html', 'colectie.html', 'embera.html', 'aether.html', 'flavo.html', 'fera.html', 'ignite.html', 'confirmare.html', 'privacy.html', 'newsletter.html', 'termeni.html', 'politica-retur.html', 'cos-cumparaturi.html', 'finalizare-comanda.html', 'despre-noi.html'];
 
 // Fisierul ramane in repo, dar fara ruta proprie — vezi redirectul de mai jos.
@@ -37,6 +41,13 @@ function createApp({ stripeSecretKey, stripeWebhookSecret, baseUrl, rateLimits }
   if (!stripeWebhookSecret) {
     throw new Error('STRIPE_WEBHOOK_SECRET este obligatoriu — fara el, evenimentele de plata nu pot fi verificate in siguranta.');
   }
+
+  // Toate paginile se randeaza o singura data, la pornire: un marcaj gresit sau un
+  // catalog invalid opresc serverul imediat, nu apar abia cand cineva deschide pagina.
+  // In dezvoltare, `npm run dev` reporneste serverul la orice modificare din content/ sau src/.
+  const catalog = loadCatalog();
+  const pages = new Map(['404.html', ...PUBLIC_PAGES].map((file) => [file, renderPage(file, catalog)]));
+  const sendPage = (res, file) => res.type('html').send(pages.get(file));
 
   const stripe = new Stripe(stripeSecretKey);
   const { checkoutLimiter, contactLimiter, reviewsLimiter, subscribeLimiter, orderLookupLimiter, webhookLimiter, globalLimiter } =
@@ -91,9 +102,9 @@ function createApp({ stripeSecretKey, stripeWebhookSecret, baseUrl, rateLimits }
   app.use('/api', buildReviewsRouter());
   app.use('/api', buildSubscribeRouter(baseUrl));
 
-  app.get('/', (req, res) => res.sendFile(path.join(PROJECT_ROOT, 'index.html')));
+  app.get('/', (req, res) => sendPage(res, 'index.html'));
   PUBLIC_PAGES.forEach((file) => {
-    app.get(`/${file}`, (req, res) => res.sendFile(path.join(PROJECT_ROOT, file)));
+    app.get(`/${file}`, (req, res) => sendPage(res, file));
   });
   // Vechile adrese de produs nu mai servesc niciun continut, dar nici nu dau 404
   // in fata cuiva care are link salvat: trimit la modelul corespunzator din
@@ -102,6 +113,18 @@ function createApp({ stripeSecretKey, stripeWebhookSecret, baseUrl, rateLimits }
   Object.entries(RETIRED_PRODUCT_PAGES).forEach(([file, productId]) => {
     app.get(`/${file}`, (req, res) => res.redirect(302, `/colectie.html#${productId}`));
   });
+  // Panoul CMS (Sveltia) — doar doua fisiere statice. Pagina isi aduce propriul CSP
+  // printr-un <meta> (are nevoie de unpkg.com si api.github.com), asa ca aici scoatem
+  // politica stricta a site-ului; toate celelalte pagini o pastreaza.
+  // Accesul la date nu tine de server: fara token GitHub sau folderul local, CMS-ul nu poate salva nimic.
+  // Express trateaza implicit /admin si /admin/ la fel; CMS-ul cauta config.yml relativ
+  // la adresa paginii, deci il trimitem mereu pe varianta cu slash.
+  app.get('/admin/', (req, res) => {
+    if (!req.originalUrl.split('?')[0].endsWith('/')) return res.redirect(302, '/admin/');
+    res.removeHeader('Content-Security-Policy');
+    res.sendFile(path.join(ADMIN_DIR, 'index.html'));
+  });
+  app.get('/admin/config.yml', (req, res) => res.type('text/yaml').sendFile(path.join(ADMIN_DIR, 'config.yml')));
   // maxAge: 0 + ETag => browserul revalideaza de fiecare data si primeste 304 (raspuns
   // minuscul) daca fisierul nu s-a schimbat. Fara asta, un cache lung ar servi CSS/JS
   // vechi zile intregi dupa un deploy, fara ca noi sa avem cum sa invalidam.
@@ -122,7 +145,8 @@ function createApp({ stripeSecretKey, stripeWebhookSecret, baseUrl, rateLimits }
     if (req.path.startsWith('/api/')) {
       return res.status(404).json({ error: 'Not found' });
     }
-    res.status(404).sendFile(path.join(PROJECT_ROOT, '404.html'));
+    res.status(404);
+    sendPage(res, '404.html');
   });
 
   // Plasa de siguranta finala: nicio eroare neasteptata nu trebuie sa ajunga la client

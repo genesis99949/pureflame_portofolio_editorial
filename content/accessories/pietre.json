@@ -1,0 +1,12 @@
+{
+  "id": "pietre",
+  "order": 1,
+  "name": "Set pietre vulcanice (rezervă)",
+  "label": {
+    "ro": "Pietre vulcanice",
+    "en": "Volcanic stones"
+  },
+  "priceBani": 8900,
+  "image": "assets/accessories/lava-stones-bag.webp",
+  "variants": []
+}

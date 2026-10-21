@@ -1,0 +1,12 @@
+{
+  "id": "picioare",
+  "order": 5,
+  "name": "Set picioare de schimb",
+  "label": {
+    "ro": "Picioare de schimb",
+    "en": "Replacement feet"
+  },
+  "priceBani": 11900,
+  "image": "assets/accessories/detachable-legs.webp",
+  "variants": []
+}

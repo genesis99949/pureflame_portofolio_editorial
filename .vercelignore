@@ -1,9 +1,11 @@
-# Fisiere care nu fac parte din site-ul publicat pe Vercel (doar front-end).
-# Scoase din fiecare deployment ca sa economisim spatiul de stocare.
+# Fisiere de care build-ul de pe Vercel nu are nevoie (vezi scripts/build.js).
+# Build-ul foloseste src/, content/, assets/ si server/catalog.js + render.js;
+# public ajunge doar folderul dist/.
 output/
 docs/
 test/
-scripts/
+scripts/*
+!scripts/build.js
 .github/
 README.md
 # Variante vechi, inlocuite de versiunile web (nu sunt referite de nicio pagina)

@@ -114,6 +114,20 @@ test('paginile publice raman accesibile', async () => {
   }
 });
 
+test('panoul CMS isi foloseste propriul CSP, restul site-ului ramane pe politica stricta', async () => {
+  const admin = await fetch(`${baseUrl}/admin/`);
+  assert.equal(admin.status, 200);
+  assert.equal(admin.headers.get('content-security-policy'), null);
+  assert.match(await admin.text(), /http-equiv="Content-Security-Policy"[^>]*script-src 'self' https:\/\/unpkg\.com/);
+
+  const config = await fetch(`${baseUrl}/admin/config.yml`);
+  assert.equal(config.status, 200);
+  assert.match(config.headers.get('content-type'), /yaml/);
+
+  const page = await fetch(`${baseUrl}/colectie.html`);
+  assert.match(page.headers.get('content-security-policy'), /script-src 'self'(;|$)/);
+});
+
 test('limitarea globala protejeaza API-ul fara sa blocheze paginile si asseturile', async () => {
   const limitedApp = createApp({
     stripeSecretKey: FAKE_STRIPE_KEY,
