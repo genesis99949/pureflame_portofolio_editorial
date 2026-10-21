@@ -14,6 +14,8 @@ const { buildContactRouter } = require('./routes/contact');
 const { buildReviewsRouter } = require('./routes/reviews');
 const { buildSubscribeRouter } = require('./routes/subscribe');
 const { buildRateLimiters } = require('./middleware/rateLimit');
+const { loadCatalog } = require('./catalog');
+const { renderPage } = require('./render');
 
 const PROJECT_ROOT = path.join(__dirname, '..');
 
@@ -23,6 +25,7 @@ const PROJECT_ROOT = path.join(__dirname, '..');
 // propria pagina completa (galerie + configurare + cumparare, integrarea
 // editoriala) si au nevoie de ruta directa, nu de redirect. Doar copia de
 // concept embera-copy.html ramane retrasa — nu face parte din colectia reala.
+// Sabloanele stau in src/pages/ si se randeaza cu datele din catalog (vezi server/render.js).
 const PUBLIC_PAGES = ['index.html', 'colectie.html', 'embera.html', 'aether.html', 'flavo.html', 'fera.html', 'ignite.html', 'confirmare.html', 'privacy.html', 'newsletter.html', 'termeni.html', 'politica-retur.html', 'cos-cumparaturi.html', 'finalizare-comanda.html', 'despre-noi.html'];
 
 // Fisierul ramane in repo, dar fara ruta proprie — vezi redirectul de mai jos.
@@ -37,6 +40,13 @@ function createApp({ stripeSecretKey, stripeWebhookSecret, baseUrl, rateLimits }
   if (!stripeWebhookSecret) {
     throw new Error('STRIPE_WEBHOOK_SECRET este obligatoriu — fara el, evenimentele de plata nu pot fi verificate in siguranta.');
   }
+
+  // Toate paginile se randeaza o singura data, la pornire: un marcaj gresit sau un
+  // catalog invalid opresc serverul imediat, nu apar abia cand cineva deschide pagina.
+  // In dezvoltare, `npm run dev` reporneste serverul la orice modificare din content/ sau src/.
+  const catalog = loadCatalog();
+  const pages = new Map(['404.html', ...PUBLIC_PAGES].map((file) => [file, renderPage(file, catalog)]));
+  const sendPage = (res, file) => res.type('html').send(pages.get(file));
 
   const stripe = new Stripe(stripeSecretKey);
   const { checkoutLimiter, contactLimiter, reviewsLimiter, subscribeLimiter, orderLookupLimiter, webhookLimiter, globalLimiter } =
@@ -91,9 +101,9 @@ function createApp({ stripeSecretKey, stripeWebhookSecret, baseUrl, rateLimits }
   app.use('/api', buildReviewsRouter());
   app.use('/api', buildSubscribeRouter(baseUrl));
 
-  app.get('/', (req, res) => res.sendFile(path.join(PROJECT_ROOT, 'index.html')));
+  app.get('/', (req, res) => sendPage(res, 'index.html'));
   PUBLIC_PAGES.forEach((file) => {
-    app.get(`/${file}`, (req, res) => res.sendFile(path.join(PROJECT_ROOT, file)));
+    app.get(`/${file}`, (req, res) => sendPage(res, file));
   });
   // Vechile adrese de produs nu mai servesc niciun continut, dar nici nu dau 404
   // in fata cuiva care are link salvat: trimit la modelul corespunzator din
@@ -122,7 +132,8 @@ function createApp({ stripeSecretKey, stripeWebhookSecret, baseUrl, rateLimits }
     if (req.path.startsWith('/api/')) {
       return res.status(404).json({ error: 'Not found' });
     }
-    res.status(404).sendFile(path.join(PROJECT_ROOT, '404.html'));
+    res.status(404);
+    sendPage(res, '404.html');
   });
 
   // Plasa de siguranta finala: nicio eroare neasteptata nu trebuie sa ajunga la client

@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="assets/css/page-transition.css?v=20260917icons">
 <script src="assets/js/page-transition.js?v=20260917icons"></script>
 <script src="assets/js/reveal-init.js?v=20260917icons"></script>
-<meta name="description" content="Aether — masă cu foc rotundă din beton fin texturat, conectată prin furtun la o butelie separată, acoperită de mască. 83.5×83.5×37cm, de la 2.989 lei.">
+<meta name="description" content="Aether — masă cu foc rotundă din beton fin texturat, conectată prin furtun la o butelie separată, acoperită de mască. {{products.aether.dimsCompact}}, de la {{products.aether.priceLabel}}.">
 <title>Aether — PureFlame</title>
 <link rel="stylesheet" href="assets/css/site.css?v=20261008craft">
 <link rel="stylesheet" href="assets/css/home-header.css?v=20260917icons">
@@ -22,7 +22,8 @@
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 
 <link rel="stylesheet" href="assets/css/liquid-header.css?v=20260917icons">
-<link rel="stylesheet" href="assets/css/home-rail.css?v=20260918icon"><link rel="stylesheet" href="assets/css/product-gallery-editorial.css?v=20260917icons"><link rel="stylesheet" href="assets/css/mobile-polish.css?v=20261001mobile"><link rel="stylesheet" href="assets/css/mobile-header.css?v=20261008c"></head>
+<link rel="stylesheet" href="assets/css/home-rail.css?v=20260918icon"><link rel="stylesheet" href="assets/css/product-gallery-editorial.css?v=20260917icons"><link rel="stylesheet" href="assets/css/mobile-polish.css?v=20261001mobile"><link rel="stylesheet" href="assets/css/mobile-header.css?v=20261008c"><script type="application/json" id="pf-catalog">{{{publicJson}}}</script>
+</head>
 <body class="home-rail-page product-detail-page">
 <div class="pf-page-transition" aria-hidden="true"><img src="assets/brand/pf-inline.png" alt="" width="1200" height="340" loading="lazy"></div>
 <div class="pf-intro" tabindex="-1" role="dialog" aria-modal="true" aria-label="PureFlame — intro"><div class="pf-intro-art"><video data-intro-src="assets/brand/signature-intro.webm?v=20260915c" muted playsinline preload="none" aria-hidden="true" width="1440" height="810"></video></div></div>
@@ -118,7 +119,7 @@
       <p class="epp-gallery-hint"><span class="lang-ro">Selectează un cadru pentru detalii.</span><span class="lang-en" hidden>Select a view to explore the details.</span><span aria-hidden="true">↗︎</span></p>
 </div>
 
-      <aside class="epp-buy-panel" id="epp-configurare" tabindex="-1" data-product-id="aether" data-amount-bani="298900" data-price="2.989,00 lei" data-image="assets/products/aether/aether-hero-grey.png">
+      <aside class="epp-buy-panel" id="epp-configurare" tabindex="-1" data-product-id="aether" data-amount-bani="{{products.aether.priceBani}}" data-price="{{products.aether.priceLabelFull}}" data-image="assets/products/aether/aether-hero-grey.png">
         <div class="epp-heading">
           <h1 class="epp-title">Aether</h1>
           <div class="epp-rating">
@@ -128,7 +129,7 @@
         </div>
 
         <div class="epp-price-row">
-          <strong class="epp-price">2.989 lei</strong>
+          <strong class="epp-price">{{products.aether.priceLabel}}</strong>
           <span><span class="lang-ro">TVA inclus</span><span class="lang-en" hidden>VAT included</span></span>
         </div>
 
@@ -209,11 +210,11 @@
             <details open>
               <summary><span><span class="lang-ro">Specificații</span><span class="lang-en" hidden>Specifications</span></span> <span aria-hidden="true">+</span></summary>
               <dl>
-                <div><dt><span class="lang-ro">Dimensiuni</span><span class="lang-en" hidden>Dimensions</span></dt><dd><span class="lang-ro">83,5 × 83,5 × 37 cm</span><span class="lang-en" hidden>83.5 × 83.5 × 37 cm</span></dd></div>
-                <div><dt><span class="lang-ro">Greutate netă</span><span class="lang-en" hidden>Net weight</span></dt><dd>24 kg</dd></div>
-                <div><dt><span class="lang-ro">Greutate brută</span><span class="lang-en" hidden>Gross weight</span></dt><dd><span class="lang-ro">29,3 kg</span><span class="lang-en" hidden>29.3 kg</span></dd></div>
-                <div><dt><span class="lang-ro">Material</span><span class="lang-en" hidden>Material</span></dt><dd><span class="lang-ro">Beton fin texturat</span><span class="lang-en" hidden>Fine-textured concrete</span></dd></div>
-                <div><dt><span class="lang-ro">Cod produs</span><span class="lang-en" hidden>Product code</span></dt><dd>HF30806AA</dd></div>
+                <div><dt><span class="lang-ro">Dimensiuni</span><span class="lang-en" hidden>Dimensions</span></dt><dd><span class="lang-ro">{{products.aether.dims.ro}}</span><span class="lang-en" hidden>{{products.aether.dims.en}}</span></dd></div>
+                <div><dt><span class="lang-ro">Greutate netă</span><span class="lang-en" hidden>Net weight</span></dt><dd><span class="lang-ro">{{products.aether.weightNet.ro}}</span><span class="lang-en" hidden>{{products.aether.weightNet.en}}</span></dd></div>
+                <div><dt><span class="lang-ro">Greutate brută</span><span class="lang-en" hidden>Gross weight</span></dt><dd><span class="lang-ro">{{products.aether.weightGross.ro}}</span><span class="lang-en" hidden>{{products.aether.weightGross.en}}</span></dd></div>
+                <div><dt><span class="lang-ro">Material</span><span class="lang-en" hidden>Material</span></dt><dd><span class="lang-ro">{{products.aether.material.ro}}</span><span class="lang-en" hidden>{{products.aether.material.en}}</span></dd></div>
+                <div><dt><span class="lang-ro">Cod produs</span><span class="lang-en" hidden>Product code</span></dt><dd>{{products.aether.code}}</dd></div>
               </dl>
             </details>
             <details id="epp-inclus">
@@ -441,10 +442,10 @@
 <script src="assets/js/vendor/gsap/ScrollTrigger.min.js?v=20260917icons"></script>
 <script src="assets/js/vendor/gsap/ScrollSmoother.min.js?v=20260917icons"></script>
 <script src="assets/js/scroll-fx.js?v=20261008native"></script>
-<script src="assets/js/home-rail.js?v=20260917icons"></script><script src="assets/js/site.js?v=20261008curtain"></script>
+<script src="assets/js/home-rail.js?v=20260917icons"></script><script src="assets/js/site.js?v=20261021catalog"></script>
 <script src="assets/js/cart.js?v=20260918flag2"></script>
-<script src="assets/js/product-accessories.js?v=20260917icons"></script>
-<script src="assets/js/product-compare.js?v=20260917icons"></script>
+<script src="assets/js/product-accessories.js?v=20261021catalog"></script>
+<script src="assets/js/product-compare.js?v=20261021catalog"></script>
 <script src="assets/js/product-reviews.js?v=20261008demo"></script>
 <script src="assets/js/product-gallery.js?v=20260917icons"></script>
 <script src="assets/js/product-journey.js?v=20260917icons" defer></script>

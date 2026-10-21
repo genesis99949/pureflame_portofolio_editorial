@@ -9,17 +9,18 @@
 <link rel="stylesheet" href="assets/css/page-transition.css?v=20260917icons">
 <script src="assets/js/page-transition.js?v=20260917icons"></script>
 <script src="assets/js/reveal-init.js?v=20260917icons"></script>
-<meta name="description" content="Confirmă-ți abonarea la newsletter-ul PureFlame.">
-<meta name="robots" content="noindex">
-<title>Newsletter — PureFlame</title>
+<meta name="description" content="Termeni și condiții PureFlame — informații despre comerciant, comandă, plată, livrare, garanție și dreptul de retragere.">
+<title>Termeni și condiții — PureFlame</title>
 <link rel="stylesheet" href="assets/css/site.css?v=20261008craft">
 <link rel="stylesheet" href="assets/css/home-header.css?v=20260917icons">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/brand/favicon-16.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 
-<link rel="stylesheet" href="assets/css/home-rail.css?v=20260918icon"><link rel="stylesheet" href="assets/css/mobile-polish.css?v=20261001mobile"><link rel="stylesheet" href="assets/css/mobile-header.css?v=20261008c"></head>
-<body class="home-rail-page page-confirm">
+<link rel="stylesheet" href="assets/css/liquid-header.css?v=20260917icons">
+<link rel="stylesheet" href="assets/css/home-rail.css?v=20260918icon"><link rel="stylesheet" href="assets/css/mobile-polish.css?v=20261001mobile"><link rel="stylesheet" href="assets/css/mobile-header.css?v=20261008c"><script type="application/json" id="pf-catalog">{{{publicJson}}}</script>
+</head>
+<body class="home-rail-page">
 <div class="pf-page-transition" aria-hidden="true"><img src="assets/brand/pf-inline.png" alt="" width="1200" height="340" loading="lazy"></div>
 <div class="pf-intro" tabindex="-1" role="dialog" aria-modal="true" aria-label="PureFlame — intro"><div class="pf-intro-art"><video data-intro-src="assets/brand/signature-intro.webm?v=20260915c" muted playsinline preload="none" aria-hidden="true" width="1440" height="810"></video></div></div>
 <header class="site-header site-header--home" id="header">
@@ -37,54 +38,90 @@
 
   
 
-  <section class="confirm-section" id="main-content">
-    <h1 class="sr-only">
-      <span class="lang-ro">Starea abonării la newsletterul PureFlame</span>
-      <span class="lang-en" hidden>PureFlame newsletter status</span>
-    </h1>
-    <div class="confirm-box" id="stareConfirmat" hidden>
-      <p class="confirm-eyebrow">
-        <span class="lang-ro">Confirmat</span><span class="lang-en" hidden>Confirmed</span>
-      </p>
-      <h2>
-        <span class="lang-ro">Abonarea ta e activă</span>
-        <span class="lang-en" hidden>You're subscribed</span>
-      </h2>
-      <p class="confirm-copy lang-ro">Îți mulțumim. Îți trimitem ghidul pe email imediat ce e gata, plus acces timpuriu la colecțiile noi. Te poți dezabona oricând, din orice email primit.</p>
-      <p class="confirm-copy lang-en" hidden>Thank you. We'll email you the guide as soon as it's ready, plus early access to new collections. You can unsubscribe at any time from any email.</p>
-      <a class="btn btn-solid" href="index.html">
-        <span class="lang-ro">Vezi colecția</span><span class="lang-en" hidden>See the collection</span>
-      </a>
+  <section class="legal-page" id="main-content">
+    <h1><span class="lang-ro">Termeni și condiții</span><span class="lang-en" hidden>Terms and Conditions</span></h1>
+    <div class="lang-ro">
+      <p class="legal-updated">Ultima actualizare: august 2026</p>
+
+      <h2>1. Despre operatorul site-ului</h2>
+      <p>Acest site este operat sub marca PureFlame. Pentru întrebări despre produse, comenzi sau documentele contractuale, folosește <a href="index.html#contact" class="js-contact-trigger">formularul de contact</a> al site-ului.</p>
+      <p>Prin plasarea unei comenzi pe acest site, confirmi că ai citit și accepți acești termeni și condiții.</p>
+
+      <h2>2. Produse și prețuri</h2>
+      <p>Produsele comercializate sunt mese cu foc pe gaz din colecția PureFlame (Embera, Aether, Flavo, Fera, Ignite). Prețurile afișate pe site sunt exprimate în lei (RON), includ TVA conform legislației în vigoare și pot fi modificate oricând, fără efect retroactiv asupra comenzilor deja confirmate. Comanda unui singur model se poate face în cantitate de 1-3 bucăți; pentru cantități mai mari sau modele diferite în aceeași comandă, te rugăm să ne contactezi direct.</p>
+
+      <h2>3. Comanda și încheierea contractului</h2>
+      <p>Comanda se plasează prin completarea formularului de pe pagina produsului (date de livrare) urmată de plata prin Stripe Checkout. Contractul se consideră încheiat în momentul în care primești confirmarea comenzii pe email, după procesarea cu succes a plății. Fiecare comandă este înregistrată, indiferent dacă plata este finalizată sau nu.</p>
+
+      <h2>4. Plata</h2>
+      <p>Plata se procesează integral prin <strong>Stripe</strong>, un procesator de plăți autorizat, certificat PCI-DSS. Nu colectăm și nu stocăm niciodată datele complete ale cardului tău bancar.</p>
+
+      <h2>5. Livrare</h2>
+      <p id="livrare">Livrarea se face la adresa indicată în formularul de comandă. Termenele și costurile de livrare exacte îți sunt comunicate la finalizarea comenzii sau prin echipa de contact, în funcție de destinație și disponibilitatea produsului.</p>
+
+      <h2>6. Dreptul de retragere (retur)</h2>
+      <p>În calitate de consumator, ai dreptul de a te retrage din contract în termen de <strong>14 zile calendaristice</strong> de la primirea produsului, fără a fi nevoie să justifici decizia, conform OUG nr. 34/2014. Detaliile complete — cum exerciți acest drept, cine suportă costul transportului de retur și termenul de rambursare — sunt descrise în <a href="politica-retur.html">Politica de retur</a>.</p>
+
+      <h2>7. Garanție</h2>
+      <p id="garantie">Produsele beneficiază de <strong>garanția legală de conformitate de 2 ani</strong>, conform OUG nr. 140/2021, aplicabilă tuturor bunurilor de consum vândute către persoane fizice în Uniunea Europeană. Dacă un produs prezintă un defect de conformitate în această perioadă, ne poți contacta pentru reparare, înlocuire, reducere de preț sau rezoluțiunea contractului, conform legii.</p>
+
+      <h2>8. Răspundere</h2>
+      <p>PureFlame depune diligențele necesare pentru ca informațiile de pe site (descrieri, imagini, prețuri) să fie corecte și actualizate, dar nu poate garanta absența oricărei erori. În cazul unei erori evidente de preț sau descriere, ne rezervăm dreptul de a anula comanda afectată, cu notificarea și rambursarea integrală a clientului.</p>
+
+      <h2>9. Forță majoră</h2>
+      <p>Niciuna dintre părți nu răspunde pentru neexecutarea obligațiilor contractuale dacă aceasta se datorează unui eveniment de forță majoră, în sensul legii române.</p>
+
+      <h2>10. Soluționarea litigiilor</h2>
+      <p>Pentru orice nemulțumire, te încurajăm să ne contactezi mai întâi prin <a href="index.html#contact" class="js-contact-trigger">formularul de contact</a>. Dacă nu ajungem la o soluție amiabilă, poți apela la:</p>
+      <ul class="feature-list">
+        <li>Autoritatea Națională pentru Protecția Consumatorilor (ANPC) — <a href="https://anpc.ro" target="_blank" rel="noopener">anpc.ro</a></li>
+        <li>Platforma europeană de Soluționare a Litigiilor Online (SOL) — <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a></li>
+      </ul>
+
+      <h2>11. Legea aplicabilă</h2>
+      <p>Acești termeni sunt guvernați de legea română. Pentru orice aspect nereglementat aici, se aplică Legea nr. 365/2002 privind comerțul electronic, OUG nr. 34/2014 privind drepturile consumatorilor și legislația română aplicabilă protecției consumatorilor.</p>
     </div>
 
-    <div class="confirm-box" id="stareDezabonat" hidden>
-      <p class="confirm-eyebrow">
-        <span class="lang-ro">Dezabonat</span><span class="lang-en" hidden>Unsubscribed</span>
-      </p>
-      <h2>
-        <span class="lang-ro">Nu-ți vom mai trimite emailuri</span>
-        <span class="lang-en" hidden>You won't hear from us again</span>
-      </h2>
-      <p class="confirm-copy lang-ro">Adresa ta a fost scoasă din lista de newsletter. Dacă te-ai dezabonat din greșeală, te poți înscrie din nou oricând de pe site.</p>
-      <p class="confirm-copy lang-en" hidden>Your address has been removed from the newsletter list. If this was a mistake, you can sign up again from the site at any time.</p>
-      <a class="btn btn-outline" href="index.html">
-        <span class="lang-ro">Înapoi la colecție</span><span class="lang-en" hidden>Back to the collection</span>
-      </a>
-    </div>
+    <div class="lang-en" hidden>
+      <p class="legal-updated">Last updated: August 2026</p>
 
-    <div class="confirm-box" id="stareEroare" hidden>
-      <p class="confirm-eyebrow">
-        <span class="lang-ro">Hmm…</span><span class="lang-en" hidden>Hmm…</span>
-      </p>
-      <h2>
-        <span class="lang-ro">Link invalid sau deja folosit</span>
-        <span class="lang-en" hidden>Invalid or already used link</span>
-      </h2>
-      <p class="confirm-copy lang-ro">Este posibil ca linkul să fi fost deja folosit. Dacă ceva pare greșit, scrie-ne și rezolvăm.</p>
-      <p class="confirm-copy lang-en" hidden>This link may have already been used. If something looks wrong, get in touch and we'll sort it out.</p>
-      <a class="btn btn-outline" href="index.html">
-        <span class="lang-ro">Înapoi la colecție</span><span class="lang-en" hidden>Back to the collection</span>
-      </a>
+      <h2>1. About the website operator</h2>
+      <p>This site is operated under the PureFlame brand. For questions about products, orders, or contractual documents, use the website <a href="index.html#contact" class="js-contact-trigger">contact form</a>.</p>
+      <p>By placing an order on this site, you confirm that you have read and accept these terms and conditions.</p>
+
+      <h2>2. Products and prices</h2>
+      <p>The products sold are gas fire tables from the PureFlame collection (Embera, Aether, Flavo, Fera, Ignite). Prices shown on the site are in Romanian lei (RON), include VAT as required by law, and may change at any time without retroactive effect on already-confirmed orders. A single model can be ordered in a quantity of 1-3 units; for larger quantities or different models in the same order, please contact us directly.</p>
+
+      <h2>3. Order and formation of the contract</h2>
+      <p>An order is placed by filling in the form on the product page (delivery details) followed by payment via Stripe Checkout. The contract is considered formed once you receive the order confirmation by email, after successful payment processing. Every order is recorded, regardless of whether payment is completed.</p>
+
+      <h2>4. Payment</h2>
+      <p>Payment is processed entirely through <strong>Stripe</strong>, an authorized, PCI-DSS certified payment processor. We never collect or store your full card details.</p>
+
+      <h2>5. Delivery</h2>
+      <p id="delivery">Delivery is made to the address provided in the order form. Exact delivery times and costs are communicated when the order is finalized or by our contact team, depending on destination and product availability.</p>
+
+      <h2>6. Right of withdrawal (returns)</h2>
+      <p>As a consumer, you have the right to withdraw from the contract within <strong>14 calendar days</strong> of receiving the product, without needing to justify your decision, under Romanian Government Emergency Ordinance no. 34/2014. Full details — how to exercise this right, who bears the return shipping cost, and the refund timeline — are described in the <a href="politica-retur.html">Return Policy</a>.</p>
+
+      <h2>7. Warranty</h2>
+      <p id="warranty">Products carry the <strong>2-year legal conformity warranty</strong> required under Romanian Emergency Ordinance no. 140/2021, applicable to all consumer goods sold to individuals within the European Union. If a product shows a conformity defect within this period, you can contact us for repair, replacement, price reduction, or contract termination, as provided by law.</p>
+
+      <h2>8. Liability</h2>
+      <p>PureFlame takes reasonable care to keep the information on the site (descriptions, images, prices) accurate and up to date, but cannot guarantee the absence of any error. In case of an obvious pricing or description error, we reserve the right to cancel the affected order, with notification and full refund to the customer.</p>
+
+      <h2>9. Force majeure</h2>
+      <p>Neither party is liable for failure to perform contractual obligations where this is due to a force majeure event, as defined under Romanian law.</p>
+
+      <h2>10. Dispute resolution</h2>
+      <p>For any complaint, we encourage you to contact us first via the website <a href="index.html#contact" class="js-contact-trigger">contact form</a>. If we cannot reach an amicable solution, you may turn to:</p>
+      <ul class="feature-list">
+        <li>The Romanian National Authority for Consumer Protection (ANPC) — <a href="https://anpc.ro" target="_blank" rel="noopener">anpc.ro</a></li>
+        <li>The EU Online Dispute Resolution (ODR) platform — <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a></li>
+      </ul>
+
+      <h2>11. Governing law</h2>
+      <p>These terms are governed by Romanian law. For any matter not covered here, Romanian Law no. 365/2002 on electronic commerce, Emergency Ordinance no. 34/2014 on consumer rights, and applicable Romanian consumer protection legislation apply.</p>
     </div>
   </section>
 
@@ -131,8 +168,9 @@
 <script src="assets/js/vendor/gsap/ScrollTrigger.min.js?v=20260917icons"></script>
 <script src="assets/js/vendor/gsap/ScrollSmoother.min.js?v=20260917icons"></script>
 <script src="assets/js/scroll-fx.js?v=20261008native"></script>
-<script src="assets/js/home-rail.js?v=20260917icons"></script><script src="assets/js/site.js?v=20261008curtain"></script>
-<script src="assets/js/newsletter-status.js?v=20260917icons"></script>
-<script src="assets/js/cart.js?v=20260918flag2"></script><script src="assets/js/cart-dialog.js?v=20261008tap"></script><script src="assets/js/flame-motion.js?v=20260917icons"></script>
+<script src="assets/js/home-rail.js?v=20260917icons"></script><script src="assets/js/site.js?v=20261021catalog"></script>
+<script src="assets/js/cart.js?v=20260918flag2"></script>
+
+<script src="assets/js/cart-dialog.js?v=20261008tap"></script><script src="assets/js/flame-motion.js?v=20260917icons"></script>
 </body>
 </html>
