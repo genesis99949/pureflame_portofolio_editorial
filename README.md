@@ -60,7 +60,7 @@ content/*.json ─► server/catalog.js (validare + formate de afișare)
 | Securitate | helmet, express-rate-limit |
 | Conținut | Sveltia CMS 0.229.0 (Git-based, backend GitHub), catalog JSON |
 | Build și hosting | Script Node propriu (`scripts/build.js`), fără dependențe; Vercel (doar static) |
-| Teste | `node:test` (test runner nativ Node) |
+| Teste și CI | `node:test` (test runner nativ Node); GitHub Actions rulează testele și `npm audit` la fiecare PR și push pe `main` |
 
 ## Instalare și rulare
 
@@ -132,7 +132,6 @@ docs/             capturi de ecran și documentație explicată pe înțeles (do
 - **Textele editoriale rămân în HTML.** Dimensiunile apar și în titluri și descrieri („169 × 95 cm. Amprentă generoasă.”), de aceea sunt doar pentru citire în CMS. Culorile noi și produsele noi cer imagini și o pagină, deci se adaugă din cod.
 - **Autentificarea în CMS se face cu token GitHub**, potrivit pentru un singur editor tehnic. Pentru o echipă ar fi nevoie de un server OAuth (Sveltia CMS Authenticator).
 - **Comenzile abandonate** devin „expired" după ce expiră sesiunea Stripe (24 de ore), dar datele clientului rămân în baza de date. Nu există încă o curățare automată.
-- **Nu are integrare continuă (CI)** în acest moment.
 - **Nu are audit de accesibilitate** efectuat (Lighthouse/axe) și nici teste end-to-end în browser.
 - Prețurile și produsele sunt fictive și nu corespund unei oferte reale.
 - **Recenziile de pe paginile de produs sunt demonstrative** (text generat pentru portofoliu, definit în `assets/js/product-reviews.js`). Nu provin de la clienți reali. Formularul de recenzii funcționează și salvează recenziile noi spre moderare în baza de date.
