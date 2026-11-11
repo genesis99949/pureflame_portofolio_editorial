@@ -15,7 +15,14 @@
     const card = cards.find((c) => c.id === id);
     if (!card) return;
 
-    card.scrollIntoView({ behavior: instant || reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    // Cu ScrollSmoother activ, scrollIntoView ar derula nativ #smooth-wrapper
+    // (overflow ascuns) in loc de pagina: continutul se taie sus si ramane gol
+    // jos. Derulam deci prin smoother.
+    if (window.PFScroll && window.PFScroll.active()) {
+      window.PFScroll.to(card, !(instant || reduceMotion), 'center center');
+    } else {
+      card.scrollIntoView({ behavior: instant || reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    }
 
     card.classList.remove('is-hash-target');
     // fortam un reflow ca sa poata rula din nou animatia daca acelasi hash e vizat de doua ori

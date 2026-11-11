@@ -15,11 +15,16 @@
 
   window.PFScroll = {
     get: function () { return smoother ? smoother.scrollTop() : window.scrollY; },
-    to: function (target, smooth) {
-      if (smoother) { smoother.scrollTo(target, smooth !== false); return; }
+    // position: ex. 'center center' (implicit 'top top'), ca la ScrollSmoother.
+    to: function (target, smooth, position) {
+      if (smoother) { smoother.scrollTo(target, smooth !== false, position); return; }
       var el = typeof target === 'string' ? document.querySelector(target) : target;
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
+      if (el) el.scrollIntoView({
+        behavior: smooth === false ? 'auto' : 'smooth',
+        block: position && position.indexOf('center') === 0 ? 'center' : 'start'
+      });
+    },
+    active: function () { return !!smoother; }
   };
 
   if (!pluginsReady) return;
@@ -75,6 +80,16 @@
         allowNestedScroll: true
       }
     });
+
+    // #smooth-wrapper e fix si cu overflow ascuns: el nu trebuie sa deruleze
+    // niciodata nativ, doar #smooth-content se translateaza. Saltul browserului
+    // la #hash (la incarcare), scrollIntoView() sau focus() il pot totusi
+    // derula programatic — continutul se taie sus si ramane gol jos. Il
+    // readucem mereu la 0.
+    var smoothWrapper = document.getElementById('smooth-wrapper');
+    var resetWrapper = function () { if (smoothWrapper.scrollTop || smoothWrapper.scrollLeft) { smoothWrapper.scrollTop = 0; smoothWrapper.scrollLeft = 0; } };
+    smoothWrapper.addEventListener('scroll', resetWrapper, { passive: true });
+    resetWrapper();
 
     // Modalele/meniul mobil blocheaza scroll-ul cu body.style.overflow =
     // 'hidden' (contact.js, newsletter.js, site.js) — asta singur nu opreste

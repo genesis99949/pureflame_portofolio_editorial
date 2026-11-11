@@ -179,7 +179,6 @@
   text-transform: uppercase;
   color: rgba(17,15,10,.55);
 }
-.ce-section-kicker > span:first-child{ color: var(--ember); }
 .ce-section-head h2,
 .ce-included-copy h2{
   margin: 0;
@@ -355,18 +354,12 @@
 }
 .ce-included-list li{
   display: grid;
-  grid-template-columns: 38px 1fr;
   align-items: center;
   min-height: 58px;
   border-bottom: 1px solid var(--line);
   font-family: var(--body);
   font-size: 12px;
   letter-spacing: .025em;
-}
-.ce-included-list li > span:first-child{
-  font-size: 9px;
-  font-variant-numeric: tabular-nums;
-  color: var(--ember);
 }
 
 @media (min-width: 901px){
