@@ -210,6 +210,10 @@
      marginea cortinei porneste mereu din linia ei de jos. */
   #siteNav.nav-open{
     padding-top: calc(80px + env(safe-area-inset-top, 0px));
+    /* Bara plutitoare a Safari pe iPhone acopera ~90px din josul ecranului si
+       nu intra in safe-area: fara acest spatiu, „Newsletter”, „Livrare si
+       retur” si comutatorul RO/EN ramaneau sub ea. */
+    padding-bottom: calc(112px + env(safe-area-inset-bottom, 0px));
     animation: pf-mnav-curtain-down .62s cubic-bezier(.76,0,.24,1) both;
   }
   #siteNav.nav-open.is-closing{ animation: pf-mnav-curtain-up .42s cubic-bezier(.76,0,.24,1) .06s both; }
