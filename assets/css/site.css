@@ -512,7 +512,10 @@ button{ font-family: inherit; cursor: pointer; }
   z-index: 1;
 }
 @media (max-width: 700px){
-  .hero{ min-height: 620px; }
+  /* Pe iPhone, svh include zona de sub bara plutitoare a Safari, deci 96svh
+     iese mai inalt decat ce se vede. Plafonam hero-ul, ca tot continutul
+     (tagline, buton, „Deruleaza”) sa ramana in zona vizibila. */
+  .hero{ height: min(96svh, 620px); min-height: 520px; }
 }
 
 /* Fallback nativ atunci cand ScrollTrigger nu este disponibil. Clasa este
@@ -709,7 +712,7 @@ button{ font-family: inherit; cursor: pointer; }
      „Vezi colectia” raman sub ea. */
   .hero-scroll-cue{
     left: 18px;
-    bottom: 104px;
+    bottom: 72px;
     gap: 10px;
   }
   .hero-scroll-track{ height: 46px; }
@@ -717,7 +720,7 @@ button{ font-family: inherit; cursor: pointer; }
   /* Wordmark-ul si butonul raman aliniate la dreapta, ca pe desktop —
      doar mai mici, ca sa nu atinga caseta de text de sus in hero-ul de
      64vh de pe telefon. */
-  .hero-cta-stack{ gap: 20px; bottom: 104px; }
+  .hero-cta-stack{ gap: 20px; bottom: 72px; }
   .hero-wordmark{ height: min(24vh, 180px); }
   .hero-tagline{ max-width: 60vw; font-size: 13px; }
   .hero-view-link{ font-size: 30px; }
