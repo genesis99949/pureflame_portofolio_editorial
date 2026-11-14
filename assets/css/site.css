@@ -704,9 +704,12 @@ button{ font-family: inherit; cursor: pointer; }
   50%{ transform: translateX(.22em); }
 }
 @media (max-width: 700px){
+  /* Pe iPhone, bara plutitoare a Safari acopera ~90px din josul paginii si
+     nu e inclusa in svh/safe-area: fara acest spatiu, tagline-ul si butonul
+     „Vezi colectia” raman sub ea. */
   .hero-scroll-cue{
     left: 18px;
-    bottom: 28px;
+    bottom: 104px;
     gap: 10px;
   }
   .hero-scroll-track{ height: 46px; }
@@ -714,7 +717,7 @@ button{ font-family: inherit; cursor: pointer; }
   /* Wordmark-ul si butonul raman aliniate la dreapta, ca pe desktop —
      doar mai mici, ca sa nu atinga caseta de text de sus in hero-ul de
      64vh de pe telefon. */
-  .hero-cta-stack{ gap: 20px; }
+  .hero-cta-stack{ gap: 20px; bottom: 104px; }
   .hero-wordmark{ height: min(24vh, 180px); }
   .hero-tagline{ max-width: 60vw; font-size: 13px; }
   .hero-view-link{ font-size: 30px; }
