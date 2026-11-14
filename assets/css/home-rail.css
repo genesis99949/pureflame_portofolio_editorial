@@ -138,7 +138,9 @@
 }
 @media(max-width:1024px){
  #siteNav.nav-open .menu-discovery{display:flex;flex-direction:column;flex:1 0 auto}
- #siteNav .menu-discovery .menu-useful-links{margin-top:auto;padding-top:28px}
+ /* Ordine jos: comutatorul RO/EN, apoi Newsletter / Livrare si retur. */
+ #siteNav .menu-discovery .nav-lang-mobile{margin-top:auto;padding-top:28px;justify-content:flex-start}
+ #siteNav .menu-discovery .menu-useful-links{margin-top:8px;padding-top:0}
 }
 
 @media(min-width:1025px){.rail-content{min-height:100dvh;height:max-content}}
